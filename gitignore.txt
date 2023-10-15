@@ -1,0 +1,21 @@
+# Ignore all files in the project
+*
+
+# Except for directories
+!*/
+
+# Allow specific file types
+!*.java
+!*.xml
+!*.properties
+# Add more file types as needed
+
+# Ignore build artifacts
+bin/
+target/
+
+# Ignore Eclipse specific files
+.settings/
+.classpath
+.project
+# Add more Eclipse specific files as needed
