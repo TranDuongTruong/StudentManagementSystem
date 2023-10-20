@@ -81,13 +81,58 @@ public class DatabaseConnection {
 	    
 	    List<Student>  retrieveStudentFromDatabase(String classCode){
 	    	List<Student> stu = new ArrayList();
-	    	//TODO
+	    	String clas="students"+classCode.toLowerCase();
+	    	 String query = "Select * FROM "+clas;
+	    	 
+	    	 
+	    	 int studentID;
+	    	  String name;
+	    	  String dob;
+	    	  String address;
+	    	   boolean gender;// male: true; female: false
+	    	    String phoneNumber;
+	    	  int creditsCompleted;
+	    	   int creditsOwed;
+	    	   
+	    	   
+	    	   
+	    		try {
+		            Class.forName("com.mysql.cj.jdbc.Driver");
+		            con = DriverManager.getConnection(URL, USER, PASSWORD);
+		            String aa = "Select * FROM "+ clas;
+		            Statement stmt = con.createStatement();
+		            ResultSet rs= stmt.executeQuery(aa);	 
+	    	 while (rs.next()){
+            	 
+	            	studentID = rs.getInt(1);
+	            	name=	rs.getString(2);
+	            	dob=	rs.getString(3);
+	            	address=rs.getString(4);
+	            	gender=rs.getBoolean(5);
+	            	phoneNumber=rs.getString(6);
+	            	creditsCompleted=rs.getInt(7);
+	            	creditsOwed=rs.getInt(8);
+	            	
+	            	
+	            	Student student=new Student( studentID,  name,  dob,  address,  gender,  phoneNumber,  creditsCompleted,  creditsOwed);
+	       	         stu.add(student);
+	       	         
+	       	      System.out.println(studentID+"\t");
+	    	 }
+	    	 
+	    		}catch (Exception e) { // Corrected the exception parameter name
+		            System.err.println("Exception: " + e.getMessage()); 
+	    		}
+	    		
+	    	
+	    	
 	    	return stu;
 	    }
 	    
 	    public static void main(String[] args) {
 	    	DatabaseConnection a = new DatabaseConnection();
-	    	
+	    	 List<Classroom> classes = new ArrayList();
+	    	 classes=a.retrieveClassesFromDatabase();
 	       }
 	    }
 

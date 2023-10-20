@@ -1,7 +1,8 @@
 package model;
 
 public class Student {
-	  private int studentID;
+	
+	  	private int studentID;
 	 	private String name;
 	    private String dob;
 	    private String address;
