@@ -19,6 +19,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JMenu;
 import java.awt.Panel;
+import java.io.File;
+import java.net.URL;
 import java.awt.Canvas;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,24 +48,27 @@ public class MainView extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		 ImageIcon imageIcon = new ImageIcon("C:\\Users\\ADmin\\Downloads\\DTULogo.png");
+		
+		ImageIcon imageIcon = new ImageIcon();
+		 URL imageUrl=MainView.class.getClassLoader().getResource("Assert/DTULogo.png");
+	            File file = new File(imageUrl.getPath());
+	              imageIcon = new ImageIcon(file.getAbsolutePath());
+	              System.out.println(file.getAbsolutePath());
+	            
+
+
 	        // Lấy hình ảnh từ ImageIcon
 	        Image image = imageIcon.getImage();
-
-	        Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-		
+	        Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);		
 	        int imageWidth = image.getWidth(null);
 	        int imageHeight = image.getHeight(null);
 
@@ -80,23 +85,7 @@ public class MainView extends JFrame {
 			        label.setIcon(scaledImageIcon);
 			        
 			        Box verticalBox = Box.createVerticalBox();
-//			        verticalBox.setBorder(new EmptyBorder(0, 0, 0, 0));
-//			        verticalBox.setBounds(0, 0, 101, 263);
-//			         
-//			        panel.add(verticalBox);
-//			        
-//			        
-//			        JButton button = new JButton("Dashboard");
-//			        verticalBox.add(button);
-//			        
-//			        JButton button_1 = new JButton("Classes");
-//			        verticalBox.add(button_1);
-//			        
-//			        JButton button_2 = new JButton("Student");
-//			        verticalBox.add(button_2);
-//			        
-//			        JButton button_3 = new JButton("Blog");
-//			        verticalBox.add(button_3);
+
 			        verticalBox.setAlignmentX(Box.LEFT_ALIGNMENT);
 
 			        // Tạo các button

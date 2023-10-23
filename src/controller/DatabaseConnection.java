@@ -9,10 +9,17 @@ import model.Student;
 
 public class DatabaseConnection {
 	 private static Connection con = null;
-	    private static final String URL = "jdbc:mysql://localhost:3306/studentmanagementdb";
+//	    private static final String URL = "jdbc:mysql://localhost:3306/studentmanagementdb";
+//	    
+//	    private static final String USER = "root";
+//	    private static final String PASSWORD = "";
+	 private static final String URL = "jdbc:mysql://localhost:3306/studentmanagementdb?useSSL=false";
+	    
 	    private static final String USER = "root";
 	    private static final String PASSWORD = "";
-
+//	    private static final String URL = "jdbc:mysql://0.0.0.0:3306/studentmanagementdb";
+//	    private static final String USER = "truongdaica";
+//	    private static final String PASSWORD = "truongdaica123";
 	    
 	    private static void connectToBB() {
 			try {
@@ -58,6 +65,7 @@ public class DatabaseConnection {
 	            	
 	            	Classroom cl=new Classroom(f1,f2,f3,f4,stu);
 	            	classes.add(cl);
+	            	
 	            	System.out.println(f1+"  "+f2);}
 	            
 	            if (!con.isClosed()) {
@@ -119,7 +127,6 @@ public class DatabaseConnection {
 	       	         
 	       	      System.out.println(studentID+"\t");
 	    	 }
-	    	 
 	    		}catch (Exception e) { // Corrected the exception parameter name
 		            System.err.println("Exception: " + e.getMessage()); 
 	    		}
