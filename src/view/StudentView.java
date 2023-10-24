@@ -59,8 +59,8 @@ public class StudentView extends JFrame {
 	public JTextField textField_Mon3;
 	public ButtonGroup btn_gioiTinh;
 	public JComboBox comboBox_queQuan;
-	public JRadioButton radioButton_nam;
-	public JRadioButton radioButton_nu;
+	public JRadioButton rdbtnMale;
+	public JRadioButton rdbtnFemale;
 	public JComboBox comboBox_queQuan_timKiem;
 
 	/**
@@ -264,19 +264,19 @@ public class StudentView extends JFrame {
 		lblGender.setBounds(324, 412, 102, 54);
 		contentPane.add(lblGender);
 
-		radioButton_nam = new JRadioButton("Nam");
-		radioButton_nam.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		radioButton_nam.setBounds(405, 429, 61, 23);
-		contentPane.add(radioButton_nam);
+		rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnMale.setBounds(405, 429, 61, 23);
+		contentPane.add(rdbtnMale);
 
-		radioButton_nu = new JRadioButton("Nữ");
-		radioButton_nu.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		radioButton_nu.setBounds(489, 429, 61, 23);
-		contentPane.add(radioButton_nu);
+		rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnFemale.setBounds(489, 429, 102, 23);
+		contentPane.add(rdbtnFemale);
 
 		btn_gioiTinh = new ButtonGroup();
-		btn_gioiTinh.add(radioButton_nam);
-		btn_gioiTinh.add(radioButton_nu);
+		btn_gioiTinh.add(rdbtnMale);
+		btn_gioiTinh.add(rdbtnFemale);
 
 		JLabel lblPhoneNumber = new JLabel("Phone Number");
 		lblPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 19));
