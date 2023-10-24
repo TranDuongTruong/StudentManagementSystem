@@ -125,8 +125,8 @@ public class MainView extends JFrame {
 			        textPane.setText("<- Logout");
 			        panel.add(textPane);
 			      
-			        // ActionListener cho button_1 ("Classes")
-			        button_1.addActionListener(new ActionListener() {
+			        // ActionListener cho button_2 ("Student")
+			        button_2.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent e) {
 			                // Tạo một instance của StudentView
 			                StudentView studentView = new StudentView();
