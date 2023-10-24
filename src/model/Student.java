@@ -1,17 +1,18 @@
 package model;
-
+import java.time.LocalDate;
 public class Student {
 	
 	  	private int studentID;
 	 	private String name;
-	    private String dob;
+	 	
+	    private LocalDate  dob;
 	    private String address;
 	    private boolean gender;// male: true; female: false
 	    private String phoneNumber;
 	    private int creditsCompleted;
 	    private int creditsOwed;
 
-	    public Student(int studentID, String name, String dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
+	    public Student(int studentID, String name, LocalDate dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
 	        this.studentID = studentID; 
 	        this.name = name;
 	        this.dob = dob;
@@ -34,7 +35,7 @@ public class Student {
 	        return name;
 	    }
 
-	    public String getDob() {
+	    public LocalDate getDob() {
 	        return dob;
 	    }
 

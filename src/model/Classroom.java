@@ -65,7 +65,15 @@ public class Classroom {
 			this.studentList = studentList;
 		}
 
-
+	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents
+				) {
+				super();
+				this.classCode = classCode;
+				this.className = className;
+				this.numOfCurentStudents = numOfCurentStudents;
+				this.maximumNumOfStudents = maximumNumOfStudents;
+			
+			}
 		public void addStudent(Student student) {
 	        studentList.add(student);
 	        numOfCurentStudents++;
