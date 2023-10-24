@@ -19,6 +19,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JMenu;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
 import java.awt.Canvas;
@@ -123,7 +125,19 @@ public class MainView extends JFrame {
 			        textPane.setText("<- Logout");
 			        panel.add(textPane);
 			      
-			        
+			        // ActionListener cho button_1 ("Classes")
+			        button_1.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent e) {
+			                // Tạo một instance của StudentView
+			                StudentView studentView = new StudentView();
+
+			                // Hiển thị StudentView
+			                studentView.setVisible(true);
+
+			                // Đóng MainView (nếu bạn muốn đóng MainView khi chuyển đến StudentView)
+			                dispose();
+			            }
+			        });
 		
 	}
 }
