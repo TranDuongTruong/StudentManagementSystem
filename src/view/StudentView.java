@@ -184,6 +184,10 @@ public class StudentView extends JFrame {
 			        contentPane_1.add(textField);
 			        
 			        JButton btnTim = new JButton("Search");
+			        btnTim.addActionListener(new ActionListener() {
+			        	public void actionPerformed(ActionEvent e) {
+			        	}
+			        });
 			        btnTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnTim.setBounds(526, 12, 89, 54);
 			        contentPane_1.add(btnTim);
