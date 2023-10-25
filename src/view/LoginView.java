@@ -1,17 +1,14 @@
 package view;
 
 import java.awt.EventQueue;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Font;
+
+import controller.DatabaseConnection;
+import javax.swing.border.EmptyBorder;
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.sql.*;
 
 public class LoginView extends JFrame {
 
@@ -30,6 +27,36 @@ public class LoginView extends JFrame {
                 }
             }
         });
+    }
+    // Method to check admin login
+    private boolean checkAdminLogin(String email, String password) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.connectToBB(); // Get the database connection
+            String query = "SELECT * FROM admin WHERE mail = ? AND password = ?";            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            statement.setString(2, password);
+
+            resultSet = statement.executeQuery();
+
+            // If a record is found, login is successful
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false; // Login failed
     }
 
     public LoginView() {
@@ -68,12 +95,23 @@ public class LoginView extends JFrame {
         contentPane.add(passwordField);
 
         // Login Button
-        JButton loginButton = new JButton("Login");
+        JButton loginButton = new JButton("Login");   
         ImageIcon loginIcon = new ImageIcon(LoginView.class.getResource("/Assert/login1.png"));
         loginButton.setIcon(loginIcon);
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Handle login
+                // Retrieve email and password from input fields
+                String email = emailField.getText();
+                String password = new String(passwordField.getPassword());
+
+                // Query the database for a matching admin record
+                if (checkAdminLogin(email, password)) {
+                    // Successful login logic (e.g., open the main application window)
+                    JOptionPane.showMessageDialog(null, "Login successful!");
+                } else {
+                    // Failed login logic (e.g., display an error message)
+                    JOptionPane.showMessageDialog(null, "Login failed. Invalid email or password.");
+                }
             }
         });
         loginButton.setBounds(77, 229, 100, 30);
@@ -85,7 +123,7 @@ public class LoginView extends JFrame {
         cancelButton.setIcon(cancelIcon);
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Handle cancel
+                System.exit(0);
             }
         });
         cancelButton.setBounds(260, 229, 111, 30);

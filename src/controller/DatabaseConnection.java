@@ -21,7 +21,7 @@ public class DatabaseConnection {
 //     private static final String USER = "truongdaica";
 //     private static final String PASSWORD = "truong123456";
 	    
-	    private static void connectToBB() {
+	    public static Connection connectToBB() {
 			try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -30,15 +30,8 @@ public class DatabaseConnection {
 	            }
 	        } catch (Exception e) { // Corrected the exception parameter name
 	            System.err.println("Exception: " + e.getMessage()); // Print the exception message
-	        } finally {
-	            try {
-	                if (con != null) {
-	                    con.close();
-	                }
-	            } catch (SQLException e) {
-	                e.printStackTrace(); 
-	            }
 	        }
+			return con;
 		}
 	    
 	    List<Classroom> retrieveClassesFromDatabase() {
