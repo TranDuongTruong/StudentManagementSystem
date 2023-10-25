@@ -107,7 +107,10 @@ public class LoginView extends JFrame {
                 // Query the database for a matching admin record
                 if (checkAdminLogin(email, password)) {
                     // Successful login logic (e.g., open the main application window)
-                    JOptionPane.showMessageDialog(null, "Login successful!");
+//                  JOptionPane.showMessageDialog(null, "Login successful!");
+	                MainView mainView = new MainView();
+	                mainView.setVisible(true);
+	                dispose();
                 } else {
                     // Failed login logic (e.g., display an error message)
                     JOptionPane.showMessageDialog(null, "Login failed. Invalid email or password.");
