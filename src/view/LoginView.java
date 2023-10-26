@@ -1,13 +1,14 @@
 package view;
 
 import javax.swing.*;
-import java.awt.EventQueue;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
-
 
 public class LoginView extends JFrame {
     private JPanel contentPane;
@@ -15,7 +16,8 @@ public class LoginView extends JFrame {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton cancelButton;
-    
+    private JLabel errorLabel;
+
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -83,10 +85,29 @@ public class LoginView extends JFrame {
         cancelButton.setBounds(260, 229, 111, 30);
         contentPane.add(cancelButton);
 
+        // Error Label for displaying error messages
+        errorLabel = new JLabel("");
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setBounds(77, 260, 300, 20);
+        contentPane.add(errorLabel);
+
         JLabel lblNewLabel = new JLabel("Login");
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblNewLabel.setBounds(10, 11, 58, 30);
         contentPane.add(lblNewLabel);
+        
+        // Add focus listeners to clear error status when the user starts typing
+        emailField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                clearError();
+            }
+        });
+
+        passwordField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                clearError();
+            }
+        });
     }
 
     public void addLoginListener(ActionListener listener) {
@@ -105,7 +126,27 @@ public class LoginView extends JFrame {
         return new String(passwordField.getPassword());
     }
 
+    public void displayEmailError(String message) {
+        errorLabel.setText(message);
+        emailField.setBackground(Color.PINK);
+    }
+
+    public void displayPasswordError(String message) {
+        errorLabel.setText(message);
+        passwordField.setBackground(Color.PINK);
+    }
     public void displayErrorMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+        errorLabel.setText(message);
+
+        // Highlight email and password fields in red
+        emailField.setBackground(Color.PINK);
+        passwordField.setBackground(Color.PINK);
+    }
+
+
+    public void clearError() {
+        errorLabel.setText("");
+        emailField.setBackground(Color.WHITE);
+        passwordField.setBackground(Color.WHITE);
     }
 }
