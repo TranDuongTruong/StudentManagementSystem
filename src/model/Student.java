@@ -1,17 +1,16 @@
 package model;
+import java.sql.Date;
 import java.time.LocalDate;
 public class Student {
-	
 	  	private int studentID;
 	 	private String name;
-	 	
 	    private LocalDate  dob;
 	    private String address;
 	    private boolean gender;// male: true; female: false
 	    private String phoneNumber;
 	    private int creditsCompleted;
 	    private int creditsOwed;
-
+	    private String luachon;
 	    public Student(int studentID, String name, LocalDate dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
 	        this.studentID = studentID; 
 	        this.name = name;
@@ -21,6 +20,7 @@ public class Student {
 	        this.phoneNumber = phoneNumber;
 	        this.creditsCompleted = creditsCompleted;
 	        this.creditsOwed = creditsOwed;
+	        this.luachon="";
 	    }
 
 	    
@@ -62,5 +62,18 @@ public class Student {
 		public void setGender(boolean gender) {
 			this.gender = gender;
 		}
+
+
+		public String getLuachon() {
+			return luachon;
+		}
+
+
+		public void setLuachon(String luachon) {
+			this.luachon = luachon;
+		}
+
+
+		
 	    
 }

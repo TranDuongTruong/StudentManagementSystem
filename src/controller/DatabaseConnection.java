@@ -103,8 +103,8 @@ public class DatabaseConnection {
 	       		  creditsOwed=rs.getInt(8);
 	       		  
 	       		 
-	       		 Student student=new Student( studentID, name, dob, address, gender,
-	       		  phoneNumber, creditsCompleted, creditsOwed); students.add(student);
+	       		 Student student=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
+	       		 students.add(student);
 	       		  
 	       		 System.err.println(name+"\t"+dob);
 	            }
