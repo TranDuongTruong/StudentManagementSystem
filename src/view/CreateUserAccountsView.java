@@ -114,9 +114,9 @@ public class CreateUserAccountsView extends JFrame {
         errorLabel.setBounds(61, 260, 300, 20);
         contentPane.add(errorLabel);
         
-        JLabel lblAdmin = new JLabel("Admin");
+        JLabel lblAdmin = new JLabel("Admin: Create User Accounts");
         lblAdmin.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblAdmin.setBounds(10, 11, 58, 30);
+        lblAdmin.setBounds(10, 11, 322, 30);
         contentPane.add(lblAdmin);
 
         // Add focus listeners to clear error status when the user starts typing
