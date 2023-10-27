@@ -29,6 +29,9 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
+import java.awt.Font;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
 public class MainView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
