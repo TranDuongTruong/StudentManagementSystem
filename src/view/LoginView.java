@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
+import java.awt.event.ActionEvent;
 
 
 public class LoginView extends JFrame {
@@ -71,6 +72,10 @@ public class LoginView extends JFrame {
 
         // Login Button
         loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         ImageIcon loginIcon = new ImageIcon(LoginView.class.getResource("/Assert/login1.png"));
         loginButton.setIcon(loginIcon);
         loginButton.setBounds(77, 229, 100, 30);

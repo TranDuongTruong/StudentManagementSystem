@@ -42,7 +42,8 @@ public class LoginController {
 
               try {
                   connection = DatabaseConnection.connectToBB(); // Get the database connection
-                  String query = "SELECT * FROM admin WHERE mail = ? AND password = ?";            statement = connection.prepareStatement(query);
+                  String query = "SELECT * FROM admin WHERE mail = ? AND password = ?";        
+                  statement = connection.prepareStatement(query);
                   statement.setString(1, email);
                   statement.setString(2, password);
 
