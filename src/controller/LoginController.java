@@ -1,5 +1,6 @@
 package controller;
 
+import view.CreateUserAccountsView;
 import view.LoginView;
 import view.MainView;
 
@@ -26,27 +27,34 @@ public class LoginController {
     // ActionListener for the Login button
     private class LoginListener implements ActionListener {
     	 public void actionPerformed(ActionEvent e) {
-             // Retrieve email and password from the view
-             String email = loginView.getEmail();
-             String password = loginView.getPassword();
+    	        String email = loginView.getEmail();
+    	        String password = loginView.getPassword();
 
-             if (isValidEmail(email) && isValidPassword(password)) {
-                 if (isValidLogin(email, password)) {
-                     // Successful login logic
-                     MainView mainView = new MainView();
-                     mainView.setVisible(true);
-                     loginView.dispose(); // Close the login view
-                 }else {
-                     loginView.displayErrorMessage("Login failed. Invalid email or password.");
-                 } 
-             } else if(isValidEmail(email)){
-                 loginView.displayPasswordError("Password must be 6 characters or more");
-             }else if(isValidPassword(password)) {
-            	 loginView.displayEmailError("Invalid email format.");
-             }else {
-                 loginView.displayErrorMessage("Invalid email or password format.");
-             }
-         }
+    	        if (isValidEmail(email) && isValidPassword(password)) {
+    	            String role = getRoleForEmail(email); // Lấy vai trò từ cơ sở dữ liệu
+
+    	            if (isValidLogin(email, password)) {
+    	                if ("admin".equals(role)) {
+    	                    // Redirect to CreateUserAccountsView for admin
+    	                    CreateUserAccountsView createAccountsView = new CreateUserAccountsView();
+    	                    createAccountsView.setVisible(true);
+    	                } else {
+    	                    // Redirect to MainView for teacher or student
+    	                    MainView mainView = new MainView();
+    	                    mainView.setVisible(true);
+    	                }
+    	                loginView.dispose(); // Đóng cửa sổ đăng nhập
+    	            } else {
+    	                loginView.displayErrorMessage("Login failed. Invalid email or password.");
+    	            }
+    	        } else if (isValidEmail(email)) {
+    	            loginView.displayPasswordError("Password must be 6 characters or more");
+    	        } else if (isValidPassword(password)) {
+    	            loginView.displayEmailError("Invalid email format.");
+    	        } else {
+    	            loginView.displayErrorMessage("Invalid email or password format.");
+    	        }
+    	    }
 
          private boolean isValidEmail(String email) {
              // Basic email validation using regex
@@ -67,7 +75,7 @@ public class LoginController {
 
               try {
                   connection = DatabaseConnection.connectToBB(); // Get the database connection
-                  String query = "SELECT * FROM admin WHERE mail = ? AND password = ?";        
+                  String query = "SELECT * FROM accounts WHERE email = ? AND password = ?";        
                   statement = connection.prepareStatement(query);
                   statement.setString(1, email);
                   statement.setString(2, password);
@@ -93,6 +101,35 @@ public class LoginController {
         }
     }
 
+    private String getRoleForEmail(String email) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.connectToBB();
+            String query = "SELECT role FROM accounts WHERE email = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("role");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return null; // Trả về null nếu không tìm thấy vai trò
+    }
     // ActionListener for the Cancel button
     private class CancelListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
