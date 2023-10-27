@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.Canvas;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,7 +40,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import controller.DatabaseConnection;
 import controller.StudentController;
+import model.Classroom;
 import model.Student;
 import view.MainView;
 public class StudentView extends JFrame {
@@ -46,15 +50,19 @@ public class StudentView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public Student model;
-	public JTextField textField;
+	public JTextField searchInp;
 	public JTextField textField_ID;
 	public JTextField textField_name;
 	public JTextField textField_dob;
 	public JTextField textField_phone;
 	public JTextField textField_completed;
-	public JTextField textField_owed;public JTable table;
+	public JTextField textField_owed;
+	public JTable table;
 	public ButtonGroup bt;
-	public JComboBox comboBox_queQuan;public JComboBox comboBox_queQuan_timKiem;
+	private JButton btnTim;
+	private JButton btnHuyTim;
+	public JComboBox comboBox_queQuan;
+	static Classroom classRoom;
 
 	/**
 	 * Launch the application.
@@ -65,6 +73,16 @@ public class StudentView extends JFrame {
 				try {
 					StudentView frame = new StudentView();
 					frame.setVisible(true);
+					//-- Ai code phần hiển thị sv theo lớp thì viết hàm đổi biến classroom này là đc và bỏ phần này
+					//------------------------------------ĐÂY CHỈ TEST đưa ds sv vào;
+					DatabaseConnection a = new DatabaseConnection();
+			    	 List<Classroom> classes = new ArrayList();
+			    	 classes=a.retrieveClassesFromDatabase();
+			    	 classRoom=classes.get(0);
+			    	 //-------------------------------------------------------------------------------------------------
+			    	 
+			    	 StudentController stu=new StudentController(frame,classRoom);
+			    	 			     					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -172,41 +190,32 @@ public class StudentView extends JFrame {
 			        JPanel contentPane_1 = new JPanel();
 			        contentPane_1.setLayout(null);
 			        contentPane_1.setBorder(new EmptyBorder(5, 5, 5, 5));
-			        contentPane_1.setBounds(127, -159, 770, 679);
+			        contentPane_1.setBounds(119, 0, 760, 679);
 			        contentPane.add(contentPane_1);
 			        
 			        Box verticalBox_1 = Box.createVerticalBox();
 			        verticalBox_1.setBounds(44, 144, -28, -35);
 			        contentPane_1.add(verticalBox_1);
 			        
-			        JLabel label_Address = new JLabel("Address");
-			        label_Address.setFont(new Font("Tahoma", Font.PLAIN, 19));
-			        label_Address.setBounds(31, 11, 92, 54);
-			        contentPane_1.add(label_Address);
-			        
 			        JLabel label_Student_ID = new JLabel("Student ID");
 			        label_Student_ID.setFont(new Font("Tahoma", Font.PLAIN, 19));
-			        label_Student_ID.setBounds(285, 11, 155, 54);
+			        label_Student_ID.setBounds(15, 11, 155, 54);
 			        contentPane_1.add(label_Student_ID);
 			        
-			        textField = new JTextField();
-			        textField.setFont(new Font("Tahoma", Font.PLAIN, 19));
-			        textField.setColumns(10);
-			        textField.setBounds(393, 12, 123, 54);
-			        contentPane_1.add(textField);
+			        searchInp = new JTextField();
+			        searchInp.setFont(new Font("Tahoma", Font.PLAIN, 19));
+			        searchInp.setColumns(10);
+			        searchInp.setBounds(127, 12, 272, 54);
+			        contentPane_1.add(searchInp);
 			        
-			        JButton btnTim = new JButton("Search");
+			         btnTim = new JButton("Search");
 			        btnTim.addActionListener(new ActionListener() {
 			        	public void actionPerformed(ActionEvent e) {
 			        	}
 			        });
 			        btnTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			        btnTim.setBounds(526, 12, 89, 54);
+			        btnTim.setBounds(421, 12, 117, 54);
 			        contentPane_1.add(btnTim);
-			        
-			        comboBox_queQuan_timKiem = new JComboBox();
-			        comboBox_queQuan_timKiem.setBounds(120, 11, 155, 54);
-			        contentPane_1.add(comboBox_queQuan_timKiem);
 			        
 			        JSeparator separator_1 = new JSeparator();
 			        separator_1.setBounds(10, 92, 738, 2);
@@ -390,18 +399,63 @@ public class StudentView extends JFrame {
 			        separator_1_1_1.setBounds(10, 616, 738, 2);
 			        contentPane_1.add(separator_1_1_1);
 			        
-			        JButton btnHuyTim = new JButton("Undo");
+			         btnHuyTim = new JButton("Undo");
+			        btnHuyTim.addActionListener(new ActionListener() {
+			        	public void actionPerformed(ActionEvent e) {
+			        	}
+			        });
 			        btnHuyTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			        btnHuyTim.setBounds(631, 11, 117, 54);
+			        btnHuyTim.setBounds(585, 12, 117, 54);
 			        contentPane_1.add(btnHuyTim);
 			      
 		
 	}
 
+    public int getSearchInp() {
+        String text = searchInp.getText();
 
+        if (text == null || text.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return 0;
+        }
+
+        return Integer.parseInt(text);
+    }
+    public void notFindStudent(int id) {
+    	JOptionPane.showMessageDialog(null, "Không tìm thấy sinh viên có MSV: "+id, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }
+	 public void searchStudentListener(ActionListener listener) {
+		 btnTim.addActionListener(listener);
+     }
+	 public void huyTimListener(ActionListener listener) {
+		 btnHuyTim.addActionListener(listener);
+     }
+	 public void displayStudentList(List<Student> studentList) {		 
+		    DefaultTableModel model = (DefaultTableModel) table.getModel();
+		    // Xóa tất cả các dòng hiện tại trong model
+		    model.setRowCount(0);
+		    System.out.println("\tfffffffffff"+studentList.size());
+		    for (Student student : studentList) {
+		        Object[] rowData = new Object[8];
+		        rowData[0] = student.getStudentID();
+		        rowData[1] = student.getName();
+		        rowData[2] = student.getDob();
+		        rowData[3] = student.getAddress();
+		        rowData[4] = student.isGender() ? "Male" : "Female";
+		        rowData[5] = student.getPhoneNumber();
+		        rowData[6] = student.getCreditsCompleted();
+		        rowData[7] = student.getCreditsOwed();
+		        System.out.println("\tfffffffffff"+rowData[1]);
+		        model.addRow(rowData);
+		    }
+		    
+		    // Cập nhật model của JTable
+		    table.setModel(model);
+		}
+	 
 
 	public void xoaForm() {
-		textField.setText("");
+		searchInp.setText("");
 		textField_ID.setText("");
 		textField_name.setText("");
 		textField_dob.setText("");

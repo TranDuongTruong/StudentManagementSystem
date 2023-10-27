@@ -34,7 +34,7 @@ public class DatabaseConnection {
 			return con;
 		}
 	    
-	    List<Classroom> retrieveClassesFromDatabase() {
+	    public List<Classroom> retrieveClassesFromDatabase() {
 	    	
 	        List<Classroom> classes = new ArrayList();
 	        String f1, f2;
@@ -239,10 +239,10 @@ public class DatabaseConnection {
 	    
 	    
 	    public static void main(String[] args) {
-	    	DatabaseConnection a = new DatabaseConnection();
-	    	 List<Classroom> classes = new ArrayList();
-	    	 classes=a.retrieveClassesFromDatabase();
-	    	
+//	    	DatabaseConnection a = new DatabaseConnection();
+//	    	 List<Classroom> classes = new ArrayList();
+//	    	 classes=a.retrieveClassesFromDatabase();
+//	    	
 	       }
 	    }
 

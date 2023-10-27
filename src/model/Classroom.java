@@ -79,7 +79,7 @@ public class Classroom {
 	        numOfCurentStudents++;
 	    }
 	    public void removeStudent(Student student) {
-	        //to do
+	        
 	    }
 	    public void displayStudentList() {
 	    		
