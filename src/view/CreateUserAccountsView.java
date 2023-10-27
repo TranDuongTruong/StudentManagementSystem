@@ -26,7 +26,6 @@ public class CreateUserAccountsView extends JFrame {
             public void run() {
                 try {
                     CreateUserAccountsView frame = new CreateUserAccountsView();
-                    CreateUserAccountsController controller = new CreateUserAccountsController(frame);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -90,8 +89,11 @@ public class CreateUserAccountsView extends JFrame {
 
         submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
+            public void actionPerformed(ActionEvent e) {
+                // Xử lý sự kiện khi người dùng nhấn nút "Submit"
+                CreateUserAccountsController controller = new CreateUserAccountsController(CreateUserAccountsView.this);
+                controller.handleCreateAccount(); 
+            }
         });
         ImageIcon submitIcon = new ImageIcon(LoginView.class.getResource("/Assert/submit.png"));
         submitButton.setIcon(submitIcon);

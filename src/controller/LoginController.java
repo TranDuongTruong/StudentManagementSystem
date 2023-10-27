@@ -136,4 +136,7 @@ public class LoginController {
             System.exit(0);
         }
     }
+    public void displayLoginView() {
+        loginView.setVisible(true);
+    }
 }
