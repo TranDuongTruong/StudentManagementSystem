@@ -110,6 +110,13 @@ public class CreateUserAccountsView extends JFrame {
         backButton.setIcon(backIcon);
         backButton.setBounds(234, 223, 103, 30);
         contentPane.add(backButton);
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	AdminHomeView adminhomeView = new AdminHomeView();
+            	adminhomeView.setVisible(true);
+                dispose();
+            }
+        });
 
         errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
@@ -168,16 +175,19 @@ public class CreateUserAccountsView extends JFrame {
     public void displayEmailError(String message) {
         errorLabel.setText(message);
         emailField.setBackground(Color.PINK);
+        errorLabel.setForeground(Color.RED);
     }
 
     public void displayPasswordError(String message) {
         errorLabel.setText(message);
         passwordField.setBackground(Color.PINK);
+        errorLabel.setForeground(Color.RED);
     }
 
     public void displayNameError(String message) {
         errorLabel.setText(message);
         nameField.setBackground(Color.PINK);
+        errorLabel.setForeground(Color.RED);
     }
 
     public void clearError() {
@@ -188,10 +198,11 @@ public class CreateUserAccountsView extends JFrame {
     }
     public void displayErrorMessage(String message) {
         errorLabel.setText(message);
+        errorLabel.setForeground(Color.RED);
     }
 
-//    public void displaySuccessMessage(String message) {
-//        errorLabel.setText(message);
-//        errorLabel.setForeground(Color.GREEN);
-//    }
+    public void displaySuccessMessage(String message) {
+        errorLabel.setText(message);
+        errorLabel.setForeground(Color.GREEN);
+    }
 }
