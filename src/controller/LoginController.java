@@ -1,5 +1,6 @@
 package controller;
 
+import view.AdminHomeView;
 import view.CreateUserAccountsView;
 import view.LoginView;
 import view.MainView;
@@ -36,8 +37,8 @@ public class LoginController {
     	            if (isValidLogin(email, password)) {
     	                if ("admin".equals(role)) {
     	                    // Redirect to CreateUserAccountsView for admin
-    	                    CreateUserAccountsView createAccountsView = new CreateUserAccountsView();
-    	                    createAccountsView.setVisible(true);
+    	                    AdminHomeView adminView = new AdminHomeView();
+    	                    adminView.setVisible(true);
     	                } else {
     	                    // Redirect to MainView for teacher or student
     	                    MainView mainView = new MainView();

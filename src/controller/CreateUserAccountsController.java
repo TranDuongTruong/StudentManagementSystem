@@ -30,12 +30,12 @@ public class CreateUserAccountsController {
             if (isEmailExists(email)) {
                 createUserAccountsView.displayEmailError("Email already exists. Please choose another email.");
             } else {
+            	createUserAccountsView.clearError();
                 if (addUserToDatabase(email, password, name, role)) {
-                    createUserAccountsView.clearError();
-//                  createUserAccountsView.displaySuccessMessage("User added successfully.");
-                    LoginController loginController = new LoginController(new LoginView());
-                    loginController.displayLoginView();
-                    createUserAccountsView.dispose(); // Close the registration view
+                  createUserAccountsView.displaySuccessMessage("User added successfully.");
+//                    LoginController loginController = new LoginController(new LoginView());
+//                    loginController.displayLoginView();
+//                    createUserAccountsView.dispose(); // Close the registration view
                 } else {
                     createUserAccountsView.displayErrorMessage("Failed to add user.");
                 }
