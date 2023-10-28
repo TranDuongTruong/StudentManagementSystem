@@ -78,8 +78,9 @@ public class Classroom {
 	        studentList.add(student);
 	        numOfCurentStudents++;
 	    }
-	    public void removeStudent(Student student) {
-	        
+	    public void removeStudent(int index) {
+	    	 studentList.remove(index);
+		     numOfCurentStudents--;
 	    }
 	    public void displayStudentList() {
 	    		

@@ -25,11 +25,14 @@ import javax.swing.ButtonGroup;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.awt.Canvas;
 import javax.swing.JButton;
@@ -70,6 +73,7 @@ public class StudentView extends JFrame {
 	JRadioButton rdbtnFemale;
 	JRadioButton rdbtnMale;
 	 JButton btnThem;
+	 JButton btnXoa;
 	 private JTextField textField_dob_month;
 	 private JTextField textField_dob_year;
 	/**
@@ -372,7 +376,7 @@ public class StudentView extends JFrame {
 			        btnThem.setBounds(44, 628, 89, 42);
 			        contentPane_1.add(btnThem);
 			        
-			        JButton btnXoa = new JButton("Delete");
+			        btnXoa = new JButton("Delete");
 			        btnXoa.addActionListener(action);
 			        btnXoa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnXoa.setBounds(151, 628, 89, 42);
@@ -437,12 +441,11 @@ public class StudentView extends JFrame {
 
     public int getSearchInp() {
         String text = searchInp.getText();
-
         if (text == null || text.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            
             return 0;
         }
-
         return Integer.parseInt(text);
     }
     public void notFindStudent(int id) {
@@ -478,8 +481,9 @@ public class StudentView extends JFrame {
 		}
 	 
 	 public Student getInfoOfNewStudent() {
+		 if(!test()) 
+			 return null;
 		 Student st;
-		 
 		   int studentID; String name; LocalDate dob; String address; boolean gender=false;
 			 String phoneNumber; int creditsCompleted; int  creditsOwed;
 			 studentID=Integer.parseInt(textField_ID.getText());
@@ -502,13 +506,69 @@ public class StudentView extends JFrame {
 			 creditsCompleted=Integer.parseInt(textField_phone.getText());
 			 creditsOwed=Integer.parseInt(textField_owed.getText());
 			 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
-		 return st;
-		 
+		 return st; 
 	 }
-	 
+	 public boolean test() {
+		    try {
+		        int studentID = Integer.parseInt(textField_ID.getText());
+		        String name = textField_name.getText();
+		        String address = textField_Add.getText();
+		        int day = Integer.parseInt(textField_dob_day.getText());
+		        int month = Integer.parseInt(textField_dob_month.getText());
+		        int year = Integer.parseInt(textField_dob_year.getText());
+		        LocalDate dob = LocalDate.of(year, month, day);
+		        boolean gender = false;
+		        if (rdbtnFemale.isSelected()) {
+		            gender = false;
+		        } else if (rdbtnMale.isSelected()) {
+		            gender = true;
+		        }
+		        String phoneNumber = textField_phone.getText();
+		        int creditsCompleted=Integer.parseInt(textField_phone.getText());
+				int creditsOwed=Integer.parseInt(textField_owed.getText());
+
+				if (studentID<=0) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai ma sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    } else if (name.isEmpty()) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai ten sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    } else if (address.isEmpty()) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai dia chi sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    } else if (day <= 0 || month <= 0 || year <= 0) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai ngay sinh cua sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    } else if (phoneNumber.isEmpty()) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai so dien thoai cua sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    } else if (creditsCompleted < 0) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai Credits Completed", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    } else if (creditsOwed < 0) {
+			        JOptionPane.showMessageDialog(null, "Nhap sai Credits Owed", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    }
+		        return true;
+		    } catch (NumberFormatException e) {
+		        JOptionPane.showMessageDialog(null, "Nhap sai ", "Loi", JOptionPane.ERROR_MESSAGE);
+		    } catch (IllegalArgumentException e) {
+		        JOptionPane.showMessageDialog(null, e.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
+		    }
+
+		    return false;
+		}
+	  
+	 public int getIndexofStudentToDelete() {
+		 int index=table.getSelectedRow();;
+		 return index;
+	 }
 	 public void addStudentListener(ActionListener listener) {
 		 btnThem.addActionListener(listener);
      }
+	 public void deleteStudentListener(ActionListener listener) {
+		 btnXoa.addActionListener(listener);
+	 }
 	public void xoaForm() {
 		searchInp.setText("");
 		textField_ID.setText("");
