@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.EventQueue;
@@ -26,6 +27,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Canvas;
@@ -53,7 +56,7 @@ public class StudentView extends JFrame {
 	public JTextField searchInp;
 	public JTextField textField_ID;
 	public JTextField textField_name;
-	public JTextField textField_dob;
+	public JTextField textField_dob_day;
 	public JTextField textField_phone;
 	public JTextField textField_completed;
 	public JTextField textField_owed;
@@ -63,7 +66,12 @@ public class StudentView extends JFrame {
 	private JButton btnHuyTim;
 	public JComboBox comboBox_queQuan;
 	static Classroom classRoom;
-
+	private JTextField textField_Add;
+	JRadioButton rdbtnFemale;
+	JRadioButton rdbtnMale;
+	 JButton btnThem;
+	 private JTextField textField_dob_month;
+	 private JTextField textField_dob_year;
 	/**
 	 * Launch the application.
 	 */
@@ -74,7 +82,7 @@ public class StudentView extends JFrame {
 					StudentView frame = new StudentView();
 					frame.setVisible(true);
 					//-- Ai code phần hiển thị sv theo lớp thì viết hàm đổi biến classroom này là đc và bỏ phần này
-					//------------------------------------ĐÂY CHỈ TEST đưa ds sv vào;
+					//------------------------------------Đ Y CHỈ TEST đưa ds sv vào;
 					DatabaseConnection a = new DatabaseConnection();
 			    	 List<Classroom> classes = new ArrayList();
 			    	 classes=a.retrieveClassesFromDatabase();
@@ -284,32 +292,28 @@ public class StudentView extends JFrame {
 			        lblAddress.setBounds(10, 510, 102, 54);
 			        contentPane_1.add(lblAddress);
 			        
-			        JComboBox comboBox_queQuan = new JComboBox();
-			        comboBox_queQuan.setBounds(127, 522, 166, 35);
-			        contentPane_1.add(comboBox_queQuan);
-			        
 			        JLabel lblDayOfBirth = new JLabel("Day Of Birth");
 			        lblDayOfBirth.setFont(new Font("Tahoma", Font.PLAIN, 19));
 			        lblDayOfBirth.setBounds(10, 563, 155, 54);
 			        contentPane_1.add(lblDayOfBirth);
 			        
-			        textField_dob = new JTextField();
-			        textField_dob.setFont(new Font("Tahoma", Font.PLAIN, 19));
-			        textField_dob.setColumns(10);
-			        textField_dob.setBounds(127, 576, 166, 29);
-			        contentPane_1.add(textField_dob);
+			        textField_dob_day = new JTextField();
+			        textField_dob_day.setFont(new Font("Tahoma", Font.PLAIN, 19));
+			        textField_dob_day.setColumns(10);
+			        textField_dob_day.setBounds(127, 576, 43, 29);
+			        contentPane_1.add(textField_dob_day);
 			        
 			        JLabel lblGender = new JLabel("Gender");
 			        lblGender.setFont(new Font("Tahoma", Font.PLAIN, 19));
 			        lblGender.setBounds(324, 412, 102, 54);
 			        contentPane_1.add(lblGender);
 			        
-			        JRadioButton rdbtnMale = new JRadioButton("Male");
+			         rdbtnMale = new JRadioButton("Male");
 			        rdbtnMale.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        rdbtnMale.setBounds(405, 429, 61, 23);
 			        contentPane_1.add(rdbtnMale);
 			        
-			        JRadioButton rdbtnFemale = new JRadioButton("Female");
+			         rdbtnFemale = new JRadioButton("Female");
 			        rdbtnFemale.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        rdbtnFemale.setBounds(489, 429, 102, 23);
 			        contentPane_1.add(rdbtnFemale);
@@ -360,10 +364,12 @@ public class StudentView extends JFrame {
 //			        btnThem.setBounds(31, 628, 89, 42);
 //			        contentPane_1.add(btnThem);
 
-			        JButton btnThem = new JButton("Add");
+			         btnThem = new JButton("Add");
+			      
+			      
 			        btnThem.addActionListener(action);
 			        btnThem.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			        btnThem.setBounds(151, 628, 89, 42);
+			        btnThem.setBounds(44, 628, 89, 42);
 			        contentPane_1.add(btnThem);
 			        
 			        JButton btnXoa = new JButton("Delete");
@@ -407,6 +413,24 @@ public class StudentView extends JFrame {
 			        btnHuyTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnHuyTim.setBounds(585, 12, 117, 54);
 			        contentPane_1.add(btnHuyTim);
+			        
+			        textField_Add = new JTextField();
+			        textField_Add.setFont(new Font("Tahoma", Font.PLAIN, 19));
+			        textField_Add.setColumns(10);
+			        textField_Add.setBounds(127, 523, 166, 29);
+			        contentPane_1.add(textField_Add);
+			        
+			        textField_dob_month = new JTextField();
+			        textField_dob_month.setFont(new Font("Tahoma", Font.PLAIN, 19));
+			        textField_dob_month.setColumns(10);
+			        textField_dob_month.setBounds(175, 576, 43, 29);
+			        contentPane_1.add(textField_dob_month);
+			        
+			        textField_dob_year = new JTextField();
+			        textField_dob_year.setFont(new Font("Tahoma", Font.PLAIN, 19));
+			        textField_dob_year.setColumns(10);
+			        textField_dob_year.setBounds(228, 576, 43, 29);
+			        contentPane_1.add(textField_dob_year);
 			      
 		
 	}
@@ -453,12 +477,43 @@ public class StudentView extends JFrame {
 		    table.setModel(model);
 		}
 	 
-
+	 public Student getInfoOfNewStudent() {
+		 Student st;
+		 
+		   int studentID; String name; LocalDate dob; String address; boolean gender=false;
+			 String phoneNumber; int creditsCompleted; int  creditsOwed;
+			 studentID=Integer.parseInt(textField_ID.getText());
+			 name=textField_name.getText();
+			 address=textField_Add.getText();
+			int day=Integer.parseInt(textField_dob_day.getText());
+			int month=Integer.parseInt(textField_dob_month.getText());
+			int year=Integer.parseInt(textField_dob_year.getText());
+			
+			dob = LocalDate.of(year, month, day);
+			
+			
+			 if (rdbtnFemale.isSelected()) {
+				 gender=false;
+				 
+			 }else if(rdbtnMale.isSelected()) {
+				 gender=true;
+			 }
+			 phoneNumber=textField_phone.getText();
+			 creditsCompleted=Integer.parseInt(textField_phone.getText());
+			 creditsOwed=Integer.parseInt(textField_owed.getText());
+			 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
+		 return st;
+		 
+	 }
+	 
+	 public void addStudentListener(ActionListener listener) {
+		 btnThem.addActionListener(listener);
+     }
 	public void xoaForm() {
 		searchInp.setText("");
 		textField_ID.setText("");
 		textField_name.setText("");
-		textField_dob.setText("");
+		textField_dob_day.setText("");
 		textField_phone.setText("");
 		textField_completed.setText("");
 		textField_owed.setText("");

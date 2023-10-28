@@ -23,7 +23,7 @@ import view.StudentView;
 public class StudentController implements ActionListener{
 	public StudentView studentView;
 	List<Student> studentList;
-	Classroom classRoom;
+	public Classroom classRoom;
 	 
 	public Classroom getClassRoom() {
 		return classRoom;
@@ -43,6 +43,7 @@ public class StudentController implements ActionListener{
 		this.classRoom=classRoom;
 		view.searchStudentListener(new SearchListener());
 		view.huyTimListener(new HuyTimListener());
+		view.addStudentListener(new AddNewStudentListener ());
 		displayListOfStudent();
 	}
 
@@ -91,47 +92,23 @@ public class StudentController implements ActionListener{
 	    	
 	        //...
 	 }
-	
+	 private class AddNewStudentListener implements ActionListener {
+	        public void actionPerformed(ActionEvent e) {
+	        	
+	        	Student st=studentView.getInfoOfNewStudent();
+	        	classRoom.addStudent(st);
+	        	displayListOfStudent();
+	        }
+
+	       
+	    }
 
 	 
 	 
 	 
 	 
 	 
-	 public void actionPerformed(ActionEvent e) {
-		String cm = e.getActionCommand();
-		JOptionPane.showMessageDialog(studentView, "Ban vua nhan vao: "+cm);
-		if(cm.equals("Add"));{
-			this.studentView.xoaForm();
-			this.studentView.model.setLuachon("Add");
-		}if(cm.equals("save")) {
-			try {
-				int studentID = Integer.valueOf(this.studentView.textField_ID.getText());
-				String name =this.studentView.textField_name.getText();
-				String address =this.studentView.comboBox_queQuan.getSelectedIndex()+"";
-				//LocalDate dob= new LocalDate(this.view.textField_dob.getText());
-				
-				
-					
-				//		    private LocalDate  dob;
-				//		    private String address;
-				//		    private boolean gender;// male: true; female: false
-				//		    private String phoneNumber;
-				//		    private int creditsCompleted;
-				//		    private int creditsOwed;
-				if (this.studentView.model.getLuachon().equals("") || this.studentView.model.getLuachon().equals("Add")) {
 
-				} else if (this.studentView.model.getLuachon().equals("Update")) {
-
-				} 
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}if(cm.equals("")) {
-			
-		}
-		
-	}
 
 	
     
@@ -139,4 +116,9 @@ public class StudentController implements ActionListener{
     	
     	
     }
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
+
