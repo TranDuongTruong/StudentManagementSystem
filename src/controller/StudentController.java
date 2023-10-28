@@ -44,6 +44,7 @@ public class StudentController implements ActionListener{
 		view.searchStudentListener(new SearchListener());
 		view.huyTimListener(new HuyTimListener());
 		view.addStudentListener(new AddNewStudentListener ());
+		view.deleteStudentListener(new DeleteStudentListener());
 		displayListOfStudent();
 	}
 
@@ -94,15 +95,23 @@ public class StudentController implements ActionListener{
 	 }
 	 private class AddNewStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
-	        	
 	        	Student st=studentView.getInfoOfNewStudent();
+	        	if(st==null)
+	        		return ;
 	        	classRoom.addStudent(st);
 	        	displayListOfStudent();
+	        	
 	        }
-
-	       
+	      
 	    }
-
+	 private class DeleteStudentListener implements ActionListener {
+	        public void actionPerformed(ActionEvent e) {
+	        	classRoom.removeStudent(studentView.getIndexofStudentToDelete());
+	        	displayListOfStudent();
+	        	
+	        }
+	      
+	    }
 	 
 	 
 	 
