@@ -6,8 +6,19 @@ import java.util.List;
 public class Classroom {
 	 	private String classCode;
 	    private String className;
-	    private int numberOfStudents;
+	    private int numOfCurentStudents;
+	    private int maximumNumOfStudents;
 	    private List<Student> studentList;
+	    
+	    
+	    public int getMaximumNumOfStudents() {
+			return maximumNumOfStudents;
+		}
+
+
+		public void setMaximumNumOfStudents(int maximumNumOfStudents) {
+			this.maximumNumOfStudents = maximumNumOfStudents;
+		}
 
 	    
 
@@ -32,29 +43,43 @@ public class Classroom {
 
 
 		public int getNumberOfStudents() {
-			return numberOfStudents;
+			return numOfCurentStudents;
 		}
 
 
 		public void setNumberOfStudents(int numberOfStudents) {
-			this.numberOfStudents = numberOfStudents;
+			this.numOfCurentStudents = numberOfStudents;
 		}
 
 
-		public Classroom(String classCode, String className) {
-	        this.classCode = classCode;
-	        this.className = className;
-	        this.numberOfStudents = 0;
-	        this.studentList = new ArrayList();
-	    }
 
 	  
-	    public void addStudent(Student student) {
+	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents,
+			List<Student> studentList) {
+			super();
+			this.classCode = classCode;
+			this.className = className;
+			this.numOfCurentStudents = numOfCurentStudents;
+			this.maximumNumOfStudents = maximumNumOfStudents;
+			this.studentList = studentList;
+		}
+
+	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents
+				) {
+				super();
+				this.classCode = classCode;
+				this.className = className;
+				this.numOfCurentStudents = numOfCurentStudents;
+				this.maximumNumOfStudents = maximumNumOfStudents;
+			
+			}
+		public void addStudent(Student student) {
 	        studentList.add(student);
-	        numberOfStudents++;
+	        numOfCurentStudents++;
 	    }
-	    public void removeStudent(Student student) {
-	        //to do
+	    public void removeStudent(int index) {
+	    	 studentList.remove(index);
+		     numOfCurentStudents--;
 	    }
 	    public void displayStudentList() {
 	    		
@@ -69,6 +94,7 @@ public class Classroom {
 		public void setStudentList(List<Student> studentList) {
 			this.studentList = studentList;
 		}
-	    
+
+		
 
 }
