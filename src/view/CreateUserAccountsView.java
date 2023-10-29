@@ -95,7 +95,7 @@ public class CreateUserAccountsView extends JFrame {
                 controller.handleCreateAccount(); 
             }
         });
-        ImageIcon submitIcon = new ImageIcon(LoginView.class.getResource("/Assert/submit.png"));
+        ImageIcon submitIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/submit.png"));
         submitButton.setIcon(submitIcon);
 
         submitButton.setBounds(61, 223, 103, 30);
@@ -106,7 +106,7 @@ public class CreateUserAccountsView extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        ImageIcon backIcon = new ImageIcon(LoginView.class.getResource("/Assert/back.png"));
+        ImageIcon backIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/back.png"));
         backButton.setIcon(backIcon);
         backButton.setBounds(234, 223, 103, 30);
         contentPane.add(backButton);
