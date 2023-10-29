@@ -11,7 +11,6 @@ public class Classroom {
 	    private List<Student> studentList;
 	    
 	    
-	    
 	    public int getMaximumNumOfStudents() {
 			return maximumNumOfStudents;
 		}
@@ -95,6 +94,7 @@ public class Classroom {
 		public void setStudentList(List<Student> studentList) {
 			this.studentList = studentList;
 		}
-	    
+
+		
 
 }

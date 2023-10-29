@@ -8,48 +8,46 @@ import javax.swing.*;
 
 import model.Classroom;
 import model.Student;
+import model.StudentManager;
 import view.ClassesView;
 
 public class ClassesController implements ActionListener {
-    List <Classroom> classes;
+    StudentManager classes;
     public ClassesView view;
    
     public ClassesController(ClassesView view){
-        classes=new ArrayList<Classroom>();
-        this.view=view;        
+        classes=new StudentManager();
+        this.view=view;
         displayClasses();
     }
     
      void displayClasses() {
         DatabaseConnection a= new DatabaseConnection();
         classes=a.retrieveClassesFromDatabase();
+        view.model=classes;
         view.displayClassList(classes);
     }
     public void actionPerformed(ActionEvent e) {
         String cm = e.getActionCommand();
+        JOptionPane.showMessageDialog(view, "Bạn vừa nhấn vào: "+cm);
         if(cm.equals("Thêm")) {
             this.view.xoaForm();
-            this.view.model.setLuaChon("Thêm");
+            this.view.model.setLuachon("Thêm");
         }else if(cm.equals("Lưu")) {
             try {
-                //Get dữ liệu
-                String classCode = this.view.textField_MaLop.getText();
-                String className = this.view.textField_TenLop.getText();
-                int numOfCurentStudents = Integer.valueOf(this.view.textField_SoHSHT.getText());
-                int maximumNumOfStudents =Integer.valueOf(this.view.textField_SoHSTD.getText());;
-                
-                Classroom lop= new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
-                if (this.view.model.getLuaChon().equals("") || this.view.model.getLuaChon().equals("Thêm")) {
-                    this.view.ThemLop(lop);
-                } else if (this.view.model.getLuaChon().equals("Cập nhật")) {
-                    this.view.CapNhatLop(lop);
-                } 
+                this.view.ThemHoacCapNhatLop();
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
+        }else if(cm.equals("Cập Nhật")) {
+        	this.view.hienthiThongTinLopDaChon();
+        }else if(cm.equals("Xoá")) {
+        	this.view.ThucHienXoa();
+        }else if(cm.equals("Huỷ bỏ")) {
+        	this.view.xoaForm();
+        	this.view.huyTim();
+        } if(cm.equals("Tìm")) {
+        	this.view.ThucHienTim();
         }
-        
     }
-    
-    
 }

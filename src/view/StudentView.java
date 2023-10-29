@@ -50,6 +50,7 @@ import controller.DatabaseConnection;
 import controller.StudentController;
 import model.Classroom;
 import model.Student;
+import model.StudentManager;
 import view.MainView;
 public class StudentView extends JFrame {
 
@@ -88,9 +89,9 @@ public class StudentView extends JFrame {
 					//-- Ai code phần hiển thị sv theo lớp thì viết hàm đổi biến classroom này là đc và bỏ phần này
 					//------------------------------------Đ Y CHỈ TEST đưa ds sv vào;
 					DatabaseConnection a = new DatabaseConnection();
-			    	 List<Classroom> classes = new ArrayList();
+			    	 StudentManager classes = new StudentManager();
 			    	 classes=a.retrieveClassesFromDatabase();
-			    	 classRoom=classes.get(0);
+			    	 classRoom=classes.getClassroomList().get(0);
 			    	 //-------------------------------------------------------------------------------------------------
 			    	 
 			    	 StudentController stu=new StudentController(frame,classRoom);
@@ -553,6 +554,7 @@ public class StudentView extends JFrame {
 		    } catch (NumberFormatException e) {
 		        JOptionPane.showMessageDialog(null, "Nhap sai ", "Loi", JOptionPane.ERROR_MESSAGE);
 		    } catch (IllegalArgumentException e) {
+		        JOptionPane.showMessageDialog(null, e.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
 		        JOptionPane.showMessageDialog(null, e.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
 		    }
 
