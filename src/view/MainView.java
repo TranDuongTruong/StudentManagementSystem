@@ -54,7 +54,7 @@ public class MainView extends JFrame {
 				try {
 					MainView frame = new MainView();
 					MainViewCtrl_Teacher mainView=new MainViewCtrl_Teacher(frame);
-					frame.setVisible(true);
+					frame.setVisible(true); 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
