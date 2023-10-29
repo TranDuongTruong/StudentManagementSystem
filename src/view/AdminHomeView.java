@@ -59,25 +59,25 @@ public class AdminHomeView extends JFrame {
 		
 		JLabel logoLabel = new JLabel("logoLable");
 		 // Logo Image
-        ImageIcon logoIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/logo.png"));
+        ImageIcon logoIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/logo.png"));
         logoLabel.setIcon(logoIcon);
         logoLabel.setBounds(223, 41, 291, 155);
 		contentPane.add(logoLabel);
 		
 		JLabel lblNewLabel = new JLabel("");
-		ImageIcon addAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/addAdmin.png"));
+		ImageIcon addAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/addAdmin.png"));
 		lblNewLabel.setIcon(addAdminIcon);
 		lblNewLabel.setBounds(20, 219, 178, 128);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		ImageIcon configurationIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/configuration1.png"));
+		ImageIcon configurationIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/configuration1.png"));
 		lblNewLabel_1.setIcon(configurationIcon);
 		lblNewLabel_1.setBounds(261, 219, 178, 128);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		ImageIcon showAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/showAdmin.png"));
+		ImageIcon showAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/showAdmin.png"));
 		lblNewLabel_2.setIcon(showAdminIcon);
 		lblNewLabel_2.setBounds(505, 219, 178, 128);
 		contentPane.add(lblNewLabel_2);
@@ -102,7 +102,7 @@ public class AdminHomeView extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Logout");
-		ImageIcon logoutIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/logout.png"));
+		ImageIcon logoutIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/logout.png"));
 		btnNewButton_3.setIcon(logoutIcon);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

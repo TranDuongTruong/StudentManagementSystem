@@ -47,7 +47,7 @@ public class LoginView extends JFrame {
 
         // Logo Image
         JLabel logoLabel = new JLabel();
-        ImageIcon logoIcon = new ImageIcon(LoginView.class.getResource("/Assert/login.png"));
+        ImageIcon logoIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/login.png"));
         logoLabel.setIcon(logoIcon);
         logoLabel.setBounds(150, 11, 200, 112);
         contentPane.add(logoLabel);
@@ -78,14 +78,14 @@ public class LoginView extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         	}
         });
-        ImageIcon loginIcon = new ImageIcon(LoginView.class.getResource("/Assert/login1.png"));
+        ImageIcon loginIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/login1.png"));
         loginButton.setIcon(loginIcon);
         loginButton.setBounds(77, 229, 100, 30);
         contentPane.add(loginButton);
 
         // Cancel Button
         cancelButton = new JButton("Cancel");
-        ImageIcon cancelIcon = new ImageIcon(LoginView.class.getResource("/Assert/cancel1.png"));
+        ImageIcon cancelIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/cancel1.png"));
         cancelButton.setIcon(cancelIcon);
         cancelButton.setBounds(260, 229, 111, 30);
         contentPane.add(cancelButton);
