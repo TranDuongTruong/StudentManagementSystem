@@ -50,13 +50,13 @@ import controller.DatabaseConnection;
 import controller.StudentController;
 import model.Classroom;
 import model.Student;
-import model.StudentManager;
+import model.ClassesManager;
 import view.MainView;
 public class StudentView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	public Student model;
+	//public Student model;
 	public JTextField searchInp;
 	public JTextField textField_ID;
 	public JTextField textField_name;
@@ -84,14 +84,15 @@ public class StudentView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StudentView frame = new StudentView();
-					frame.setVisible(true);
-					//-- Ai code phần hiển thị sv theo lớp thì viết hàm đổi biến classroom này là đc và bỏ phần này
-					//------------------------------------Đ Y CHỈ TEST đưa ds sv vào;
+					
 					DatabaseConnection a = new DatabaseConnection();
-			    	 StudentManager classes = new StudentManager();
+			    	 ClassesManager classes = new ClassesManager();
 			    	 classes=a.retrieveClassesFromDatabase();
 			    	 classRoom=classes.getClassroomList().get(0);
+					StudentView frame = new StudentView(classRoom);
+					frame.setVisible(true);
+					
+					
 			    	 //-------------------------------------------------------------------------------------------------
 			    	 
 			    	 StudentController stu=new StudentController(frame,classRoom);
@@ -103,10 +104,11 @@ public class StudentView extends JFrame {
 		});
 	}
 	
-
 	
-	public StudentView() {
-		
+	
+	public StudentView(Classroom classRoom) {
+		this.classRoom=classRoom;		
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 903, 718);
 		contentPane = new JPanel();
@@ -437,7 +439,8 @@ public class StudentView extends JFrame {
 			        textField_dob_year.setBounds(228, 576, 43, 29);
 			        contentPane_1.add(textField_dob_year);
 			      
-		
+			        StudentController stu=new StudentController(this,classRoom);
+			        setVisible(true);
 	}
 
     public int getSearchInp() {

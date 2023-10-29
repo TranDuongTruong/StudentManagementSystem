@@ -8,46 +8,71 @@ import javax.swing.*;
 
 import model.Classroom;
 import model.Student;
-import model.StudentManager;
+import model.ClassesManager;
 import view.ClassesView;
 
-public class ClassesController implements ActionListener {
-    StudentManager classes;
+public class ClassesController  {
+    ClassesManager classes;
     public ClassesView view;
    
     public ClassesController(ClassesView view){
-        classes=new StudentManager();
+        classes=new ClassesManager();
         this.view=view;
+        DatabaseConnection a= new DatabaseConnection();
+        classes=a.retrieveClassesFromDatabase();
+        view.searchClassListener(new SearchListener() );
+        view.undoClassListener(new UndoListener());
+        view.addClassListener(new AddNewClassListener());
+        view.deleteClassListener(new DeleteClassListener());
         displayClasses();
     }
     
      void displayClasses() {
-        DatabaseConnection a= new DatabaseConnection();
-        classes=a.retrieveClassesFromDatabase();
+        
         view.model=classes;
         view.displayClassList(classes);
     }
-    public void actionPerformed(ActionEvent e) {
-        String cm = e.getActionCommand();
-        JOptionPane.showMessageDialog(view, "Bạn vừa nhấn vào: "+cm);
-        if(cm.equals("Thêm")) {
-            this.view.xoaForm();
-            this.view.model.setLuachon("Thêm");
-        }else if(cm.equals("Lưu")) {
-            try {
-                this.view.ThemHoacCapNhatLop();
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        }else if(cm.equals("Cập Nhật")) {
-        	this.view.hienthiThongTinLopDaChon();
-        }else if(cm.equals("Xoá")) {
-        	this.view.ThucHienXoa();
-        }else if(cm.equals("Huỷ bỏ")) {
-        	this.view.xoaForm();
-        	this.view.huyTim();
-        } if(cm.equals("Tìm")) {
-        	this.view.ThucHienTim();
+  
+   
+    
+    private class SearchListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	String classCode=view.getClassCodeSearch();
+        	ClassesManager findClassroomList=new ClassesManager();
+        	Classroom classroom;
+        	classroom=classes.findClassroomByCode(classCode);
+        	findClassroomList.addClassroom(classroom);
+        	view.displayClassList(findClassroomList);
+        	
         }
+
+       
     }
+    private class UndoListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {       	
+        	displayClasses();
+        }
+
+       
+    }
+    private class AddNewClassListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {       	
+        	Classroom classroom;
+        	classroom=view.getNewClass();
+        	classes.addClassroom(classroom);
+        	displayClasses();
+        }
+
+       
+    }
+    private class DeleteClassListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {       	
+        	int index= view.getIndexofClassToDelete();
+        	classes.remove(index);
+        	displayClasses();
+        }
+
+       
+    }
+	
 }

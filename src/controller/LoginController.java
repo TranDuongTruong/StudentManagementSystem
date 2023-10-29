@@ -60,6 +60,7 @@ public class LoginController {
          private boolean isValidEmail(String email) {
              // Basic email validation using regex
              String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$";
+             
              return email.matches(emailPattern);
          }
 
@@ -80,10 +81,11 @@ public class LoginController {
                   statement = connection.prepareStatement(query);
                   statement.setString(1, email);
                   statement.setString(2, password);
+              //    System.out.println(statement);
 
 
                 resultSet = statement.executeQuery();
-
+                //System.out.println(resultSet);
                 // If a record is found, login is successful
                 return resultSet.next();
             } catch (SQLException ex) {

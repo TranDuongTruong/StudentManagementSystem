@@ -3,11 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentManager {
+public class ClassesManager {
 	private List<Classroom> classroomList;
     private String luachon;
 
-	public StudentManager() {
+	public ClassesManager() {
     	
         classroomList = new ArrayList();
         luachon="";
@@ -44,7 +44,9 @@ public class StudentManager {
     public void remove(Classroom lop) {
     	classroomList.remove(lop);
 	}
-    
+    public void remove(int index) {
+    	classroomList.remove(index);
+	}
      public String getLuachon() {
 		return luachon;
 	}
