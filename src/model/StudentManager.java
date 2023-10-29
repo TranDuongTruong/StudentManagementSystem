@@ -5,20 +5,12 @@ import java.util.List;
 
 public class StudentManager {
 	private List<Classroom> classroomList;
-
-    private String luaChon;
-
-    public String getLuaChon() {
-		return luaChon;
-	}
-
-	public void setLuaChon(String luaChon) {
-		this.luaChon = luaChon;
-	}
+    private String luachon;
 
 	public StudentManager() {
     	
         classroomList = new ArrayList();
+        luachon="";
     }
 
     // Other methods
@@ -37,7 +29,7 @@ public class StudentManager {
         }
         return null;
     }
-    
+   
     public Student findStudentById(int studentId) {
         for (Classroom classroom : classroomList) {
             for (Student student : classroom.getStudentList()) {
@@ -48,4 +40,40 @@ public class StudentManager {
         }
         return null;
     }
+    
+    public void remove(Classroom lop) {
+    	classroomList.remove(lop);
+	}
+    
+     public String getLuachon() {
+		return luachon;
+	}
+
+	public void setLuachon(String luachon) {
+		this.luachon = luachon;
+	}
+
+	public List<Classroom> getClassroomList() {
+		return classroomList;
+	}
+
+	public void setClassroomList(List<Classroom> classroomList) {
+		this.classroomList = classroomList;
+	}
+
+	public boolean kiemTraTonTai(Classroom lop) {
+		for(Classroom classroom: classroomList)
+			if(classroom.getClassCode()==lop.getClassCode())
+				return true;
+		return false;
+	}
+
+	public void update(Classroom lop) {
+		this.remove(lop);
+		this.addClassroom(lop);
+		
+	}
+
+	
+	
 }

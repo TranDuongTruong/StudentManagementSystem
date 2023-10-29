@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.EventQueue;
-
+import java.util.Set;
+import java.util.TreeSet;
+import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +16,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Panel;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.Component;
@@ -22,8 +25,16 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.JMenu;
+import javax.swing.ButtonGroup;
+
+import com.mysql.cj.exceptions.CJOperationNotSupportedException;
+import com.mysql.cj.protocol.Message;
 
 import controller.ClassesController;
+import controller.DatabaseConnection;
 import model.Classroom;
 import model.Student;
 import model.StudentManager;
@@ -36,7 +47,7 @@ public class ClassesView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	public StudentManager model;
+	public StudentManager model=new StudentManager();
 	public JTextField textField_FindMaLop;
 	private JTable table;
 	public JTextField textField_MaLop;
@@ -278,6 +289,7 @@ public class ClassesView extends JFrame {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		
 		});
@@ -285,12 +297,12 @@ public class ClassesView extends JFrame {
 		
 	}
 	
-	public void displayClassList(List<Classroom> classes) {		
+	public void displayClassList(StudentManager classes) {		
 		if(table==null) return;
 	    DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 	    // Xóa tất cả các dòng hiện tại trong model
 	    tableModel.setRowCount(0);
-	    for (Classroom classroom : classes) {
+	    for (Classroom classroom : classes.getClassroomList()){
 	        Object[] rowData = new Object[4];
 	        rowData[0] = classroom.getClassCode();
 	        rowData[1] = classroom.getClassName();
@@ -309,18 +321,82 @@ public class ClassesView extends JFrame {
 		textField_SoHSTD.setText("");
 		textField_TenLop.setText("");
 	}
+	
+	
 
-	public void ThemLop(Classroom lop) {
-		this.model.addClassroom(lop);
-		DefaultTableModel tableModel = new DefaultTableModel();
-		tableModel.addRow(new Object[] {lop.getClassCode(),lop.getClassName(),lop.getNumberOfStudents(),lop.getMaximumNumOfStudents()});
+	public void ThemHoacCapNhatLop() {
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		//Get dữ liệu
+        String classCode = this.textField_MaLop.getText();
+        String className = this.textField_TenLop.getText();
+        int numOfCurentStudents = Integer.valueOf(this.textField_SoHSHT.getText());
+        int maximumNumOfStudents =Integer.valueOf(this.textField_SoHSTD.getText());;
+        
+        Classroom lop= new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
+        
+		if(this.model.kiemTraTonTai(lop)==true) {
+			this.model.update(lop);
+			for (int i = 0; i < tableModel.getRowCount(); i++) {
+				String id=tableModel.getValueAt(i, 0)+"";
+				if(id.equals(lop.getClassCode()+"")) {
+					tableModel.setValueAt(lop.getClassCode(), i, 0);
+					tableModel.setValueAt(lop.getClassName(), i, 1);
+					tableModel.setValueAt(lop.getNumberOfStudents()+"", i, 2);
+					tableModel.setValueAt(lop.getMaximumNumOfStudents()+"", i, 3);
+				}
+			}
+		}else {
+			this.model.addClassroom(lop);
+			tableModel.addRow(new Object[] {lop.getClassCode(),lop.getClassName(),lop.getNumberOfStudents(),lop.getMaximumNumOfStudents()});
+		}
+}
+
+	public Classroom getLopDaChon() {
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		int i_row= table.getSelectedRow();
+		String classCode = tableModel.getValueAt(i_row,0)+"";
+        String className = tableModel.getValueAt(i_row,1)+"";
+        int numOfCurentStudents = Integer.valueOf(tableModel.getValueAt(i_row,2)+"");
+        int maximumNumOfStudents =Integer.valueOf(tableModel.getValueAt(i_row,3)+"");
+        Classroom classes = new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
+		return classes;
+	}
+	public void hienthiThongTinLopDaChon() {
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		int i_row= table.getSelectedRow();
+		String classCode = tableModel.getValueAt(i_row,0)+"";this.textField_MaLop.setText(classCode);
+        String className = tableModel.getValueAt(i_row,1)+"";this.textField_TenLop.setText(className);
+        int numOfCurentStudents = Integer.valueOf(tableModel.getValueAt(i_row,2)+"");this.textField_SoHSHT.setText(numOfCurentStudents+"");
+        int maximumNumOfStudents =Integer.valueOf(tableModel.getValueAt(i_row,3)+"");this.textField_SoHSTD.setText(maximumNumOfStudents+"");
+		
+        
+        
+	}
+	
+	public void ThucHienXoa() {
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		int i_row= table.getSelectedRow();
+		int luachon= JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xoá lớp đã chọn?");
+		if(luachon== JOptionPane.YES_OPTION) {
+//			this.model.remove(getLopDaChon());
+			tableModel.removeRow(i_row);
+		}
 	}
 
-	public void CapNhatLop(Classroom lop) {
-		
+	public void ThucHienTim() {
+		String malop= this.textField_FindMaLop.getText();
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		int soLuongDong = tableModel.getRowCount();
+		for(int i=0;i<soLuongDong;i++) {
+			String maLopTrongTable = tableModel.getValueAt(i, 0) + "";
+			if(!malop.equals(tableModel))
+				tableModel.removeRow(i);
+		}
 		
 	}
 	
-	
+	public void huyTim() {
+		textField_FindMaLop.setText("");
+	}
 	
 }

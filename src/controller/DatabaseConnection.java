@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.Classroom;
 import model.Student;
+import model.StudentManager;
 
 public class DatabaseConnection {
 	 private static Connection con = null;
@@ -34,9 +35,9 @@ public class DatabaseConnection {
 			return con;
 		}
 	    
-	    public List<Classroom> retrieveClassesFromDatabase() {
+	    public StudentManager retrieveClassesFromDatabase() {
 	    	
-	        List<Classroom> classes = new ArrayList();
+	        StudentManager classes = new StudentManager();
 	        String f1, f2;
 	        int f3, f4;
 	        try {
@@ -55,7 +56,7 @@ public class DatabaseConnection {
 	                List<Student> students = retrieveStudentsFromClassroom(f1);
 
 	                Classroom classroom = new Classroom(f1, f2, f3, f4, students);
-	                classes.add(classroom);
+	                classes.addClassroom(classroom);
 
 	                System.out.println(f1 + "  " + f2);
 	            }
