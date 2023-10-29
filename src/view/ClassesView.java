@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.ClassesController;
 import model.Classroom;
 import model.Student;
+import model.StudentManager;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -35,12 +36,13 @@ public class ClassesView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField_FindMaLop;
+	public StudentManager model;
+	public JTextField textField_FindMaLop;
 	private JTable table;
-	private JTextField textField_MaLop;
-	private JTextField textField_TenLop;
-	private JTextField textField_SoHSHT;
-	private JTextField textField_SoHSTD;
+	public JTextField textField_MaLop;
+	public JTextField textField_TenLop;
+	public JTextField textField_SoHSHT;
+	public JTextField textField_SoHSTD;
 
 	/**
 	 * Launch the application.
@@ -52,6 +54,7 @@ public class ClassesView extends JFrame {
 					ClassesView frame = new ClassesView();
 					frame.setVisible(true);
 					ClassesController control= new ClassesController(frame);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -68,6 +71,8 @@ public class ClassesView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		ActionListener action= new ClassesController(this);
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -152,17 +157,17 @@ public class ClassesView extends JFrame {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
 			},
 			new String[] {
-				"STT", "M\u00E3 L\u1EDBp", "T\u00EAn L\u1EDBp", "S\u1ED1 h\u1ECDc sinh hi\u1EC7n t\u1EA1i", "S\u1ED1 h\u1ECDc sinh t\u1ED1i \u0111a"
+				"M\u00E3 L\u1EDBp", "T\u00EAn L\u1EDBp", "S\u1ED1 h\u1ECDc sinh hi\u1EC7n t\u1EA1i", "S\u1ED1 h\u1ECDc sinh t\u1ED1i \u0111a"
 			}
 		));
 		
@@ -236,30 +241,35 @@ public class ClassesView extends JFrame {
 		contentPane.add(separator_1);
 		
 		JButton btn_Them = new JButton("Thêm");
+		btn_Them.addActionListener(action);
 		btn_Them.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Them.setBounds(124, 539, 97, 33);
 		contentPane.add(btn_Them);
 		
 		JButton btn_Xoa = new JButton("Xoá");
+		btn_Xoa.addActionListener(action);
 		btn_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Xoa.setBounds(242, 539, 97, 33);
 		contentPane.add(btn_Xoa);
 		
 		JButton btn_CapNhat = new JButton("Cập Nhật");
+		btn_CapNhat.addActionListener(action);
 		btn_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_CapNhat.setBounds(358, 539, 148, 33);
 		contentPane.add(btn_CapNhat);
 		
-		JButton btn_Lưu = new JButton("Lưu");
-		btn_Lưu.addActionListener(new ActionListener() {
+		JButton btn_Luu = new JButton("Lưu");
+		btn_Luu.addActionListener(action);
+		btn_Luu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btn_Lưu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_Lưu.setBounds(516, 539, 97, 33);
-		contentPane.add(btn_Lưu);
+		btn_Luu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btn_Luu.setBounds(516, 539, 97, 33);
+		contentPane.add(btn_Luu);
 		
 		JButton btn_Huy = new JButton("Huỷ bỏ");
+		btn_Huy.addActionListener(action);
 		btn_Huy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Huy.setBounds(638, 539, 110, 33);
 		contentPane.add(btn_Huy);
@@ -275,23 +285,42 @@ public class ClassesView extends JFrame {
 		
 	}
 	
-	public void displayClassList(List<Classroom> classes) {		 
-	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	public void displayClassList(List<Classroom> classes) {		
+		if(table==null) return;
+	    DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 	    // Xóa tất cả các dòng hiện tại trong model
-	    model.setRowCount(0);
-	    int i=1;
+	    tableModel.setRowCount(0);
 	    for (Classroom classroom : classes) {
-	        Object[] rowData = new Object[5];
-	        rowData[0] = i++;
-	        rowData[1] = classroom.getClassCode();
-	        rowData[2] = classroom.getClassName();
-	        rowData[3] = classroom.getNumberOfStudents();
-	        rowData[4] = classroom.getMaximumNumOfStudents();
-	        model.addRow(rowData);
+	        Object[] rowData = new Object[4];
+	        rowData[0] = classroom.getClassCode();
+	        rowData[1] = classroom.getClassName();
+	        rowData[2] = classroom.getNumberOfStudents();
+	        rowData[3] = classroom.getMaximumNumOfStudents();
+	        tableModel.addRow(rowData);
 	    }
-	    
 	    // Cập nhật model của JTable
-	    table.setModel(model);
+	    table.setModel(tableModel);
 	}
+	
+	public void xoaForm() {
+		textField_FindMaLop.setText("");
+		textField_MaLop.setText("");
+		textField_SoHSHT.setText("");
+		textField_SoHSTD.setText("");
+		textField_TenLop.setText("");
+	}
+
+	public void ThemLop(Classroom lop) {
+		this.model.addClassroom(lop);
+		DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addRow(new Object[] {lop.getClassCode(),lop.getClassName(),lop.getNumberOfStudents(),lop.getMaximumNumOfStudents()});
+	}
+
+	public void CapNhatLop(Classroom lop) {
+		
+		
+	}
+	
+	
 	
 }

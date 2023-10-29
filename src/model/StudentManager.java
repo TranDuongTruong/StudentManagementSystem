@@ -6,9 +6,17 @@ import java.util.List;
 public class StudentManager {
 	private List<Classroom> classroomList;
 
-    
+    private String luaChon;
 
-    public StudentManager() {
+    public String getLuaChon() {
+		return luaChon;
+	}
+
+	public void setLuaChon(String luaChon) {
+		this.luaChon = luaChon;
+	}
+
+	public StudentManager() {
     	
         classroomList = new ArrayList();
     }
