@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.DisplayUserAccountsController;
 import controller.LoginController;
 
 import javax.swing.JLabel;
@@ -98,7 +99,18 @@ public class AdminHomeView extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Show User");
-		btnNewButton_2.setBounds(540, 392, 119, 23);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				   DisplayUserAccountsView displayUserAccountsView = new DisplayUserAccountsView();
+			       DisplayUserAccountsController controller = new DisplayUserAccountsController(displayUserAccountsView);
+			       controller.displayUserView();
+			       dispose(); 
+			}
+
+
+
+		});
+		btnNewButton_2.setBounds(513, 392, 119, 23);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Logout");
