@@ -106,7 +106,7 @@ public class StudentView extends JFrame {
 	
 	
 	
-	public StudentView(Classroom classRoom) {
+	public StudentView(final Classroom classRoom) {
 		this.classRoom=classRoom;		
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -245,22 +245,59 @@ public class StudentView extends JFrame {
 			        scrollPane.setBounds(10, 144, 738, 214);
 			        contentPane_1.add(scrollPane);
 			        
-			        table = new JTable();
+//			        table = new JTable();
+//			        table.setModel(new DefaultTableModel(
+//			        	new Object[][] {
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        		{null, null, null, null, null, null, null, null},
+//			        	},
+//			        	new String[] {
+//			        			"Student ID", "Name", "Day of Birth", "Address", "Gender", "Phone number", "Credits Completed", "Credits Owed"
+//			        	}
+//			        ));
+			        table = new JTable() {
+			            @Override
+			            public boolean isCellEditable(int row, int column) {
+			                return false; // Không cho phép chỉnh sửa
+			            }
+			        };
+
 			        table.setModel(new DefaultTableModel(
-			        	new Object[][] {
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        		{null, null, null, null, null, null, null, null},
-			        	},
-			        	new String[] {
-			        			"Student ID", "Name", "Day of Birth", "Address", "Gender", "Phone number", "Credits Completed", "Credits Owed"
-			        	}
+			            new Object[][] {
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			                {null, null, null, null, null, null, null, null},
+			            },
+			            new String[] {
+			                "Student ID", "Name", "Day of Birth", "Address", "Gender", "Phone number", "Credits Completed", "Credits Owed"
+			            }
 			        ));
+			        table.addMouseListener(new MouseAdapter() {
+					    @Override
+					    public void mouseClicked(MouseEvent e) {
+					    	if (e.getClickCount() == 2) {
+			                	
+			                    int row = table.getSelectedRow();
+			                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+						    	 
+						    	 DetalInformationofStudentView stu=new DetalInformationofStudentView(classRoom.getStudentList().get(row));
+						    	 stu.setVisible(true);
+						    	 System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+			                    	                   
+			                }
+					    }
+					});
 			        scrollPane.setViewportView(table);
 			        
 			        JSeparator separator_1_1 = new JSeparator();

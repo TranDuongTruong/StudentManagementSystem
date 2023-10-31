@@ -86,7 +86,16 @@ public class Classroom {
 	    public void displayStudentList() {
 	    		
 	    }
-
+	    public Student findAStudent(int id) {
+	    	
+	    	for (int i=0;i< studentList.size();i++) {
+                	if(id==studentList.get(i).getStudentID())
+                		return  studentList.get(i);
+                }
+            
+	    	return null;
+	    	
+	    }
 
 		public List<Student> getStudentList() {
 			return studentList;
