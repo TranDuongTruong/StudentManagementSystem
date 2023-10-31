@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -40,6 +42,8 @@ import model.Student;
 import model.ClassesManager;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 
@@ -95,63 +99,82 @@ public class ClassesView extends JFrame {
 		classesPane = new JPanel();
 		classesPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		
-		
 		setContentPane(classesPane);
 		classesPane.setLayout(null);
 		
 		Panel panel = new Panel();
-		panel.setBackground(Color.LIGHT_GRAY);
-		panel.setBounds(0, 0, 97, 583);
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(0, 0, 97, 622);
 		classesPane.add(panel);
-		
+
+		ImageIcon imageIcon = new ImageIcon();
+		URL imageUrl = ClassesView.class.getClassLoader().getResource("Assert/DTULogo.png");
+		File file = new File(imageUrl.getPath());
+		imageIcon = new ImageIcon(file.getAbsolutePath());
+
+		// Lấy hình ảnh từ ImageIcon
+		Image image = imageIcon.getImage();
+		Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		ImageIcon scaledImageIcon = new ImageIcon(image.getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+
+		// Thêm hình ảnh vào label
 		JLabel label = new JLabel();
+		label.setIcon(scaledImageIcon);
 		panel.add(label);
-		
+
 		Box verticalBox = Box.createVerticalBox();
-		verticalBox.setAlignmentX(0.0f);
-		panel.add(verticalBox);
-		
+		verticalBox.setAlignmentX(Box.LEFT_ALIGNMENT);
+
+		// Tạo các button
 		JButton btnDashboard = new JButton("Dashboard");
 		btnDashboard.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		    public void actionPerformed(ActionEvent e) {
+		    }
 		});
-		btnDashboard.setMaximumSize(new Dimension(100, 20));
-		btnDashboard.setBackground(Color.LIGHT_GRAY);
+		btnDashboard.setBackground(new Color(255, 255, 255));
+
+		JButton btnClasses = new JButton("Classes");
+		btnClasses.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    }
+		});
+		btnClasses.setBackground(new Color(192, 192, 192));
+
+		JButton btnStudent = new JButton("Student");
+		btnStudent.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    }
+		});
+		btnStudent.setBackground(new Color(192, 192, 192));
+
+		JButton btnBlog = new JButton("Blog");
+		btnBlog.setBackground(new Color(192, 192, 192));
+
+		// Đặt độ rộng cho các button
+		int buttonWidth = verticalBox.getWidth();
+		Dimension buttonDimension = new Dimension(100, 20);
+
+		btnDashboard.setMaximumSize(buttonDimension);
+		btnClasses.setMaximumSize(buttonDimension);
+		btnStudent.setMaximumSize(buttonDimension);
+		btnBlog.setMaximumSize(buttonDimension);
+
+		// Thêm các button vào VerticalBox
 		verticalBox.add(btnDashboard);
-		
-		Component verticalStrut = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut);
-		
-		JButton button_1 = new JButton("Classes");
-		button_1.setMaximumSize(new Dimension(100, 20));
-		button_1.setBorder(null);
-		button_1.setBackground(Color.WHITE);
-		verticalBox.add(button_1);
-		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_1);
-		
-		JButton button_2 = new JButton("Student");
-		button_2.setMaximumSize(new Dimension(100, 20));
-		button_2.setBackground(Color.LIGHT_GRAY);
-		verticalBox.add(button_2);
-		
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_2);
-		
-		JButton button_3 = new JButton("Blog");
-		button_3.setMaximumSize(new Dimension(100, 20));
-		button_3.setBackground(Color.LIGHT_GRAY);
-		verticalBox.add(button_3);
-		
-		Component verticalStrut_3 = Box.createVerticalStrut(40);
-		verticalBox.add(verticalStrut_3);
-		
-		JButton btnNewButton = new JButton("<- Log Out");
-		verticalBox.add(btnNewButton);
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
+		verticalBox.add(Box.createVerticalStrut(10)); // Khoảng cách giữa các button
+		verticalBox.add(btnClasses);
+		verticalBox.add(Box.createVerticalStrut(10));
+		verticalBox.add(btnStudent);
+		verticalBox.add(Box.createVerticalStrut(10));
+		verticalBox.add(btnBlog);
+
+		panel.add(verticalBox);
+
+		JTextPane btnLogout = new JTextPane();
+		verticalBox.add(Box.createVerticalStrut(30));
+		btnLogout.setText("<- Logout");
+		panel.add(btnLogout);
+
 		
 		JLabel lb_FindMaLop = new JLabel("Mã Lớp");
 		lb_FindMaLop.setHorizontalAlignment(SwingConstants.CENTER);
@@ -323,14 +346,6 @@ public class ClassesView extends JFrame {
 		btnHuyTim.setBounds(633, 29, 110, 48);
 		classesPane.add(btnHuyTim);
 		
-		
-		
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		
-		});
 		System.out.println("Aaaaaaaaa");
 		ClassesController control= new ClassesController(this);
 		setVisible(true);

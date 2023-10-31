@@ -92,7 +92,7 @@ public class MainView extends JFrame {
 			        System.out.println(imageWidth+" "+ imageHeight);
 			        Panel panel = new Panel();
 			        panel.setBackground(new Color(192, 192, 192));
-			        panel.setBounds(0, 0, 97, 414);
+			        panel.setBounds(0, 0, 104, 414);
 			        main_Panel.add(panel);
 			        JLabel label = new JLabel();
 			        panel.add(label);
