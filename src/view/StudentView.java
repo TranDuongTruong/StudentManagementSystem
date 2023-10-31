@@ -56,7 +56,7 @@ public class StudentView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	//public Student model;
+	public Student selectedStu;
 	public JTextField searchInp;
 	public JTextField textField_ID;
 	public JTextField textField_name;
@@ -70,11 +70,15 @@ public class StudentView extends JFrame {
 	private JButton btnHuyTim;
 	public JComboBox comboBox_queQuan;
 	static Classroom classRoom;
+	
 	private JTextField textField_Add;
 	JRadioButton rdbtnFemale;
 	JRadioButton rdbtnMale;
 	 JButton btnThem;
 	 JButton btnXoa;
+	 JButton btnCapNhat;
+	 JButton btnLuu ;
+	 public boolean isUpdating=false;
 	 private JTextField textField_dob_month;
 	 private JTextField textField_dob_year;
 	/**
@@ -422,13 +426,13 @@ public class StudentView extends JFrame {
 			        btnXoa.setBounds(151, 628, 89, 42);
 			        contentPane_1.add(btnXoa);
 			        
-			        JButton btnCapNhat = new JButton("Update");
+			         btnCapNhat = new JButton("Update");
 			        btnCapNhat.addActionListener(action);
 			        btnCapNhat.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnCapNhat.setBounds(264, 628, 135, 42);
 			        contentPane_1.add(btnCapNhat);
 			        
-			        JButton btnLuu = new JButton("Save");
+			         btnLuu = new JButton("Save");
 			        btnLuu.addActionListener(action);
 			        btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnLuu.setBounds(421, 628, 135, 42);
@@ -601,8 +605,9 @@ public class StudentView extends JFrame {
 		    return false;
 		}
 	  
-	 public int getIndexofStudentToDelete() {
-		 int index=table.getSelectedRow();;
+	 public int getIndexofSelectedRow() {
+		
+		 int index=table.getSelectedRow(); selectedStu=classRoom.getStudentList().get(index);
 		 return index;
 	 }
 	 public void addStudentListener(ActionListener listener) {
@@ -611,15 +616,52 @@ public class StudentView extends JFrame {
 	 public void deleteStudentListener(ActionListener listener) {
 		 btnXoa.addActionListener(listener);
 	 }
+	 public void updateStudentListener(ActionListener listener) {
+		  btnCapNhat.addActionListener(listener);
+	 }
+	 public void saveStudentListener(ActionListener listener) {
+		  btnLuu.addActionListener(listener);
+	 }
+	 public void setInfoOfNewStudent() {
+		 	Student student=classRoom.getStudentList().get(getIndexofSelectedRow());
+		 	
+		    if ( getIndexofSelectedRow()==-1||student==null) {
+		        return;
+		    }
+		    isUpdating=true;
+		    textField_ID.setText(""+student.getStudentID());
+		    textField_name.setText(student.getName());
+		    textField_Add.setText(student.getAddress());
+		    System.out.println("aaaaaaaaas");
+		    textField_dob_day.setText(String.valueOf(student.getDob().getDayOfMonth()));
+		    textField_dob_month.setText(String.valueOf(student.getDob().getMonthValue()));
+		    textField_dob_year.setText(String.valueOf(student.getDob().getYear()));
+		    
+		    if (student.isGender()) {
+		        rdbtnMale.setSelected(true);
+		    } else {
+		        rdbtnFemale.setSelected(true);
+		    }
+		    
+		    textField_phone.setText(student.getPhoneNumber());
+		    textField_completed.setText(""+student.getCreditsCompleted());
+		    textField_owed.setText(""+(student.getCreditsOwed()));
+		    
+		}
 	public void xoaForm() {
 		searchInp.setText("");
 		textField_ID.setText("");
 		textField_name.setText("");
 		textField_dob_day.setText("");
+		textField_dob_month.setText("");
+		textField_dob_year.setText("");
+		rdbtnFemale.setSelected(false);
+		rdbtnMale.setSelected(false);
 		textField_phone.setText("");
 		textField_completed.setText("");
 		textField_owed.setText("");
-		comboBox_queQuan.setSelectedIndex(-1);		
+		textField_Add.setText("");		
+		
 		bt.clearSelection();
 	}
 }

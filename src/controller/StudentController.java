@@ -45,6 +45,8 @@ public class StudentController implements ActionListener{
 		view.huyTimListener(new HuyTimListener());
 		view.addStudentListener(new AddNewStudentListener ());
 		view.deleteStudentListener(new DeleteStudentListener());
+		view.updateStudentListener(new UpdateStudentListener());
+		view.saveStudentListener(new SaveStudentListener());
 		displayListOfStudent();
 	}
 
@@ -106,14 +108,37 @@ public class StudentController implements ActionListener{
 	    }
 	 private class DeleteStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
-	        	classRoom.removeStudent(studentView.getIndexofStudentToDelete());
+	        	classRoom.removeStudent(studentView.getIndexofSelectedRow());
 	        	displayListOfStudent();
 	        	
 	        }
 	      
 	    }
-	 
-	 
+	 private class UpdateStudentListener implements ActionListener {
+	        public void actionPerformed(ActionEvent e) {
+	        	
+	        	//System.out.println(studentView.getIndexofSelectedRow());
+	        	studentView.setInfoOfNewStudent();
+	        	//System.out.println(classRoom.findAStudent(studentView.getIndexofSelectedRow()).getName());
+	        //	classRoom.removeStudent(studentView.getIndexofSelectedRow());
+	        	//displayListOfStudent();
+	        	
+	        }
+	      
+	    }
+	 private class SaveStudentListener implements ActionListener {
+	        public void actionPerformed(ActionEvent e) {
+	        		
+	        	if(!studentView.isUpdating)return;
+	        	Student st=studentView.selectedStu;
+	        	classRoom.findAStudent(st.getStudentID()).SetStudent(studentView.getInfoOfNewStudent());
+	        	System.out.println(st.getCreditsCompleted());
+	        	displayListOfStudent();
+	        	//studentView.xoaForm();
+	        	
+	        }
+	      
+	    }
 	 
 	 
 	 

@@ -96,7 +96,16 @@ public class Classroom {
 	    	return null;
 	    	
 	    }
-
+	    public boolean checkAStudent(int id) {
+	    	
+	    	for (int i=0;i< studentList.size();i++) {
+                	if(id==studentList.get(i).getStudentID())
+                		return  true;
+                }
+            
+	    	return false;
+	    	
+	    }
 		public List<Student> getStudentList() {
 			return studentList;
 		}

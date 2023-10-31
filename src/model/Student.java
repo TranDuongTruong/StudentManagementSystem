@@ -21,7 +21,16 @@ public class Student {
 	        this.creditsOwed = creditsOwed;
 	    }
 
-	    
+	    public void SetStudent(Student st) {
+	        this.studentID = st.studentID; 
+	        this.name = st.name;
+	        this.dob = st.dob;
+	        this.address = st.address;
+	        this.gender = st.gender;
+	        this.phoneNumber = st.phoneNumber;
+	        this.creditsCompleted = st.creditsCompleted;
+	        this.creditsOwed = st.creditsOwed;
+	    }
 	    public int getStudentID() {
 	        return studentID;
 	    }
