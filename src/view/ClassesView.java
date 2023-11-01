@@ -37,6 +37,7 @@ import com.mysql.cj.protocol.Message;
 
 import controller.ClassesController;
 import controller.DatabaseConnection;
+import controller.LoginController;
 import model.Classroom;
 import model.Student;
 import model.ClassesManager;
@@ -169,11 +170,19 @@ public class ClassesView extends JFrame {
 		verticalBox.add(btnBlog);
 
 		panel.add(verticalBox);
-
-		JTextPane btnLogout = new JTextPane();
 		verticalBox.add(Box.createVerticalStrut(30));
-		btnLogout.setText("<- Logout");
-		panel.add(btnLogout);
+		
+		JButton btn_Classes_1 = new JButton("<- Logout");
+		btn_Classes_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginController loginController = new LoginController(new LoginView());
+                loginController.displayLoginView();
+                dispose();
+			}
+		});
+		btn_Classes_1.setMaximumSize(new Dimension(100, 20));
+		btn_Classes_1.setBackground(Color.WHITE);
+		panel.add(btn_Classes_1);
 
 		
 		JLabel lb_FindMaLop = new JLabel("Mã Lớp");

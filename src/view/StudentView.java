@@ -47,6 +47,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.DatabaseConnection;
+import controller.LoginController;
 import controller.StudentController;
 import model.Classroom;
 import model.Student;
@@ -201,11 +202,19 @@ public class StudentView extends JFrame {
 			        verticalBox.add(button_3);
 			        
 			        panel.add(verticalBox);
-			        
-			        JTextPane textPane = new JTextPane();
 			        verticalBox.add(Box.createVerticalStrut(30));
-			        textPane.setText("<- Logout");
-			        panel.add(textPane);
+			        
+			        JButton btn_Classes_1 = new JButton("<- Logout");
+			        btn_Classes_1.addActionListener(new ActionListener() {
+			        	public void actionPerformed(ActionEvent e) {
+			        		LoginController loginController = new LoginController(new LoginView());
+			                loginController.displayLoginView();
+			                dispose();
+			        	}
+			        });
+			        btn_Classes_1.setMaximumSize(new Dimension(100, 20));
+			        btn_Classes_1.setBackground(Color.WHITE);
+			        panel.add(btn_Classes_1);
 			        
 			        JPanel contentPane_1 = new JPanel();
 			        contentPane_1.setLayout(null);
