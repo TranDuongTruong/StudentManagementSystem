@@ -47,6 +47,7 @@ public class StudentController implements ActionListener{
 		view.deleteStudentListener(new DeleteStudentListener());
 		view.updateStudentListener(new UpdateStudentListener());
 		view.saveStudentListener(new SaveStudentListener());
+		view.cancelStudentListener(new CancelStudentListener());
 		displayListOfStudent();
 	}
 
@@ -101,10 +102,8 @@ public class StudentController implements ActionListener{
 	        	if(st==null)
 	        		return ;
 	        	classRoom.addStudent(st);
-	        	displayListOfStudent();
-	        	
+	        	displayListOfStudent();   	
 	        }
-	      
 	    }
 	 private class DeleteStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
@@ -139,7 +138,15 @@ public class StudentController implements ActionListener{
 	        }
 	      
 	    }
-	 
+	
+	 private class CancelStudentListener implements ActionListener {
+		// public MainView mmainview;
+	        public void actionPerformed(ActionEvent e) {
+	        	studentView.xoaForm();
+	        	
+	        }
+	      
+	    }
 	 
 	 
 
