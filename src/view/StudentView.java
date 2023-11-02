@@ -417,7 +417,7 @@ public class StudentView extends JFrame {
 			      
 			        btnThem.addActionListener(action);
 			        btnThem.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			        btnThem.setBounds(44, 628, 89, 42);
+			        btnThem.setBounds(52, 628, 89, 42);
 			        contentPane_1.add(btnThem);
 			        
 			        btnXoa = new JButton("Delete");

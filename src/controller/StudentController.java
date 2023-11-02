@@ -100,8 +100,12 @@ public class StudentController implements ActionListener{
 	        	Student st=studentView.getInfoOfNewStudent();
 	        	if(st==null)
 	        		return ;
+	        	//if(classRoom.checkAStudent(st.getStudentID())) {
 	        	classRoom.addStudent(st);
 	        	displayListOfStudent();
+	        //	}
+	        	System.out.println("adding");
+	        
 	        	
 	        }
 	      

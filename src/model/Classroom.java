@@ -76,6 +76,7 @@ public class Classroom {
 		public void addStudent(Student student) {
 	        studentList.add(student);
 	        numOfCurentStudents++;
+	        
 	       
 	        
 	    }
