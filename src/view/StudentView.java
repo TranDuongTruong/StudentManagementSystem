@@ -47,6 +47,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.DatabaseConnection;
+import controller.LoginController;
 import controller.StudentController;
 import model.Classroom;
 import model.Student;
@@ -78,6 +79,7 @@ public class StudentView extends JFrame {
 	 JButton btnXoa;
 	 JButton btnCapNhat;
 	 JButton btnLuu ;
+	 JButton btnHuyBo;
 	 public boolean isUpdating=false;
 	 private JTextField textField_dob_month;
 	 private JTextField textField_dob_year;
@@ -200,11 +202,19 @@ public class StudentView extends JFrame {
 			        verticalBox.add(button_3);
 			        
 			        panel.add(verticalBox);
-			        
-			        JTextPane textPane = new JTextPane();
 			        verticalBox.add(Box.createVerticalStrut(30));
-			        textPane.setText("<- Logout");
-			        panel.add(textPane);
+			        
+			        JButton btn_Classes_1 = new JButton("<- Logout");
+			        btn_Classes_1.addActionListener(new ActionListener() {
+			        	public void actionPerformed(ActionEvent e) {
+			        		LoginController loginController = new LoginController(new LoginView());
+			                loginController.displayLoginView();
+			                dispose();
+			        	}
+			        });
+			        btn_Classes_1.setMaximumSize(new Dimension(100, 20));
+			        btn_Classes_1.setBackground(Color.WHITE);
+			        panel.add(btn_Classes_1);
 			        
 			        JPanel contentPane_1 = new JPanel();
 			        contentPane_1.setLayout(null);
@@ -438,7 +448,7 @@ public class StudentView extends JFrame {
 			        btnLuu.setBounds(421, 628, 135, 42);
 			        contentPane_1.add(btnLuu);
 			        
-			        JButton btnHuyBo = new JButton("Cancel");
+			        btnHuyBo = new JButton("Cancel");
 			        btnHuyBo.addActionListener(action);
 			        btnHuyBo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnHuyBo.setBounds(585, 628, 135, 42);
@@ -539,8 +549,6 @@ public class StudentView extends JFrame {
 			int year=Integer.parseInt(textField_dob_year.getText());
 			
 			dob = LocalDate.of(year, month, day);
-			
-			
 			 if (rdbtnFemale.isSelected()) {
 				 gender=false;
 				 
@@ -575,7 +583,12 @@ public class StudentView extends JFrame {
 				if (studentID<=0) {
 			        JOptionPane.showMessageDialog(null, "Nhap sai ma sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
 			        return false;
-			    } else if (name.isEmpty()) {
+			    }
+				else if (classRoom.checkAStudent(studentID)) {
+			        JOptionPane.showMessageDialog(null, "Ma sinh vien da ton tai", "Loi", JOptionPane.ERROR_MESSAGE);
+			        return false;
+			    }
+				else if (name.isEmpty()) {
 			        JOptionPane.showMessageDialog(null, "Nhap sai ten sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
 			        return false;
 			    } else if (address.isEmpty()) {
@@ -604,7 +617,8 @@ public class StudentView extends JFrame {
 
 		    return false;
 		}
-	  
+	 
+
 	 public int getIndexofSelectedRow() {
 		
 		 int index=table.getSelectedRow(); selectedStu=classRoom.getStudentList().get(index);
@@ -622,9 +636,11 @@ public class StudentView extends JFrame {
 	 public void saveStudentListener(ActionListener listener) {
 		  btnLuu.addActionListener(listener);
 	 }
+	 public void cancelStudentListener(ActionListener listener) {
+		  btnHuyBo.addActionListener(listener);
+	 }
 	 public void setInfoOfNewStudent() {
 		 	Student student=classRoom.getStudentList().get(getIndexofSelectedRow());
-		 	
 		    if ( getIndexofSelectedRow()==-1||student==null) {
 		        return;
 		    }
@@ -635,14 +651,12 @@ public class StudentView extends JFrame {
 		    System.out.println("aaaaaaaaas");
 		    textField_dob_day.setText(String.valueOf(student.getDob().getDayOfMonth()));
 		    textField_dob_month.setText(String.valueOf(student.getDob().getMonthValue()));
-		    textField_dob_year.setText(String.valueOf(student.getDob().getYear()));
-		    
+		    textField_dob_year.setText(String.valueOf(student.getDob().getYear()));	    
 		    if (student.isGender()) {
 		        rdbtnMale.setSelected(true);
 		    } else {
 		        rdbtnFemale.setSelected(true);
 		    }
-		    
 		    textField_phone.setText(student.getPhoneNumber());
 		    textField_completed.setText(""+student.getCreditsCompleted());
 		    textField_owed.setText(""+(student.getCreditsOwed()));

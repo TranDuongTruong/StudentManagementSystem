@@ -17,6 +17,7 @@ import javax.swing.Box;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
+import controller.LoginController;
 import controller.MainViewCtrl_Teacher;
 
 import java.awt.Color;
@@ -36,6 +37,7 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
+import java.awt.SystemColor;
 public class MainView extends JFrame {
 
 	 JButton btn_Classes;
@@ -140,11 +142,19 @@ public class MainView extends JFrame {
 			        btn_DashBoard.setBorder(null);
 			        
 			        panel.add(verticalBox);
-			        
-			        JTextPane Btn_Logout = new JTextPane();
 			        verticalBox.add(Box.createVerticalStrut(30));
-			        Btn_Logout.setText("<- Logout");
-			        panel.add(Btn_Logout);
+			        
+			        JButton btn_Classes_1 = new JButton("<- Logout");
+			        btn_Classes_1.setBackground(Color.WHITE);
+			        btn_Classes_1.addActionListener(new ActionListener() {
+			        	public void actionPerformed(ActionEvent e) {
+			        		LoginController loginController = new LoginController(new LoginView());
+			                loginController.displayLoginView();
+			                dispose();
+			        	}
+			        });
+			        btn_Classes_1.setMaximumSize(new Dimension(100, 20));
+			        panel.add(btn_Classes_1);
 			        
 			        JPanel content_panel = new JPanel();
 			        content_panel.setBounds(103, 0, 537, 414);
