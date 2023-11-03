@@ -133,13 +133,17 @@ public class StudentController implements ActionListener{
 	    }
 	 private class SaveStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
-	        		
+	        	System.out.println("12345666666666666");
 	        	if(!studentView.isUpdating)return;
+	        	
 	        	Student st=studentView.selectedStu;
-	        	classRoom.findAStudent(st.getStudentID()).SetStudent(studentView.getInfoOfNewStudent());
+	        	
+	        	classRoom.findAStudent(st.getStudentID()).SetStudent(studentView.getInfoOfExitsStudent());
+	        	
 	        	System.out.println(st.getCreditsCompleted());
+	        	
 	        	displayListOfStudent();
-	        	//studentView.xoaForm();
+	        	studentView.xoaForm();
 	        	
 	        }
 	      

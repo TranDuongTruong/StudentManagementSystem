@@ -443,7 +443,7 @@ public class StudentView extends JFrame {
 			        contentPane_1.add(btnCapNhat);
 			        
 			         btnLuu = new JButton("Save");
-			        btnLuu.addActionListener(action);
+			       // btnLuu.addActionListener(action);
 			        btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			        btnLuu.setBounds(421, 628, 135, 42);
 			        contentPane_1.add(btnLuu);
@@ -561,6 +561,31 @@ public class StudentView extends JFrame {
 			 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
 		 return st; 
 	 }
+	 public Student getInfoOfExitsStudent() {
+	
+		 Student st;
+		   int studentID; String name; LocalDate dob; String address; boolean gender=false;
+			 String phoneNumber; int creditsCompleted; int  creditsOwed;
+			 studentID=Integer.parseInt(textField_ID.getText());
+			 name=textField_name.getText();
+			 address=textField_Add.getText();
+			int day=Integer.parseInt(textField_dob_day.getText());
+			int month=Integer.parseInt(textField_dob_month.getText());
+			int year=Integer.parseInt(textField_dob_year.getText());
+			
+			dob = LocalDate.of(year, month, day);
+			 if (rdbtnFemale.isSelected()) {
+				 gender=false;
+				 
+			 }else if(rdbtnMale.isSelected()) {
+				 gender=true;
+			 }
+			 phoneNumber=textField_phone.getText();
+			 creditsCompleted=Integer.parseInt(textField_completed.getText());
+			 creditsOwed=Integer.parseInt(textField_owed.getText());
+			 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
+		 return st; 
+	 }
 	 public boolean test() {
 		    try {
 		        int studentID = Integer.parseInt(textField_ID.getText());
@@ -640,7 +665,10 @@ public class StudentView extends JFrame {
 		  btnHuyBo.addActionListener(listener);
 	 }
 	 public void setInfoOfNewStudent() {
-		 	Student student=classRoom.getStudentList().get(getIndexofSelectedRow());
+	
+		 
+		 Student student=classRoom.getStudentList().get(getIndexofSelectedRow());
+		
 		    if ( getIndexofSelectedRow()==-1||student==null) {
 		        return;
 		    }
