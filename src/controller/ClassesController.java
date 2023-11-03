@@ -43,7 +43,6 @@ public class ClassesController  {
         	classroom=classes.findClassroomByCode(classCode);
         	findClassroomList.addClassroom(classroom);
         	view.displayClassList(findClassroomList);
-        	
         }
 
        
@@ -69,6 +68,14 @@ public class ClassesController  {
         public void actionPerformed(ActionEvent e) {       	
         	int index= view.getIndexofClassToDelete();
         	classes.remove(index);
+        	displayClasses();
+        }
+
+       
+    }
+    private class EditClassListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {       	
+        	
         	displayClasses();
         }
 

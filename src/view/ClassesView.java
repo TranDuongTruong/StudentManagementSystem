@@ -132,14 +132,14 @@ public class ClassesView extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		    }
 		});
-		btnDashboard.setBackground(new Color(255, 255, 255));
+		btnDashboard.setBackground(Color.LIGHT_GRAY);
 
 		JButton btnClasses = new JButton("Classes");
 		btnClasses.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    }
 		});
-		btnClasses.setBackground(new Color(192, 192, 192));
+		btnClasses.setBackground(Color.WHITE);
 
 		JButton btnStudent = new JButton("Student");
 		btnStudent.addActionListener(new ActionListener() {
@@ -377,8 +377,8 @@ public class ClassesView extends JFrame {
 	    // Cập nhật model của JTable
 	    table.setModel(tableModel);
 	}
-	
-	public void xoaForm() {
+//Nguyen Hoang Viet	
+	public void deleteForm() {
 		textField_FindMaLop.setText("");
 		textField_MaLop.setText("");
 		textField_SoHSHT.setText("");
@@ -387,10 +387,8 @@ public class ClassesView extends JFrame {
 	}
 	
 	
-// HOANG VIET
-	public void ThemHoacCapNhatLop() {
+	public void addOrUpdateClass() {
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-		//Get dữ liệu
         String classCode = this.textField_MaLop.getText();
         String className = this.textField_TenLop.getText();
         int numOfCurentStudents = Integer.valueOf(this.textField_SoHSHT.getText());
@@ -398,7 +396,7 @@ public class ClassesView extends JFrame {
         
         Classroom lop= new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
         
-		if(this.model.kiemTraTonTai(lop)==true) {
+		if(this.model.CheckClass(lop)==true) {
 			this.model.update(lop);
 			for (int i = 0; i < tableModel.getRowCount(); i++) {
 				String id=tableModel.getValueAt(i, 0)+"";
@@ -415,7 +413,7 @@ public class ClassesView extends JFrame {
 		}
 }
 
-	public Classroom getLopDaChon() {
+	public Classroom getSelectedClass() {
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		int i_row= table.getSelectedRow();
 		String classCode = tableModel.getValueAt(i_row,0)+"";
@@ -425,7 +423,7 @@ public class ClassesView extends JFrame {
         Classroom classes = new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
 		return classes;
 	}
-	public void hienthiThongTinLopDaChon() {
+	public void showInfor_SeclectedClass() {
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		int i_row= table.getSelectedRow();
 		String classCode = tableModel.getValueAt(i_row,0)+"";this.textField_MaLop.setText(classCode);
@@ -469,7 +467,7 @@ public class ClassesView extends JFrame {
 		if(btn_Xoa==null)return;
 		btn_Xoa.addActionListener(listener);
     }
-	  
+	
 	public int getIndexofClassToDelete() {
 			 int index=table.getSelectedRow();;
 			 return index;

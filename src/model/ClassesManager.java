@@ -63,7 +63,7 @@ public class ClassesManager {
 		this.classroomList = classroomList;
 	}
 
-	public boolean kiemTraTonTai(Classroom lop) {
+	public boolean CheckClass(Classroom lop) {
 		for(Classroom classroom: classroomList)
 			if(classroom.getClassCode()==lop.getClassCode())
 				return true;
