@@ -47,7 +47,7 @@ public class DisplayUserAccountsView extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel lblStudents = new JLabel("User");
+        JLabel lblStudents = new JLabel("Admin: Show Users");
         lblStudents.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblStudents.setBounds(10, 0, 322, 30);
         contentPane.add(lblStudents);
