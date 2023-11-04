@@ -268,7 +268,41 @@ public class DatabaseConnection {
 	        return new CreditsPerformance(numStudentsOwedMoreThan5,numStudentsOwed1To5,numStudentsNotOwed);
 	        
 	    }
-	    
+	  List<Student> retrieveStudentsCredited() {
+		    System.out.println("Aaa");Connection con = connectToBB();
+		    List<Student> students = new ArrayList();
+		    int studentID;
+		    String name;
+		    LocalDate dob;
+		    String address;
+		    boolean gender;
+		    String phoneNumber;
+		    int creditsCompleted;
+		    int creditsOwed;
+		    try {
+		        String query = "SELECT * FROM student WHERE creditsOwed > 0 ORDER BY creditsOwed DESC";
+		        PreparedStatement stmt = con.prepareStatement(query);
+		        ResultSet rs = stmt.executeQuery();
+		        while (rs.next()) {
+		            studentID = rs.getInt("studentID");
+		            name = rs.getString("name");
+		            Date dobDate = rs.getDate("dob");
+		            dob = dobDate.toLocalDate();
+		            address = rs.getString("address");
+		            gender = rs.getBoolean("gender");
+		            phoneNumber = rs.getString("phoneNumber");
+		            creditsCompleted = rs.getInt("creditsCompleted");
+		            creditsOwed = rs.getInt("creditsOwed");
+		            System.out.println("Aaa"+creditsOwed);
+		            Student student = new Student(studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed);
+		            students.add(student);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return students;
+		}
 	    public static void main(String[] args) {
 //	    	DatabaseConnection a = new DatabaseConnection();
 //	    	 List<Classroom> classes = new ArrayList();
