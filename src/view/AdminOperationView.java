@@ -19,14 +19,17 @@ import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import controller.AdminOperationController;
+
+
 
 public class AdminOperationView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JPasswordField passwordField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JTextField passwordField;
 
 	/**
 	 * Launch the application.
@@ -70,10 +73,6 @@ public class AdminOperationView extends JFrame {
 		passwordLabel.setBounds(61, 175, 83, 20);
 		contentPane.add(passwordLabel);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(150, 177, 200, 20);
-		contentPane.add(passwordField);
-		
 		JLabel nameLabel = new JLabel("Name:");
 		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		nameLabel.setBounds(61, 111, 83, 20);
@@ -87,7 +86,7 @@ public class AdminOperationView extends JFrame {
 		separator.setBounds(0, 44, 523, 13);
 		contentPane.add(separator);
 		
-		JComboBox<String> roleComboBox = new JComboBox<String>();
+		final JComboBox<String> roleComboBox = new JComboBox<String>();
 		roleComboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Admin", "Teacher"}));
 		roleComboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
 		roleComboBox.setBounds(150, 213, 200, 20);
@@ -111,6 +110,9 @@ public class AdminOperationView extends JFrame {
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AdminHomeView adminhomeView = new AdminHomeView();
+            	adminhomeView.setVisible(true);
+                dispose();
 			}
 		});
 		ImageIcon backIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/back.png"));
@@ -150,11 +152,17 @@ public class AdminOperationView extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+                AdminOperationController.searchButtonClicked(textField_2.getText(), textField, passwordField, textField_1, roleComboBox);
+            }
 		});
 		ImageIcon searchIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/loupe.png"));
 		btnSearch.setIcon(searchIcon);
 		btnSearch.setBounds(396, 77, 103, 30);
 		contentPane.add(btnSearch);
+		
+		passwordField = new JTextField();
+		passwordField.setBounds(150, 177, 200, 20);
+		contentPane.add(passwordField);
+		passwordField.setColumns(10);
 	}
 }

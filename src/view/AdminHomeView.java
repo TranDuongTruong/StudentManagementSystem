@@ -96,6 +96,14 @@ public class AdminHomeView extends JFrame {
 		
 		JButton btnNewButton_1 = new JButton("Operation");
 		btnNewButton_1.setBounds(273, 392, 98, 23);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminOperationView adminOperationView = new AdminOperationView();
+				adminOperationView.setVisible(true);
+                dispose();
+			}
+
+		});
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Show User");
