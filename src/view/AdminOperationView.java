@@ -26,9 +26,9 @@ import controller.AdminOperationController;
 public class AdminOperationView extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textField_Email;
+	private JTextField textField_Name;
+	private JTextField textField_ID;
 	private JTextField passwordField;
 
 	/**
@@ -64,9 +64,9 @@ public class AdminOperationView extends JFrame {
 		emailLabel.setBounds(61, 144, 83, 20);
 		contentPane.add(emailLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(150, 144, 200, 20);
-		contentPane.add(textField);
+		textField_Email = new JTextField();
+		textField_Email.setBounds(150, 144, 200, 20);
+		contentPane.add(textField_Email);
 		
 		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -78,9 +78,9 @@ public class AdminOperationView extends JFrame {
 		nameLabel.setBounds(61, 111, 83, 20);
 		contentPane.add(nameLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(150, 113, 200, 20);
-		contentPane.add(textField_1);
+		textField_Name = new JTextField();
+		textField_Name.setBounds(150, 113, 200, 20);
+		contentPane.add(textField_Name);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 44, 523, 13);
@@ -100,6 +100,8 @@ public class AdminOperationView extends JFrame {
 		JButton updateButton = new JButton("Update");
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AdminOperationController.updateButtonClicked(textField_ID.getText(), textField_Email, passwordField, 
+						textField_Name, roleComboBox);
 			}
 		});
 		ImageIcon updateIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/submit.png"));
@@ -135,13 +137,15 @@ public class AdminOperationView extends JFrame {
 		lblId.setBounds(61, 80, 83, 20);
 		contentPane.add(lblId);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(150, 82, 200, 20);
-		contentPane.add(textField_2);
+		textField_ID = new JTextField();
+		textField_ID.setBounds(150, 82, 200, 20);
+		contentPane.add(textField_ID);
 		
 		JButton deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AdminOperationController.deleteButtonClicked(textField_ID.getText(), textField_Email, passwordField, 
+																		textField_Name, roleComboBox);
 			}
 		});
 		ImageIcon deleteIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/cancel1.png"));
@@ -152,7 +156,7 @@ public class AdminOperationView extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                AdminOperationController.searchButtonClicked(textField_2.getText(), textField, passwordField, textField_1, roleComboBox);
+                AdminOperationController.searchButtonClicked(textField_ID.getText(), textField_Email, passwordField, textField_Name, roleComboBox);
             }
 		});
 		ImageIcon searchIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/loupe.png"));
