@@ -703,7 +703,7 @@ public class StudentView extends JFrame {
 		textField_completed.setText("");
 		textField_owed.setText("");
 		textField_Add.setText("");		
-		
+		table.clearSelection();
 		bt.clearSelection();
 	}
 }

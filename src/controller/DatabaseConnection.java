@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Classroom;
+import model.CreditsPerformance;
 import model.Student;
 import model.ClassesManager;
 
@@ -237,7 +238,36 @@ public class DatabaseConnection {
 	            }
 	        }
 	    }
-	    
+	  public  CreditsPerformance getCreditsPerformance() {
+	    	Connection con = connectToBB(); // Kết nối đến cơ sở dữ liệu
+	    	   int numStudentsOwedMoreThan5=0;
+               int numStudentsOwed1To5 =0;
+               int numStudentsNotOwed = 0 ;
+	        try {
+	            Statement stmt = con.createStatement();
+	            String query = "SELECT * FROM creditsPerformance";
+	            ResultSet rs = stmt.executeQuery(query);
+
+	            while (rs.next()) {
+	                 numStudentsOwedMoreThan5 = rs.getInt("numStudentsOwedMoreThan5");
+	                 numStudentsOwed1To5 = rs.getInt("numStudentsOwed1To5");
+	                 numStudentsNotOwed = rs.getInt("numStudentsNotOwed");
+
+//	                System.out.println("Số học sinh nợ hơn 5 môn: " + numStudentsOwedMoreThan5);
+//	                System.out.println("Số học sinh nợ từ 1-5 môn: " + numStudentsOwed1To5);
+//	                System.out.println("Số học sinh không nợ môn: " + numStudentsNotOwed);
+	            }
+
+	            rs.close();
+	            stmt.close();
+	            con.close();
+	       
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return new CreditsPerformance(numStudentsOwedMoreThan5,numStudentsOwed1To5,numStudentsNotOwed);
+	        
+	    }
 	    
 	    public static void main(String[] args) {
 //	    	DatabaseConnection a = new DatabaseConnection();
