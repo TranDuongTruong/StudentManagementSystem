@@ -17,7 +17,12 @@ import model.Student;
 import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.JTable;
-
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingUtilities;
 public class CreditsPerformanceView_Admin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +48,7 @@ public class CreditsPerformanceView_Admin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreditsPerformanceView_Admin(final Classroom classRoom) {
+	public CreditsPerformanceView_Admin() {
 		this.classRoom=classRoom;	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 498);
@@ -54,7 +59,7 @@ public class CreditsPerformanceView_Admin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(10, 50, 738, 160);
+		scrollPane.setBounds(10, 93, 738, 315);
 		contentPane.add(scrollPane);
 		
 		table = new JTable() {
@@ -95,7 +100,22 @@ public class CreditsPerformanceView_Admin extends JFrame {
 		    }
 		});
 		scrollPane.setViewportView(table);
-		PerformanceController_Admin per=new PerformanceController_Admin(this, classRoom);
+		
+		JLabel lblListOfStudents_1 = new JLabel("List of students with credit debt");
+		lblListOfStudents_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblListOfStudents_1.setBounds(10, 29, 380, 53);
+		contentPane.add(lblListOfStudents_1);
+		
+		final JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(btnBack);
+		        frame.dispose();
+			}
+		});
+		btnBack.setBounds(10, 415, 92, 36);
+		contentPane.add(btnBack);
+		PerformanceController_Admin per=new PerformanceController_Admin(this);
 		 
 	}
 	public void displayStudentList(List<Student> studentList) {		 

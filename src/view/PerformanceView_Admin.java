@@ -18,12 +18,13 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.data.general.DefaultPieDataset;
 
 import controller.DatabaseConnection;
 import controller.PerformanceController_Admin;
 import model.CreditsPerformance;
-
+import org.jfree.chart.plot.PiePlot;
 public class PerformanceView_Admin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -62,30 +63,37 @@ public class PerformanceView_Admin extends JFrame {
 	         chartPanel = new ChartPanel(chart);
 	        chartPanel.setBounds(10, 10, 479, 259);
 	        contentPane.add(chartPanel);
+	        System.out.println("ddddđ"); 
+	        PerformanceController_Admin perCtrl=new PerformanceController_Admin(this);
+	        //System.out.println("ddddđ");
+	        setVisible(true);
 	       
 	}
 	private DefaultPieDataset createDataset() {
-        DefaultPieDataset dataset = new DefaultPieDataset();
+	    DefaultPieDataset dataset = new DefaultPieDataset();
+	    DatabaseConnection con = new DatabaseConnection();
+	    CreditsPerformance creditsData = con.getCreditsPerformance();
+	    
+	    dataset.setValue("More than 5 subjects owed: " + creditsData.getNumStudentsOwedMoreThan5(), creditsData.getNumStudentsOwedMoreThan5());
+	    dataset.setValue("1-5 subjects owed: " + creditsData.getNumStudentsOwed1To5(), creditsData.getNumStudentsOwed1To5());
+	    dataset.setValue("No subjects owed: " + creditsData.getNumStudentsNotOwed(), creditsData.getNumStudentsNotOwed());
 
-        DatabaseConnection con=new DatabaseConnection();
-		CreditsPerformance creditsData=con.getCreditsPerformance();
-		dataset.setValue("More than 5 subjects owed", creditsData.getNumStudentsOwedMoreThan5());
-		dataset.setValue("1-5 subjects owed", creditsData.getNumStudentsOwed1To5());
-		dataset.setValue("No subjects owed", creditsData.getNumStudentsNotOwed());
+	    return dataset;
+	}
+	private JFreeChart createChart(DefaultPieDataset dataset) {
+	    JFreeChart chart = ChartFactory.createPieChart(
+	            "Credits Performance",
+	            dataset,
+	            true,
+	            true,
+	            false
+	    );
 
-        return dataset;
-    }
-	 private JFreeChart createChart(DefaultPieDataset dataset) {
-	        JFreeChart chart = ChartFactory.createPieChart(
-	                "Credits Performance",
-	                dataset,
-	                true,
-	                true,
-	                false
-	        );
+	    PiePlot plot = (PiePlot) chart.getPlot();
+	    plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}: {2} ({1})"));
 
-	        return chart;
-	    }
+	    return chart;
+	}
 	
 	 public void creditsChartListener(final ActionListener listener) {
 		    chartPanel.addChartMouseListener(new ChartMouseListener() {
