@@ -1,7 +1,7 @@
 package controller;
 
-import view.CreateUserAccountsView;
-import view.LoginView;
+import view.AdminAccount.CreateUserAccountsView;
+import view.AdminAccount.LoginView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

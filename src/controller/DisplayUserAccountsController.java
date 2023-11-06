@@ -12,8 +12,9 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import view.AdminHomeView;
-import view.DisplayUserAccountsView;
+
+import view.AdminAccount.AdminHomeView;
+import view.AdminAccount.DisplayUserAccountsView;
 public class DisplayUserAccountsController implements ActionListener {
 
     private DisplayUserAccountsView view;

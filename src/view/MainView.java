@@ -19,6 +19,7 @@ import javax.swing.border.LineBorder;
 
 import controller.LoginController;
 import controller.MainViewCtrl_Teacher;
+import view.AdminAccount.LoginView;
 
 import java.awt.Color;
 import javax.swing.JMenu;

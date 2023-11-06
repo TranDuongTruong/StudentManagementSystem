@@ -1,9 +1,9 @@
 package controller;
 
-import view.AdminHomeView;
-import view.CreateUserAccountsView;
-import view.LoginView;
 import view.MainView;
+import view.AdminAccount.AdminHomeView;
+import view.AdminAccount.CreateUserAccountsView;
+import view.AdminAccount.LoginView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

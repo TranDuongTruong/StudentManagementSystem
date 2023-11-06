@@ -53,6 +53,7 @@ import model.Classroom;
 import model.Student;
 import model.ClassesManager;
 import view.MainView;
+import view.AdminAccount.LoginView;
 public class StudentView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
