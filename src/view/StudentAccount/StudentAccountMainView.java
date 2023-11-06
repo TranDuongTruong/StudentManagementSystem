@@ -174,6 +174,8 @@ public class StudentAccountMainView extends JFrame {
 		
 		verticalBox_1.add(btn_Logout);
 		
+		//Basic Design --------------------------------------------------------
+		
 		
 		
 		
