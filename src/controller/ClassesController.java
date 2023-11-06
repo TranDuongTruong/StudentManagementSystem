@@ -37,7 +37,7 @@ public class ClassesController  {
     
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-        	String classCode=view.getClassCodeSearch();
+        	String classCode=view.getClassCode();
         	ClassesManager findClassroomList=new ClassesManager();
         	Classroom classroom;
         	classroom=classes.findClassroomByCode(classCode);

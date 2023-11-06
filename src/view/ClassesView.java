@@ -73,6 +73,7 @@ public class ClassesView extends JFrame {
 	JButton btn_Luu;
 	JButton btn_CapNhat;
 	JButton btn_Xoa;
+	public Classroom currentClassroom;
 	/**
 	 * Launch the application.
 	 */
@@ -185,10 +186,10 @@ public class ClassesView extends JFrame {
 		panel.add(btn_Classes_1);
 
 		
-		JLabel lb_FindMaLop = new JLabel("Mã Lớp");
+		JLabel lb_FindMaLop = new JLabel("Class Code");
 		lb_FindMaLop.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_FindMaLop.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lb_FindMaLop.setBounds(124, 29, 121, 48);
+		lb_FindMaLop.setBounds(124, 29, 140, 48);
 		classesPane.add(lb_FindMaLop);
 		
 		textField_FindMaLop = new JTextField();
@@ -198,12 +199,16 @@ public class ClassesView extends JFrame {
 		classesPane.add(textField_FindMaLop);
 		textField_FindMaLop.setColumns(10);
 		
-		 btn_Tim = new JButton("Tìm");
+		 btn_Tim = new JButton("Find");
+		 btn_Tim.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 	}
+		 });
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btn_Tim.setBounds(526, 29, 97, 48);
 		classesPane.add(btn_Tim);
 		
-		JLabel lblDanhSchCc = new JLabel("Danh sách các lớp");
+		JLabel lblDanhSchCc = new JLabel("List of classes");
 		lblDanhSchCc.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDanhSchCc.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDanhSchCc.setBounds(124, 110, 177, 41);
@@ -259,48 +264,48 @@ public class ClassesView extends JFrame {
 		scrollPane.setBounds(134, 152, 635, 218);
 		classesPane.add(scrollPane);
 		
-		JLabel lb_Malop = new JLabel("Mã Lớp");
+		JLabel lb_Malop = new JLabel("Class Code");
 		lb_Malop.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_Malop.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lb_Malop.setBounds(124, 409, 97, 41);
+		lb_Malop.setBounds(103, 409, 97, 41);
 		classesPane.add(lb_Malop);
 		
 		textField_MaLop = new JTextField();
-		textField_MaLop.setBounds(231, 409, 164, 41);
+		textField_MaLop.setBounds(220, 413, 123, 41);
 		classesPane.add(textField_MaLop);
 		textField_MaLop.setColumns(10);
 		
-		JLabel lb_TenLop = new JLabel("Tên Lớp");
+		JLabel lb_TenLop = new JLabel("Class name");
 		lb_TenLop.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_TenLop.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lb_TenLop.setBounds(124, 470, 97, 41);
+		lb_TenLop.setBounds(103, 466, 118, 41);
 		classesPane.add(lb_TenLop);
 		
 		textField_TenLop = new JTextField();
 		textField_TenLop.setColumns(10);
-		textField_TenLop.setBounds(231, 470, 164, 41);
+		textField_TenLop.setBounds(220, 465, 123, 41);
 		classesPane.add(textField_TenLop);
 		
-		JLabel lb_SoHSHT = new JLabel("Số HSHT");
+		JLabel lb_SoHSHT = new JLabel("Number of current student");
 		lb_SoHSHT.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_SoHSHT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lb_SoHSHT.setBounds(431, 409, 97, 41);
+		lb_SoHSHT.setBounds(358, 413, 244, 41);
 		classesPane.add(lb_SoHSHT);
 		
 		textField_SoHSHT = new JTextField();
 		textField_SoHSHT.setColumns(10);
-		textField_SoHSHT.setBounds(538, 413, 164, 41);
+		textField_SoHSHT.setBounds(602, 413, 164, 41);
 		classesPane.add(textField_SoHSHT);
 		
-		JLabel lb_SoHSTD = new JLabel("Số HSTD");
+		JLabel lb_SoHSTD = new JLabel("Number of max student");
 		lb_SoHSTD.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_SoHSTD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lb_SoHSTD.setBounds(431, 470, 97, 41);
+		lb_SoHSTD.setBounds(368, 466, 221, 41);
 		classesPane.add(lb_SoHSTD);
 		
 		textField_SoHSTD = new JTextField();
 		textField_SoHSTD.setColumns(10);
-		textField_SoHSTD.setBounds(538, 474, 164, 41);
+		textField_SoHSTD.setBounds(602, 470, 164, 41);
 		classesPane.add(textField_SoHSTD);
 		
 		JSeparator separator = new JSeparator();
@@ -311,26 +316,26 @@ public class ClassesView extends JFrame {
 		separator_1.setBounds(134, 394, 601, 2);
 		classesPane.add(separator_1);
 		
-		 btn_Them = new JButton("Thêm");
+		 btn_Them = new JButton("Add");
 	
 		
 		btn_Them.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Them.setBounds(124, 539, 97, 33);
 		classesPane.add(btn_Them);
 		
-		 btn_Xoa = new JButton("Xoá");
+		 btn_Xoa = new JButton("Delete");
 		
 		btn_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Xoa.setBounds(242, 539, 97, 33);
 		classesPane.add(btn_Xoa);
 		
-		 btn_CapNhat = new JButton("Cập Nhật");
+		 btn_CapNhat = new JButton("Update");
 	
 		btn_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_CapNhat.setBounds(358, 539, 148, 33);
 		classesPane.add(btn_CapNhat);
 		
-		 btn_Luu = new JButton("Lưu");
+		 btn_Luu = new JButton("Save");
 	
 		btn_Luu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -340,7 +345,7 @@ public class ClassesView extends JFrame {
 		btn_Luu.setBounds(516, 539, 97, 33);
 		classesPane.add(btn_Luu);
 		
-		 btn_Huy = new JButton("Huỷ bỏ");
+		 btn_Huy = new JButton("Cancel");
 		
 		btn_Huy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btn_Huy.setBounds(638, 539, 110, 33);
@@ -385,61 +390,33 @@ public class ClassesView extends JFrame {
 		textField_SoHSTD.setText("");
 		textField_TenLop.setText("");
 	}
-	
-	
-	public void addOrUpdateClass() {
-		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        String classCode = this.textField_MaLop.getText();
-        String className = this.textField_TenLop.getText();
-        int numOfCurentStudents = Integer.valueOf(this.textField_SoHSHT.getText());
-        int maximumNumOfStudents =Integer.valueOf(this.textField_SoHSTD.getText());;
-        
-        Classroom lop= new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
-        
-		if(this.model.CheckClass(lop)==true) {
-			this.model.update(lop);
-			for (int i = 0; i < tableModel.getRowCount(); i++) {
-				String id=tableModel.getValueAt(i, 0)+"";
-				if(id.equals(lop.getClassCode()+"")) {
-					tableModel.setValueAt(lop.getClassCode(), i, 0);
-					tableModel.setValueAt(lop.getClassName(), i, 1);
-					tableModel.setValueAt(lop.getNumberOfStudents()+"", i, 2);
-					tableModel.setValueAt(lop.getMaximumNumOfStudents()+"", i, 3);
-				}
-			}
-		}else {
-			this.model.addClassroom(lop);
-			tableModel.addRow(new Object[] {lop.getClassCode(),lop.getClassName(),lop.getNumberOfStudents(),lop.getMaximumNumOfStudents()});
-		}
-}
+	public void hideUI() {
+	    setVisible(false);
+	}
+	public String getClassName() {
+	    return textField_TenLop.getText();
+	}
 
-	public Classroom getSelectedClass() {
-		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-		int i_row= table.getSelectedRow();
-		String classCode = tableModel.getValueAt(i_row,0)+"";
-        String className = tableModel.getValueAt(i_row,1)+"";
-        int numOfCurentStudents = Integer.valueOf(tableModel.getValueAt(i_row,2)+"");
-        int maximumNumOfStudents =Integer.valueOf(tableModel.getValueAt(i_row,3)+"");
-        Classroom classes = new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
-		return classes;
+	public int getNumOfCurrentStudents() {
+	    return Integer.parseInt(textField_SoHSHT.getText());
 	}
-	public void showInfor_SeclectedClass() {
-		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-		int i_row= table.getSelectedRow();
-		String classCode = tableModel.getValueAt(i_row,0)+"";this.textField_MaLop.setText(classCode);
-        String className = tableModel.getValueAt(i_row,1)+"";this.textField_TenLop.setText(className);
-        int numOfCurentStudents = Integer.valueOf(tableModel.getValueAt(i_row,2)+"");this.textField_SoHSHT.setText(numOfCurentStudents+"");
-        int maximumNumOfStudents =Integer.valueOf(tableModel.getValueAt(i_row,3)+"");this.textField_SoHSTD.setText(maximumNumOfStudents+"");
-		
-        
-        
+
+	public int getMaximumNumOfStudents() {
+	    return Integer.parseInt(textField_SoHSTD.getText());
 	}
-	
-	
-	
+
+	public void setClassInfo(Classroom classroom) {
+		textField_MaLop.setText(classroom.getClassCode());
+	    textField_TenLop.setText(classroom.getClassName());
+	    textField_SoHSHT.setText(String.valueOf(classroom.getNumberOfStudents()));
+	    textField_SoHSTD.setText(String.valueOf(classroom.getMaximumNumOfStudents()));
+	}
+	public int getSelectedRowIndex() {
+	    return table.getSelectedRow();
+	}
 //Tran duong truong
 	
-	public String getClassCodeSearch() {
+	public String getClassCode() {
 		return textField_FindMaLop.getText();
 	}
 	public void searchClassListener(ActionListener listener) {
@@ -472,6 +449,15 @@ public class ClassesView extends JFrame {
 			 int index=table.getSelectedRow();;
 			 return index;
 	}
+	public void updateClassListener(ActionListener listener) {
+		  btn_CapNhat.addActionListener(listener);
+	 }
+	public void saveClassListener(ActionListener listener) {
+		btn_Luu.addActionListener(listener);
+	 }
+	public void CancelButtonListener(ActionListener listener) {
+	    btn_Huy.addActionListener(listener);
+	}
 	public void acessToListOfStudents() {
 		 table.addMouseListener(new MouseAdapter() {
 			
@@ -490,6 +476,7 @@ public class ClassesView extends JFrame {
 	            }
 	        });
 	}
+
 
 
 }
