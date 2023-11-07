@@ -85,7 +85,7 @@ public class AdminOperationController {
 		String[] result = searchInDatabase(id);
 
 		if (result != null) {
-			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete all of the samples?",
+			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete account?",
 					"Delete Account", JOptionPane.YES_NO_OPTION);
 
 			if (confirm == JOptionPane.YES_OPTION) {
