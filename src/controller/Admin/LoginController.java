@@ -3,6 +3,7 @@ package controller.Admin;
 import view.Admin.AdminHomeView;
 import view.Admin.CreateUserAccountsView;
 import view.Admin.LoginView;
+import view.Student.StudentAccountMainView;
 import view.Teacher.MainView;
 
 import java.awt.event.ActionEvent;
@@ -41,10 +42,13 @@ public class LoginController {
     	                    // Redirect to CreateUserAccountsView for admin
     	                    AdminHomeView adminView = new AdminHomeView();
     	                    adminView.setVisible(true);
-    	                } else {
+    	                } else if("teacher".equals(role)) {
     	                    // Redirect to MainView for teacher or student
     	                    MainView mainView = new MainView();
     	                    mainView.setVisible(true);
+    	                }else {
+    	                	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
+    	                	studentAccountMainView.setVisible(true);
     	                }
     	                loginView.dispose(); // Đóng cửa sổ đăng nhập
     	            } else {
