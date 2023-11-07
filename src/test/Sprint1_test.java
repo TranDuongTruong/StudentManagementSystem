@@ -1,6 +1,6 @@
 package test;
 
-import view.AdminAccount.LoginView;
+import view.Admin.LoginView;
 
 public class Sprint1_test {
 	public static void main(String[]args) {

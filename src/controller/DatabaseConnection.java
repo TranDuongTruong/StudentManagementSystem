@@ -268,7 +268,7 @@ public class DatabaseConnection {
 	        return new CreditsPerformance(numStudentsOwedMoreThan5,numStudentsOwed1To5,numStudentsNotOwed);
 	        
 	    }
-	  List<Student> retrieveStudentsCredited() {
+	  public List<Student> retrieveStudentsCredited() {
 		    System.out.println("Aaa");Connection con = connectToBB();
 		    List<Student> students = new ArrayList();
 		    int studentID;
