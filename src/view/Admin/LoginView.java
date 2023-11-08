@@ -34,10 +34,8 @@ public class LoginView extends JFrame {
         });
     }
 
-    public LoginView() {
-    	
+    public LoginView() {    	
         initializeUI();
-        LoginController controller = new LoginController(this); // Pass the view to the controller
         setVisible(true);
     }
 
