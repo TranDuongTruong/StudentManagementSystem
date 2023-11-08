@@ -32,8 +32,9 @@ public class StudentAccountMainView extends JFrame {
     JButton btn_Transcript ;
     JButton btn_Curriculum ;
     JButton btn_Examination ;
-
-
+    JButton btn_Information;
+    JButton btn_Schedule;
+    final JPanel content ;
 	/**
 	 * Launch the application.
 	 */
@@ -92,7 +93,7 @@ public class StudentAccountMainView extends JFrame {
 		Component verticalStrut_4 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_4);
 		
-		JButton btn_Information = new JButton("Information"); // Updated button label
+		 btn_Information = new JButton("Information"); // Updated button label
 		btn_Information.setMaximumSize(new Dimension(100, 20));
 		btn_Information.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Information);
@@ -100,11 +101,13 @@ public class StudentAccountMainView extends JFrame {
 		Component verticalStrut_1_1 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_1_1);
 		
-		JButton btn_Schedule = new JButton("Schedule"); // Updated button label
+		 btn_Schedule = new JButton("Schedule"); // Updated button label
 		btn_Schedule.setMaximumSize(new Dimension(100, 20));
 		btn_Schedule.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Schedule);
 		
+		
+	
 		Component verticalStrut_2_1 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_2_1);
 		
@@ -174,11 +177,95 @@ public class StudentAccountMainView extends JFrame {
 		
 		verticalBox_1.add(btn_Logout);
 		
+		 content = new JPanel();
+		content.setBounds(162, 0, 835, 640);
+		contentPane.add(content);
+		content.setLayout(null);
+		
+		JLabel label = new JLabel("New label");
+		label.setBounds(410, 220, 45, 13);
+		content.add(label);
+		
+		setButtonListener();
+		
 		//Basic Design --------------------------------------------------------
 		
 		
 		
 		
+	}
+	
+	public void setButtonListener() {
+		final ScheduleView scheduleView = new ScheduleView();
+		final InformationView infoView=new InformationView();
+		final ExaminationView examView=new  ExaminationView();
+		final CuriculumView curView=new CuriculumView();
+		final CourseView courView=new CourseView();
+		final TranscriptView transView=new TranscriptView();
+		
+		btn_Schedule.addActionListener(new ActionListener() {
+			
+		    public void actionPerformed(ActionEvent e) {	
+//		    	contentPane.add(content);
+//		        contentPane.add(scheduleView);
+//		        contentPane.revalidate();
+//		        contentPane.remove(content);
+//		        contentPane.repaint();
+		    	content.removeAll();
+		    	
+		        content.add(scheduleView);
+		        content.revalidate();	       
+		        content.repaint();
+		     
+		    }
+		});
+		 btn_CourseRegistration.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	content.removeAll();
+			        content.add(courView);
+			        content.revalidate();	       
+			        content.repaint();
+			    }
+			});
+		 
+	     btn_Transcript.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	content.removeAll();
+			        content.add(transView);
+			        content.revalidate();	       
+			        content.repaint();
+			    }
+			});
+	     btn_Curriculum.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	content.removeAll();
+			        content.add(curView);
+			        content.revalidate();	       
+			        content.repaint();
+			    }
+			});
+	     btn_Examination.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	content.removeAll();
+			        content.add(examView);
+			        content.revalidate();	       
+			        content.repaint();
+			    }
+			});
+	     btn_Information.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	content.removeAll();
+			        content.add(infoView);
+			        content.revalidate();	       
+			        content.repaint();
+			    }
+			});
+	     
 	}
 	// Helper method to set the visibility of the additional buttons
 	private void setAdditionalButtonsVisible(boolean visible) {
