@@ -111,7 +111,7 @@ public class ClassesView extends JFrame {
 		classesPane.add(panel);
 
 		ImageIcon imageIcon = new ImageIcon();
-		URL imageUrl = ClassesView.class.getClassLoader().getResource("Assert/DTULogo.png");
+		URL imageUrl = ClassesView.class.getClassLoader().getResource("Assert/teacher/DTULogo.png");
 		File file = new File(imageUrl.getPath());
 		imageIcon = new ImageIcon(file.getAbsolutePath());
 

@@ -76,7 +76,7 @@ public class MainView extends JFrame {
 		main_Panel.setLayout(null);
 		
 		ImageIcon imageIcon = new ImageIcon();
-		 URL imageUrl=MainView.class.getClassLoader().getResource("Assert/DTULogo.png");
+		 URL imageUrl=MainView.class.getClassLoader().getResource("Assert/teacher/DTULogo.png");
 	            File file = new File(imageUrl.getPath());
 	              imageIcon = new ImageIcon(file.getAbsolutePath());
 	              System.out.println(file.getAbsolutePath());
