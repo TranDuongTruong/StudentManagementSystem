@@ -15,7 +15,7 @@ public class CourseView extends JPanel {
 		setLayout(null);
 		this.setBounds(162, 0, 835, 640);
 		JButton button = new JButton("New button");
-		button.setBounds(182, 110, 85, 21);
+		button.setBounds(59, 45, 85, 21);
 		add(button);
 		
 		JButton button_1 = new JButton("New button");
