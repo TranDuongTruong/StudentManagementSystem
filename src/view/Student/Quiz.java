@@ -26,6 +26,9 @@ public class Quiz extends JFrame implements ActionListener {
         setBounds(50, 0, 1440, 850);
         getContentPane().setBackground(Color.WHITE);
         getContentPane().setLayout(null);
+    	
+        setExtendedState(JFrame.MAXIMIZED_BOTH);  // Thiet lập cửa sổ là full màn hình
+
         
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Assert/student/Examination/quiz.jpg"));
         JLabel image = new JLabel(i1);
@@ -286,6 +289,7 @@ public class Quiz extends JFrame implements ActionListener {
                 start(count);
             }
         }
+        
         
     }
     
