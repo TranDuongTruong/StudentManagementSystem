@@ -409,7 +409,7 @@ public class ClassesView extends JFrame {
 	public void setClassInfo(Classroom classroom) {
 		textField_MaLop.setText(classroom.getClassCode());
 	    textField_TenLop.setText(classroom.getClassName());
-	    textField_SoHSHT.setText(String.valueOf(classroom.getNumberOfStudents()));
+	    textField_SoHSHT.setText(String.valueOf(classroom.getNumOfCurentStudents()));
 	    textField_SoHSTD.setText(String.valueOf(classroom.getMaximumNumOfStudents()));
 	}
 	public int getSelectedRowIndex() {
