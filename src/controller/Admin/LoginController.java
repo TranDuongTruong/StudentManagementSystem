@@ -43,7 +43,7 @@ public class LoginController {
     	                    AdminHomeView adminView = new AdminHomeView();
     	                    adminView.setVisible(true);
     	                } else if("teacher".equals(role)) {
-    	                    // Redirect to MainView for teacher or student
+    	                    // Redirect to MainView for teacher 
     	                    MainView mainView = new MainView();
     	                    mainView.setVisible(true);
     	                }else {

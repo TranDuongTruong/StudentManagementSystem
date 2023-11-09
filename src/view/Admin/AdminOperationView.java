@@ -21,6 +21,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 
 
@@ -28,10 +30,11 @@ import java.awt.event.ActionEvent;
 public class AdminOperationView extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_Email;
-	private JTextField textField_Name;
+	private JTextField emailField;
+	private JTextField nameField;
 	private JTextField textField_ID;
 	private JTextField passwordField;
+	private JLabel errorLabel;
 
 	/**
 	 * Launch the application.
@@ -66,9 +69,9 @@ public class AdminOperationView extends JFrame {
 		emailLabel.setBounds(61, 144, 83, 20);
 		contentPane.add(emailLabel);
 		
-		textField_Email = new JTextField();
-		textField_Email.setBounds(150, 144, 200, 20);
-		contentPane.add(textField_Email);
+		emailField = new JTextField();
+		emailField.setBounds(150, 144, 200, 20);
+		contentPane.add(emailField);
 		
 		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -80,9 +83,9 @@ public class AdminOperationView extends JFrame {
 		nameLabel.setBounds(61, 111, 83, 20);
 		contentPane.add(nameLabel);
 		
-		textField_Name = new JTextField();
-		textField_Name.setBounds(150, 113, 200, 20);
-		contentPane.add(textField_Name);
+		nameField = new JTextField();
+		nameField.setBounds(150, 113, 200, 20);
+		contentPane.add(nameField);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 44, 523, 13);
@@ -102,8 +105,8 @@ public class AdminOperationView extends JFrame {
 		JButton updateButton = new JButton("Update");
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminOperationController.updateButtonClicked(textField_ID.getText(), textField_Email, passwordField, 
-						textField_Name, roleComboBox);
+				AdminOperationController.updateButtonClicked(textField_ID.getText(), emailField, passwordField, 
+						nameField, roleComboBox, errorLabel);
 			}
 		});
 		ImageIcon updateIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/submit.png"));
@@ -124,7 +127,7 @@ public class AdminOperationView extends JFrame {
 		backButton.setBounds(293, 263, 103, 30);
 		contentPane.add(backButton);
 		
-		JLabel errorLabel = new JLabel("");
+		errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setBounds(61, 312, 335, 20);
 		contentPane.add(errorLabel);
@@ -146,8 +149,8 @@ public class AdminOperationView extends JFrame {
 		JButton deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminOperationController.deleteButtonClicked(textField_ID.getText(), textField_Email, passwordField, 
-																		textField_Name, roleComboBox);
+				AdminOperationController.deleteButtonClicked(textField_ID.getText(), emailField, passwordField, 
+																		nameField, roleComboBox, errorLabel);
 			}
 		});
 		ImageIcon deleteIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/cancel1.png"));
@@ -158,7 +161,7 @@ public class AdminOperationView extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                AdminOperationController.searchButtonClicked(textField_ID.getText(), textField_Email, passwordField, textField_Name, roleComboBox);
+                AdminOperationController.searchButtonClicked(textField_ID.getText(), emailField, passwordField, nameField, roleComboBox, errorLabel);
             }
 		});
 		ImageIcon searchIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/loupe.png"));
@@ -170,5 +173,33 @@ public class AdminOperationView extends JFrame {
 		passwordField.setBounds(150, 177, 200, 20);
 		contentPane.add(passwordField);
 		passwordField.setColumns(10);
+		
+		
+		// Add focus listeners to clear error status when the user starts typing
+		emailField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                clearError();
+            }
+        });
+
+        passwordField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                clearError();
+            }
+        });
+
+        nameField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                clearError();
+            }
+        });
+	}
+
+	private void clearError() {
+		 errorLabel.setText("");
+	     emailField.setBackground(Color.WHITE);
+	     passwordField.setBackground(Color.WHITE);
+	     nameField.setBackground(Color.WHITE);
+		
 	}
 }

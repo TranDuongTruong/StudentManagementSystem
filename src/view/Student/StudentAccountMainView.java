@@ -32,8 +32,9 @@ public class StudentAccountMainView extends JFrame {
     JButton btn_Transcript ;
     JButton btn_Curriculum ;
     JButton btn_Examination ;
-
-
+    JButton btn_Information;
+    JButton btn_Schedule;
+    final JPanel content ;
 	/**
 	 * Launch the application.
 	 */
@@ -92,7 +93,7 @@ public class StudentAccountMainView extends JFrame {
 		Component verticalStrut_4 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_4);
 		
-		JButton btn_Information = new JButton("Information"); // Updated button label
+		 btn_Information = new JButton("Information"); // Updated button label
 		btn_Information.setMaximumSize(new Dimension(100, 20));
 		btn_Information.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Information);
@@ -100,11 +101,13 @@ public class StudentAccountMainView extends JFrame {
 		Component verticalStrut_1_1 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_1_1);
 		
-		JButton btn_Schedule = new JButton("Schedule"); // Updated button label
+		 btn_Schedule = new JButton("Schedule"); // Updated button label
 		btn_Schedule.setMaximumSize(new Dimension(100, 20));
 		btn_Schedule.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Schedule);
 		
+		
+	
 		Component verticalStrut_2_1 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_2_1);
 		
@@ -174,12 +177,129 @@ public class StudentAccountMainView extends JFrame {
 		
 		verticalBox_1.add(btn_Logout);
 		
+		 content = new JPanel();
+		content.setBounds(162, 0, 835, 630);
+		contentPane.add(content);
+		content.setLayout(null);
+		
+		JLabel label = new JLabel("New label");
+		label.setBounds(410, 220, 45, 13);
+		content.add(label);
+		
+		setButtonListener();
+		
 		//Basic Design --------------------------------------------------------
 		
 		
 		
 		
 	}
+	final ScheduleView scheduleView = new ScheduleView();
+	final InformationView infoView=new InformationView();
+	final ExaminationView examView=new  ExaminationView();
+	final CuriculumView curView=new CuriculumView();
+	final CourseView courView=new CourseView();
+	final TranscriptView transView=new TranscriptView();
+	boolean hasScheduleView = false;
+	boolean hasInformationView = false;
+	 boolean hasExaminationView = false;
+	 boolean hasCurriculumView = false;
+	 boolean hasCourseView = false;
+	 boolean hasTranscriptView = false;
+	public void setButtonListener() {
+
+		btn_Schedule.addActionListener(new ActionListener() {
+			
+		    public void actionPerformed(ActionEvent e) {	
+
+		    	contentPane.remove(content);removeContent();
+		    	
+		    	contentPane.add(scheduleView);
+		    	contentPane.invalidate();
+		    	contentPane.repaint();hasScheduleView=true;
+		    }
+		});
+		 btn_CourseRegistration.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	
+			    	contentPane.remove(content);removeContent();
+			    	contentPane.add(courView);	    	
+			    	contentPane.invalidate();
+			    	contentPane.repaint();hasCourseView =true;
+			    }
+			});
+		 
+	     btn_Transcript.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	contentPane.remove(content);removeContent();
+			    	contentPane.add(transView);
+			    	contentPane.invalidate();
+			    	contentPane.repaint();hasTranscriptView =true;
+			    }
+			});
+	     btn_Curriculum.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	contentPane.remove(content);removeContent();
+			    	contentPane.add(curView);
+			    	contentPane.invalidate();
+			    	contentPane.repaint();hasCurriculumView =true;
+			    }
+			});
+	     btn_Examination.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	contentPane.remove(content);removeContent();
+			    	contentPane.add(examView);
+			    	contentPane.invalidate();
+			    	contentPane.repaint();hasExaminationView =true;
+			    }
+			});
+	     btn_Information.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+			    	contentPane.remove(content);removeContent();
+			    	contentPane.add(infoView);
+			    	contentPane.invalidate();
+			    	contentPane.repaint();hasInformationView =true;
+			    }
+			});
+	     
+	}
+	public void removeContent() {
+		if (hasScheduleView) {
+			  contentPane.remove(scheduleView);
+			  hasScheduleView=false;
+			}
+		  if (hasInformationView) {
+		    contentPane.remove(infoView);
+		    hasInformationView = false;
+		  }
+
+		  if (hasExaminationView) {
+		    contentPane.remove(examView);
+		    hasExaminationView = false;
+		  }
+
+		  if (hasCurriculumView) {
+		    contentPane.remove(curView);
+		    hasCurriculumView = false;
+		  }
+
+		  if (hasCourseView) {
+		    contentPane.remove(courView);
+		    hasCourseView = false;
+		  }
+
+		  if (hasTranscriptView) {
+		    contentPane.remove(transView);
+		    hasTranscriptView = false;
+		  }
+		}
+
+	
 	// Helper method to set the visibility of the additional buttons
 	private void setAdditionalButtonsVisible(boolean visible) {
 	    btn_CourseRegistration.setVisible(visible);
