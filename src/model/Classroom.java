@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
+
 public class Classroom {
 	 	private String classCode;
 	    private String className;
@@ -114,6 +116,20 @@ public class Classroom {
 
 		public void setStudentList(List<Student> studentList) {
 			this.studentList = studentList;
+		}
+
+
+		public int getNumOfCurentStudents() {
+			return numOfCurentStudents;
+		}
+
+
+		public void setNumOfCurentStudents(int numOfCurentStudents) {
+			this.numOfCurentStudents = numOfCurentStudents;
+		}
+		
+		public void updateClassroom(Classroom a) {
+			
 		}
 
 		

@@ -62,7 +62,9 @@ public class ClassesManager {
 	public void setClassroomList(List<Classroom> classroomList) {
 		this.classroomList = classroomList;
 	}
-
+	public Classroom getClassroom(int index) {
+		return this.getClassroomList().get(index);
+	}
 	public boolean CheckClass(Classroom lop) {
 		for(Classroom classroom: classroomList)
 			if(classroom.getClassCode()==lop.getClassCode())
@@ -74,6 +76,16 @@ public class ClassesManager {
 		this.remove(lop);
 		this.addClassroom(lop);
 		
+	}
+
+	public void updateClassroom(Classroom updatedClassroom) {
+	    for (int i = 0; i < classroomList.size(); i++) {
+	        Classroom classroom = classroomList.get(i);
+	        if (classroom.getClassCode().equals(updatedClassroom.getClassCode())) {
+	            classroomList.set(i, updatedClassroom);
+	            break;
+	        }
+	    }
 	}
 
 	
