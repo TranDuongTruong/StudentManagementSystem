@@ -1,10 +1,15 @@
 package view.Student;
 
 import javax.swing.table.DefaultTableModel;
+
+import controller.Student.SechduleCtrl;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 
 import javax.swing.JFrame;
@@ -17,38 +22,95 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 
 public class ScheduleView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTable scheduleTable;
-
-  
+    private JTable colorTable;
+    JButton btnPeriviousWeek;
+    JButton btnNextWeek;
+    public int currentWeek=1;
     public ScheduleView() {
         setLayout(null);
         setBounds(162, 0, 835, 640);
 
-//        JPanel contentPane = new JPanel();
-//        contentPane.setBounds(0, 0, 835, 640);
-//        
-//
-//        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//        add(contentPane);
-//        contentPane.setLayout(null);
-
         // Create the schedule table
         scheduleTable = new JTable();
-        scheduleTable.setBounds(29, 211, 782, 371);
-        add(scheduleTable);
-        
+        scheduleTable.setBounds(10, 63, 600, 300);
+      //  add(scheduleTable);
+        scheduleTable .setRowHeight(50); 
         // Set table model with column names
         DefaultTableModel tableModel = new DefaultTableModel(
             new Object[][] {},
             new String[] {" ", " ", " ", " ", " ", " "," "," "}
         );
-        scheduleTable.setModel(tableModel);
+        scheduleTable.setModel(new DefaultTableModel(
+        	new Object[][] {
+        		{null, null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null, null},
+        	},
+        	new String[] {
+        		" ", " ", " ", " ", " ", " ", " ", " "
+        	}
+        ));
         Font tableFont = new Font("SansSerif", Font.PLAIN, 16);
         scheduleTable.setFont(tableFont);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBounds(10, 10, 815, 620);
+        add(panel);
+        panel.setLayout(null);
+        panel.add(scheduleTable);
+        
+        JLabel titleLb = new JLabel("Learning Schedule week 12: November 6, 2023 - November 12, 2023");
+        titleLb.setBounds(10, 10, 600, 43);
+        
+        panel.add(titleLb);
+        
+         btnNextWeek = new JButton("Next week");
+        btnNextWeek.setBounds(638, 63, 132, 32);
+        panel.add(btnNextWeek);
+        
+         btnPeriviousWeek = new JButton("Perivious week");
+        btnPeriviousWeek.setBounds(638, 118, 132, 32);
+        panel.add(btnPeriviousWeek);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBounds(10, 407, 795, 203);
+        panel.add(panel_1);
+        panel_1.setLayout(null);
+        
+        JLabel lblTableOfColor = new JLabel("Table of color annotations on the sechdule ");
+        lblTableOfColor.setBounds(10, 10, 378, 34);
+        panel_1.add(lblTableOfColor);
+        
+        colorTable = new JTable();
+        colorTable.setModel(new DefaultTableModel(
+        	new Object[][] {
+        		{"Color", "Class Mode Type Name", "Description"},
+        		{"Green", "Online Class", null},
+        		{"Yellow", "Offline Class", null},
+        	},
+        	new String[] {
+        		"New column", "New column", "New column"
+        	}
+        ));
+        colorTable .setRowHeight(40);
+        
+        
+        colorTable.getColumnModel().getColumn(0).setPreferredWidth(67);
+        colorTable.getColumnModel().getColumn(0).setMinWidth(22);
+        colorTable.getColumnModel().getColumn(0).setMaxWidth(70);
+        colorTable.setBounds(20, 54, 765, 120);
+        panel_1.add(colorTable);
         // Set custom cell renderer for background color
         scheduleTable.setDefaultRenderer(Object.class, new CustomCellRenderer());
         // Update the first row with week days
@@ -90,9 +152,42 @@ public class ScheduleView extends JPanel {
         
         
             updateSchedule(scheduleData);
+            SechduleCtrl sechualeCtrl=new SechduleCtrl(this);
+
             setVisible(true);
     }
-
+    public void setDataforSechduleTable() {
+    	 String[] weeksInRealTime=getWeekRealTime();
+         
+         String[] hour= {"7AM","9AM","1PM","3PM","6PM"};
+         Object[][] scheduleData = {
+                 {" ", " ", " ", " ", " ", " "," "," "},
+                 {" ", " ", " ", " ", " ", " "," "," "},
+                 {" ", " ", " ", " ", " ", " "," "," "},
+                 {" ", " ", " ", " ", " ", " "," "," "},
+                 {" ", " ", " ", " ", " ", " "," "," "},
+                 {" ", " ", " ", " ", " ", " "," "," "}
+             };
+         
+       
+         for(int i=0;i<6;i++) {
+         	if(i==0)
+         	for(int j=1;j<8;j++) {
+         		scheduleData[i][j]=weeksInRealTime[j-1];
+         		System.out.println(scheduleData[i][j]);
+         	}
+         	else {
+         		scheduleData[i][0]=hour[i-1];
+         	}
+         	
+         }
+        
+         
+           updateSchedule(scheduleData);
+           setVisible(true);
+    }
+    
+    
     public void updateSchedule(Object[][] data) {
         DefaultTableModel tableModel = (DefaultTableModel) scheduleTable.getModel();
         tableModel.setDataVector(data, new String[] {" ", " ", " ", " ", " ", " "," "," "});
@@ -113,17 +208,41 @@ public class ScheduleView extends JPanel {
             return cell;
         }
     }
+    public void nextWeekListener(ActionListener listener) {
+		  btnNextWeek.addActionListener(listener);
+	 }
+    public void periviousWeekListener(ActionListener listener) {
+    	btnPeriviousWeek.addActionListener(listener);
+	 }
+ 
+		/*
+		 * private String[] getWeekRealTime1() { LocalDate currentDate =
+		 * LocalDate.now();
+		 * 
+		 * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E dd-MM");
+		 * String[] weeks = new String[7];
+		 * 
+		 * for (int i = 0; i < 7; i++) { LocalDate currentWeekDate =
+		 * currentDate.with(DayOfWeek.of(i + 1)); String weekDay =
+		 * currentWeekDate.format(formatter); weeks[i] = getWeekDayName(i + 1) + " " +
+		 * weekDay; }
+		 * 
+		 * return weeks; }
+		 */
+    private String[] getWeekRealTime() {
+        LocalDate currentDate = LocalDate.now();
 
-    private String[]  getWeekRealTime() {
-    	 LocalDate currentDate = LocalDate.now();
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E dd-MM");
-         String[] weeks = new String[7];
+        // Tính toán ngày bắt đầu của tuần hiện tại
+        LocalDate startOfWeek = currentDate.with(DayOfWeek.MONDAY).plusWeeks(currentWeek - 1);
 
-         for (int i = 0; i < 7; i++) {
-             LocalDate currentWeekDate = currentDate.with(DayOfWeek.of(i + 1));
-             String weekDay = currentWeekDate.format(formatter);
-             weeks[i] = getWeekDayName(i + 1) + " " + weekDay;
-         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E dd-MM");
+        String[] weeks = new String[7];
+
+        for (int i = 0; i < 7; i++) {
+            LocalDate currentWeekDate = startOfWeek.plusDays(i);
+            String weekDay = currentWeekDate.format(formatter);
+            weeks[i] = getWeekDayName(i + 1) + " " + weekDay;
+        }
 
         return weeks;
     }

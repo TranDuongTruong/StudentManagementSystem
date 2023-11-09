@@ -29,7 +29,7 @@ public class Quiz extends JFrame implements ActionListener {
         
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Assert/student/Examination/quiz.jpg"));
         JLabel image = new JLabel(i1);
-        image.setBounds(0, 0, 1440, 392);
+        image.setBounds(117, -254, 1440, 392);
         getContentPane().add(image);
         
         qno = new JLabel();
