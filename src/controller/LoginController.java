@@ -1,7 +1,6 @@
 package controller;
 
-import view.AdminHomeView;
-import view.CreateUserAccountsView;
+
 import view.LoginView;
 import view.MainView;
 
@@ -35,15 +34,8 @@ public class LoginController {
     	            String role = getRoleForEmail(email); // Lấy vai trò từ cơ sở dữ liệu
 
     	            if (isValidLogin(email, password)) {
-    	                if ("admin".equals(role)) {
-    	                    // Redirect to CreateUserAccountsView for admin
-    	                    AdminHomeView adminView = new AdminHomeView();
-    	                    adminView.setVisible(true);
-    	                } else {
-    	                    // Redirect to MainView for teacher or student
     	                    MainView mainView = new MainView();
     	                    mainView.setVisible(true);
-    	                }
     	                loginView.dispose(); // Đóng cửa sổ đăng nhập
     	            } else {
     	                loginView.displayErrorMessage("Login failed. Invalid email or password.");
