@@ -27,6 +27,7 @@ public class ScheduleCtrl {
 		this.view = view;
 		view.nextWeekListener(new NextWeekListener());
 		view.periviousWeekListener(new PeriviousWeekListener() );
+		retrieveDataFromDatabase();
 	}
 	 private class NextWeekListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
