@@ -2,7 +2,7 @@ package view.Student;
 
 import javax.swing.table.DefaultTableModel;
 
-import controller.Student.SechduleCtrl;
+import controller.Student.ScheduleCtrl;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -60,6 +60,7 @@ public class ScheduleView extends JPanel {
         		" ", " ", " ", " ", " ", " ", " ", " "
         	}
         ));
+        
         Font tableFont = new Font("SansSerif", Font.PLAIN, 16);
         scheduleTable.setFont(tableFont);
         
@@ -152,9 +153,21 @@ public class ScheduleView extends JPanel {
         
         
             updateSchedule(scheduleData);
-            SechduleCtrl sechualeCtrl=new SechduleCtrl(this);
-
+            ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
+            
             setVisible(true);
+    }
+    public void setValueInTable(int rơw, int collum, Object data) {
+    	scheduleTable.setValueAt(data, rơw, collum);
+    	 // Tạo đối tượng DefaultTableCellRenderer
+    	   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+
+           // Set màu nền cho ô được chọn
+           renderer.setBackground(Color.YELLOW);
+
+           // Set renderer cho ô được chọn
+           ((Component) scheduleTable.getCellRenderer(rơw, collum)).setBackground(Color.YELLOW);
+           scheduleTable.repaint();
     }
     public void setDataforSechduleTable() {
     	 String[] weeksInRealTime=getWeekRealTime();
@@ -215,20 +228,7 @@ public class ScheduleView extends JPanel {
     	btnPeriviousWeek.addActionListener(listener);
 	 }
  
-		/*
-		 * private String[] getWeekRealTime1() { LocalDate currentDate =
-		 * LocalDate.now();
-		 * 
-		 * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E dd-MM");
-		 * String[] weeks = new String[7];
-		 * 
-		 * for (int i = 0; i < 7; i++) { LocalDate currentWeekDate =
-		 * currentDate.with(DayOfWeek.of(i + 1)); String weekDay =
-		 * currentWeekDate.format(formatter); weeks[i] = getWeekDayName(i + 1) + " " +
-		 * weekDay; }
-		 * 
-		 * return weeks; }
-		 */
+	
     private String[] getWeekRealTime() {
         LocalDate currentDate = LocalDate.now();
 
@@ -282,4 +282,11 @@ public class ScheduleView extends JPanel {
             return component;
         }
     }
+
+    
+
+
+
+
+
 }
