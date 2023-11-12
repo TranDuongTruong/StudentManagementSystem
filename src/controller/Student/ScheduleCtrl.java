@@ -17,22 +17,60 @@ import com.mysql.cj.xdevapi.Statement;
 import controller.DatabaseConnection;
 import model.ClassesManager;
 import model.Classroom;
+import model.Student;
 import view.Student.ScheduleView;
 import java.sql.*;
 public class ScheduleCtrl {
 	public ScheduleView view;
-
-	public ScheduleCtrl(ScheduleView view) {
+	public Student student;
+	String[] registeredClassCodes = {"C104","C105"};
+	public ScheduleCtrl(ScheduleView view, Student stu) {
 		super();
 		this.view = view;
+		
+		student=stu;
+		//System.out.println("aaaaaaaaaaaaaaaaaaaa"+stu.getStudentID());
+		registeredClassCodes=getRegisteredClassCodes();
 		view.nextWeekListener(new NextWeekListener());
 		view.periviousWeekListener(new PeriviousWeekListener() );
-		retrieveDataFromDatabase();
+		
+		retrieveDataFromDatabase(registeredClassCodes);
+	}
+	public String[] getRegisteredClassCodes() {
+	    List<String> registeredClassCodes = new ArrayList<>();
+	    DatabaseConnection db = new DatabaseConnection();
+	    Connection con = db.connectToBB();
+
+	    try {
+	        // Thực hiện truy vấn để lấy các mã lớp đã đăng ký của học sinh từ bảng "studentclassroom"
+	        String query = "SELECT classCode FROM studentclassroom WHERE studentID = ?";
+	        PreparedStatement pstmt = con.prepareStatement(query);
+	        pstmt.setString(1, Integer.toString(student.getStudentID()));
+	        ResultSet resultSet = pstmt.executeQuery();
+
+	        // Lặp qua các bản ghi trong ResultSet và lưu các mã lớp vào danh sách registeredClassCodes
+	        while (resultSet.next()) {
+	            String classCode = resultSet.getString("classCode");
+	            registeredClassCodes.add(classCode);
+	        }
+
+	        // Đóng kết nối và các đối tượng liên quan
+	        resultSet.close();
+	        pstmt.close();
+	        con.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // Chuyển đổi danh sách registeredClassCodes thành mảng String[]
+	    String[] classCodeArray = registeredClassCodes.toArray(new String[registeredClassCodes.size()]);
+
+	    return classCodeArray;
 	}
 	 private class NextWeekListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	view.currentWeek++;
-	        	view.setDataforSechduleTable();retrieveDataFromDatabase();
+	        	view.setDataforSechduleTable();retrieveDataFromDatabase(registeredClassCodes);
 	        }
 
 	       
@@ -40,67 +78,66 @@ public class ScheduleCtrl {
 	 private class PeriviousWeekListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	view.currentWeek--;
-	        	view.setDataforSechduleTable();
+	        	view.setDataforSechduleTable();retrieveDataFromDatabase(registeredClassCodes);
 	        }
 
 	       
 	    }
 	 public void SetSchedule() {
-		 Object[] data = retrieveDataFromDatabase();
+		 Object[] data = retrieveDataFromDatabase(registeredClassCodes);
 		  //  JTable scheduleTable = new JTable(data, weeksInRealTime);
 		 
 		 
 	 }
-	 private Object[] retrieveDataFromDatabase() {
-		    Object[] data = new Object[7][9]; // Kích thước của mảng dữ liệu tương ứng với JTable "schedule"
+	
+	 private Object[][] retrieveDataFromDatabase(String[] registeredClassCodes) {
+		    Object[][] data = new Object[7][9]; // Kích thước của mảng dữ liệu tương ứng với JTable "schedule"
 		    DatabaseConnection db = new DatabaseConnection();
 		    Connection con = db.connectToBB();
-
+		    
 		    try {
-		        // Thực hiện truy vấn để lấy dữ liệu từ bảng "schedule"
-		        String query = "SELECT * FROM schedule";
+		    	String query = "SELECT * FROM schedule WHERE classCode IN (";
+
+		    	// Tạo phần danh sách các mã lớp trong câu truy vấn
+		    	for (int i = 0; i < registeredClassCodes.length; i++) {
+		    	    query += "'" + registeredClassCodes[i] + "'";
+		    	    if (i < registeredClassCodes.length - 1) {
+		    	        query += ",";
+		    	    }
+		    	}
+
+		    	query += ")";
+		    	
+		    	
 		        java.sql.Statement stmt =  con.createStatement();
 		        ResultSet resultSet = ((java.sql.Statement) stmt).executeQuery(query);
-		        LocalDate start,end;
+
 		        // Lặp qua các bản ghi trong ResultSet và lưu dữ liệu vào mảng data
-		        
 		        while (resultSet.next()) {
-		        	
 		            String classCode = resultSet.getString("classCode");
 		            String dayOfWeek = resultSet.getString("dayOfWeek");
-		            
-		           
 		            String startTime = resultSet.getTime("startTime").toString();
-		           
 		            String endTime = resultSet.getTime("endTime").toString();
-		            
-		            
 		            Date startDay=resultSet.getDate("startDate");
 		            String startDate = startDay.toString();
 		            Date endDay= resultSet.getDate("endDate");
 		            String endDate = endDay.toString();
 		            
 		            String roomNumber = resultSet.getString("roomNumber");
-		           
-		           // System.out.println("Date:"+startDate+"\t"+startDay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()+"\n");
-		          
+		            System.out.println(classCode);
+		            
+		            
 		            if(checkDateTime(startDay,endDay))
 		            {
-		            
 		            int row = findRowIndex(startTime);
-		            // Tìm vị trí tương ứng trong mảng data dựa trên classCode và dayOfWeek
-		            int collum = findColumnIndex(dayOfWeek); // Hàm findColumnIndex để tìm vị trí cột tương ứng với ngày trong tuần
+		            int column = findColumnIndex(dayOfWeek);
+		            
+		            data[row][column] = new Object[] { classCode, dayOfWeek, startTime, endTime, startDate, endDate, roomNumber };
 		           
-		            
-		            System.out.println("ccccl: "+collum+"\t"+row+"\t"+dayOfWeek+startTime);
-		            
-		            List<Object> newData = new ArrayList<>(Arrays.asList(classCode, dayOfWeek, startTime, endTime, startDate, endDate, roomNumber));
-		            
-		            this.view.setValueInTable(row,collum,newData);
-		         
-		           // System.out.println(data);
+		            List<Object> newData = new ArrayList<>(Arrays.asList(classCode,startDate, endDate, roomNumber));
+		          //  System.out.println("dAY: "+startDate);
+		            this.view.setValueInTable(row,column,newData);
 		            }
-		            
 		        }
 
 		        // Đóng kết nối và các đối tượng liên quan
@@ -113,6 +150,8 @@ public class ScheduleCtrl {
 
 		    return data;
 		}
+	 
+	 
 	 private boolean checkDateTime(Date start, Date end) {
 		    LocalDate currentDate = LocalDate.now();
 		    LocalDate startOfWeek = currentDate.with(DayOfWeek.MONDAY).plusWeeks(this.view.currentWeek - 1);
@@ -121,12 +160,9 @@ public class ScheduleCtrl {
 		    
 		   LocalDate startDate = new Timestamp(start.getTime()).toLocalDateTime().toLocalDate();
 		  
-	        LocalDate endDate = new Timestamp(end.getTime()).toLocalDateTime().toLocalDate();
-	        
-		 
-		    
-		    boolean isStartDateValid = startDate.isBefore(startOfWeek) && endDate.isAfter(startOfWeek);		 	    
-		    System.out.println(isStartDateValid );
+	        LocalDate endDate = new Timestamp(end.getTime()).toLocalDateTime().toLocalDate();	    
+		    boolean isStartDateValid = startDate.isBefore(startOfWeek) && endDate.isAfter(startOfWeek)||startDate.isAfter(startOfWeek)&&startDate.isBefore(endOfWeek);	
+		    System.out.println(startOfWeek+"\t"+startDate+"\t"+isStartDateValid );
 		    return isStartDateValid ;
 		}
 	 private int findColumnIndex(String dayOfWeek) {

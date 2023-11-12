@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.Student;
 import view.Teacher.MainView;
 
 import java.awt.FlowLayout;
@@ -13,6 +14,7 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -34,7 +36,10 @@ public class StudentAccountMainView extends JFrame {
     JButton btn_Examination ;
     JButton btn_Information;
     JButton btn_Schedule;
-    final JPanel content ;
+    final JPanel content;
+    static Student student;
+    
+    
 	/**
 	 * Launch the application.
 	 */
@@ -42,7 +47,16 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StudentAccountMainView frame = new StudentAccountMainView();
+					 LocalDate localDate = LocalDate.now();
+					Student a=new Student(1, "AAA", localDate, "AAA", true, "AAA", 1, 2);
+					
+					System.out.println("aaaa");
+					   student=a;
+					StudentAccountMainView frame = new StudentAccountMainView(a);
+					
+					System.out.println("aaaa");
+					
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,9 +68,10 @@ public class StudentAccountMainView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StudentAccountMainView() {
+	public StudentAccountMainView(  Student student) {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+		this.student=student;
+		System.out.println("aaaaa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 677);
 		contentPane = new JPanel();
@@ -194,7 +209,7 @@ public class StudentAccountMainView extends JFrame {
 		
 		
 	}
-	final ScheduleView scheduleView = new ScheduleView();
+	final ScheduleView scheduleView = new ScheduleView(student);
 	final InformationView infoView=new InformationView();
 	final ExaminationView examView=new  ExaminationView();
 	final CuriculumView curView=new CuriculumView();
