@@ -12,10 +12,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Quiz extends JFrame implements ActionListener {
     
-    String questions[][] = new String[10][5];
+//    String questions[][] = new String[10][5];
+    private ArrayList<String[]> questionsList = new ArrayList<>();
     String answers[][] = new String[10][2];
     String useranswers[][] = new String[10][1];
     JLabel qno, question;
@@ -26,23 +28,37 @@ public class Quiz extends JFrame implements ActionListener {
     public static int timer = 15;
     public static int ans_given = 0;
     public static int count = 0;
-    public static int score = 0;
+    public static double score = 0;
     
     private Connection connection;
     private ResultSet questionsResultSet;
     
     Quiz() {
     	  // Khởi tạo kết nối đến CSDL
-        try {
-            connection = DatabaseConnection.connectToBB(); // Get the database connection
+    	 try {
+             connection = DatabaseConnection.connectToBB();
+             String sql = "SELECT * FROM questions";
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             questionsResultSet = preparedStatement.executeQuery();
 
-            String sql = "SELECT * FROM questions";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            questionsResultSet = preparedStatement.executeQuery();
+             while (questionsResultSet.next()) {
+                 String[] questionData = {
+                         questionsResultSet.getString("question_text"),
+                         questionsResultSet.getString("option1"),
+                         questionsResultSet.getString("option2"),
+                         questionsResultSet.getString("option3"),
+                         questionsResultSet.getString("option4"),
+                         questionsResultSet.getString("correct_option")
+                 };
+                 questionsList.add(questionData);
+             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+             answers = new String[questionsList.size()][2];
+             useranswers = new String[questionsList.size()][1];
+
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
 
         setBounds(50, 0, 1440, 850);
         getContentPane().setBackground(Color.WHITE);
@@ -110,6 +126,7 @@ public class Quiz extends JFrame implements ActionListener {
         lifeline.setBackground(new Color(30, 144, 255));
         lifeline.setForeground(Color.WHITE);
         lifeline.addActionListener(this);
+        
         getContentPane().add(lifeline);
         
         submit = new JButton("Submit");
@@ -141,7 +158,7 @@ public class Quiz extends JFrame implements ActionListener {
                 useranswers[count][0] = groupoptions.getSelection().getActionCommand();
             }
             
-            if (count == 8) {
+            if (count == questionsList.size() - 2) {
                 next.setEnabled(false);
                 submit.setEnabled(true);
             }
@@ -149,14 +166,18 @@ public class Quiz extends JFrame implements ActionListener {
             count++;
             start(count);
         } else if (ae.getSource() == lifeline) {
-            if (count == 2 || count == 4 || count == 6 || count == 8 || count == 9) {
-                opt2.setEnabled(false);
-                opt3.setEnabled(false);
-            } else {
-                opt1.setEnabled(false);
-                opt4.setEnabled(false);
-            }
-            lifeline.setEnabled(false);
+        	 if (count < questionsList.size()) {
+                 String correctAnswer = answers[count][1];
+
+                 if (opt1.getText().equals(correctAnswer) || opt3.getText().equals(correctAnswer)) {
+                     opt2.setEnabled(false);
+                     opt4.setEnabled(false);
+                 } else if (opt2.getText().equals(correctAnswer) || opt4.getText().equals(correctAnswer)) {
+                     opt1.setEnabled(false);
+                     opt3.setEnabled(false);
+                 }
+                 lifeline.setEnabled(false);
+             }
         } else if (ae.getSource() == submit) {
             ans_given = 1;
             if (groupoptions.getSelection() == null) {
@@ -166,11 +187,11 @@ public class Quiz extends JFrame implements ActionListener {
             }
 
             for (int i = 0; i < useranswers.length; i++) {
-                if (useranswers[i][0].equals(answers[i][1])) {
-                    score += 10;
-                } else {
-                    score += 0;
-                }
+            	 if (useranswers[i][0].equals(answers[i][1])) {
+            	        score += 10.0 / questionsList.size(); 
+            	  } else {
+            	       score += 0;
+            	  }
             }
             setVisible(false);
             new Score(score);
@@ -209,11 +230,11 @@ public class Quiz extends JFrame implements ActionListener {
             opt3.setEnabled(true);
             opt4.setEnabled(true);
             
-            if (count == 8) {
+            if (count == questionsList.size() - 2) {
                 next.setEnabled(false);
                 submit.setEnabled(true);
             }
-            if (count == 9) { // submit button
+            if (count == questionsList.size() - 1 ) { // submit button
                 if (groupoptions.getSelection() == null) {
                    useranswers[count][0] = "";
                 } else {
@@ -221,11 +242,11 @@ public class Quiz extends JFrame implements ActionListener {
                 }
                 
                 for (int i = 0; i < useranswers.length; i++) {
-                    if (useranswers[i][0].equals(answers[i][1])) {
-                        score += 10;
-                    } else {
-                        score += 0;
-                    }
+                	 if (useranswers[i][0].equals(answers[i][1])) {
+                	        score += 10.0 / questionsList.size(); 
+                	    } else {
+                	        score += 0;
+                	    }
                 }
                 setVisible(false);
                 new Score(score);
@@ -244,23 +265,20 @@ public class Quiz extends JFrame implements ActionListener {
     }
     
     public void start(int questionIndex) {
-        try {
-            if (questionsResultSet.next()) {
-                qno.setText("" + (questionIndex + 1) + ". ");
-                question.setText(questionsResultSet.getString("question_text"));
-                opt1.setText(questionsResultSet.getString("option1"));
-                opt1.setActionCommand(questionsResultSet.getString("option1"));
-                opt2.setText(questionsResultSet.getString("option2"));
-                opt2.setActionCommand(questionsResultSet.getString("option2"));
-                opt3.setText(questionsResultSet.getString("option3"));
-                opt3.setActionCommand(questionsResultSet.getString("option3"));
-                opt4.setText(questionsResultSet.getString("option4"));
-                opt4.setActionCommand(questionsResultSet.getString("option4"));
-                answers[questionIndex][1] = questionsResultSet.getString("correct_option");
-                groupoptions.clearSelection();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (questionIndex < questionsList.size()) {
+            String[] questionData = questionsList.get(questionIndex);
+            qno.setText("" + (questionIndex + 1) + ". ");
+            question.setText(questionData[0]);
+            opt1.setText(questionData[1]);
+            opt1.setActionCommand(questionData[1]);
+            opt2.setText(questionData[2]);
+            opt2.setActionCommand(questionData[2]);
+            opt3.setText(questionData[3]);
+            opt3.setActionCommand(questionData[3]);
+            opt4.setText(questionData[4]);
+            opt4.setActionCommand(questionData[4]);
+            answers[questionIndex][1] = questionData[5];
+            groupoptions.clearSelection();
         }
     }
     
