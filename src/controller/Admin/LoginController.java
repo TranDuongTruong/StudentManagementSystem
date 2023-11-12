@@ -47,8 +47,8 @@ public class LoginController {
     	                    MainView mainView = new MainView();
     	                    mainView.setVisible(true);
     	                }else {
-    	                	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
-    	                	studentAccountMainView.setVisible(true);
+//    	                	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
+//    	                	studentAccountMainView.setVisible(true);
     	                }
     	                loginView.dispose(); // Đóng cửa sổ đăng nhập
     	            } else {

@@ -1,6 +1,7 @@
 package model;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 public class Student {
 	  	private int studentID;
 	 	private String name;
@@ -10,7 +11,10 @@ public class Student {
 	    private String phoneNumber;
 	    private int creditsCompleted;
 	    private int creditsOwed;
-	    public Student(int studentID, String name, LocalDate dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
+	    
+	    private List<Classroom> classroomList;
+	    
+ 	    public Student(int studentID, String name, LocalDate dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
 	        this.studentID = studentID; 
 	        this.name = name;
 	        this.dob = dob;
@@ -20,8 +24,42 @@ public class Student {
 	        this.creditsCompleted = creditsCompleted;
 	        this.creditsOwed = creditsOwed;
 	    }
+ 	    
+ 	    
+ 	    
 
-	    public void SetStudent(Student st) {
+	    public Student(int studentID, String name, LocalDate dob, String address, boolean gender, String phoneNumber,
+				int creditsCompleted, int creditsOwed, List<Classroom> classroomList) {
+			super();
+			this.studentID = studentID;
+			this.name = name;
+			this.dob = dob;
+			this.address = address;
+			this.gender = gender;
+			this.phoneNumber = phoneNumber;
+			this.creditsCompleted = creditsCompleted;
+			this.creditsOwed = creditsOwed;
+			this.classroomList = classroomList;
+		}
+
+
+
+
+		public List<Classroom> getClassroomList() {
+			return classroomList;
+		}
+
+
+
+
+		public void setClassroomList(List<Classroom> classroomList) {
+			this.classroomList = classroomList;
+		}
+
+
+
+
+		public void SetStudent(Student st) {
 	        this.studentID = st.studentID; 
 	        this.name = st.name;
 	        this.dob = st.dob;
@@ -31,6 +69,10 @@ public class Student {
 	        this.creditsCompleted = st.creditsCompleted;
 	        this.creditsOwed = st.creditsOwed;
 	    }
+	  
+	    
+	    
+	    
 	    public int getStudentID() {
 	        return studentID;
 	    }

@@ -3,6 +3,7 @@ package view.Student;
 import javax.swing.table.DefaultTableModel;
 
 import controller.Student.ScheduleCtrl;
+import model.Student;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -33,7 +34,9 @@ public class ScheduleView extends JPanel {
     JButton btnPeriviousWeek;
     JButton btnNextWeek;
     public int currentWeek=1;
-    public ScheduleView() {
+   
+    public ScheduleView(Student student) {
+    	
         setLayout(null);
         setBounds(162, 0, 835, 640);
 
@@ -60,6 +63,7 @@ public class ScheduleView extends JPanel {
         		" ", " ", " ", " ", " ", " ", " ", " "
         	}
         ));
+        scheduleTable.getColumnModel().getColumn(0).setPreferredWidth(80);
         
         Font tableFont = new Font("SansSerif", Font.PLAIN, 16);
         scheduleTable.setFont(tableFont);
@@ -143,7 +147,7 @@ public class ScheduleView extends JPanel {
         	if(i==0)
         	for(int j=1;j<8;j++) {
         		scheduleData[i][j]=weeksInRealTime[j-1];
-        		System.out.println(scheduleData[i][j]);
+        		//System.out.println(scheduleData[i][j]);
         	}
         	else {
         		scheduleData[i][0]=hour[i-1];
@@ -153,12 +157,12 @@ public class ScheduleView extends JPanel {
         
         
             updateSchedule(scheduleData);
-            ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
+            ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this,student);
             
             setVisible(true);
     }
-    public void setValueInTable(int rơw, int collum, Object data) {
-    	scheduleTable.setValueAt(data, rơw, collum);
+    public void setValueInTable(int row, int column, Object data) {
+    	scheduleTable.setValueAt(data, row, column);
     	 // Tạo đối tượng DefaultTableCellRenderer
     	   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 
@@ -166,7 +170,12 @@ public class ScheduleView extends JPanel {
            renderer.setBackground(Color.YELLOW);
 
            // Set renderer cho ô được chọn
-           ((Component) scheduleTable.getCellRenderer(rơw, collum)).setBackground(Color.YELLOW);
+           ((Component) scheduleTable.getCellRenderer(row, column)).setBackground(Color.YELLOW);
+           int fontSize=1;
+           Component component = scheduleTable.prepareRenderer(renderer, row, column);
+           Font font = component.getFont().deriveFont(Font.PLAIN, fontSize);
+           component.setFont(font);
+         
            scheduleTable.repaint();
     }
     public void setDataforSechduleTable() {
@@ -187,7 +196,7 @@ public class ScheduleView extends JPanel {
          	if(i==0)
          	for(int j=1;j<8;j++) {
          		scheduleData[i][j]=weeksInRealTime[j-1];
-         		System.out.println(scheduleData[i][j]);
+         	//	System.out.println(scheduleData[i][j]);
          	}
          	else {
          		scheduleData[i][0]=hour[i-1];
