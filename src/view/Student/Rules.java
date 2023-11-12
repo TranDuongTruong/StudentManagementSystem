@@ -31,9 +31,9 @@ public class Rules extends JFrame implements ActionListener{
         	        "4. **Time Management**: Each question has 15 seconds; answer quickly." + "<br><br>" +
         	        "5. **Use the 'Next' Button**: After answering, click 'Next' to proceed." + "<br><br>" +
         	        "6. **Avoid Distractions**: Stay focused, don't open unrelated apps/websites." + "<br><br>" +
-        	        "7. **Follow Question Order**: Answer in order, easier to harder. Submit after 10 questions." + "<br><br>" +
+        	        "7. **Follow Question Order**: Answer in order, easier to harder. Submit after all questions." + "<br><br>" +
         	        "8. **Careful Answering**: Read questions carefully, check for errors." + "<br><br>" +
-        	        "9. **Submit on Time**: Submit after 10 questions." + "<br><br>" +
+        	        "9. **Submit on Time**: Submit after all questions." + "<br><br>" +
         	        "Good luck, follow the rules for a fair test-taking experience." + "<br><br>" +
         	    "<html>"
         	);
@@ -75,10 +75,11 @@ public class Rules extends JFrame implements ActionListener{
             new Quiz();
             
         } 
-//            else {
-//            setVisible(false);
-//            new Login();
-//        }
+        else {
+        	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
+        	studentAccountMainView.setVisible(true);
+        	setVisible(false);
+        }
     }
     
     public static void main(String[] args) {
