@@ -126,6 +126,7 @@ public class Quiz extends JFrame implements ActionListener {
         lifeline.setBackground(new Color(30, 144, 255));
         lifeline.setForeground(Color.WHITE);
         lifeline.addActionListener(this);
+        
         getContentPane().add(lifeline);
         
         submit = new JButton("Submit");
@@ -165,14 +166,18 @@ public class Quiz extends JFrame implements ActionListener {
             count++;
             start(count);
         } else if (ae.getSource() == lifeline) {
-        	 if (count % 2 == 0) {
-                 opt2.setEnabled(false);
-                 opt3.setEnabled(false);
-             } else {
-                 opt1.setEnabled(false);
-                 opt4.setEnabled(false);
+        	 if (count < questionsList.size()) {
+                 String correctAnswer = answers[count][1];
+
+                 if (opt1.getText().equals(correctAnswer) || opt3.getText().equals(correctAnswer)) {
+                     opt2.setEnabled(false);
+                     opt4.setEnabled(false);
+                 } else if (opt2.getText().equals(correctAnswer) || opt4.getText().equals(correctAnswer)) {
+                     opt1.setEnabled(false);
+                     opt3.setEnabled(false);
+                 }
+                 lifeline.setEnabled(false);
              }
-             lifeline.setEnabled(false);
         } else if (ae.getSource() == submit) {
             ans_given = 1;
             if (groupoptions.getSelection() == null) {
