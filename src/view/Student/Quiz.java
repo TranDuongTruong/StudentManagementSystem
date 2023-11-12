@@ -28,7 +28,7 @@ public class Quiz extends JFrame implements ActionListener {
     public static int timer = 15;
     public static int ans_given = 0;
     public static int count = 0;
-    public static int score = 0;
+    public static double score = 0;
     
     private Connection connection;
     private ResultSet questionsResultSet;
@@ -187,11 +187,11 @@ public class Quiz extends JFrame implements ActionListener {
             }
 
             for (int i = 0; i < useranswers.length; i++) {
-                if (useranswers[i][0].equals(answers[i][1])) {
-                    score += 10;
-                } else {
-                    score += 0;
-                }
+            	 if (useranswers[i][0].equals(answers[i][1])) {
+            	        score += 10.0 / questionsList.size(); 
+            	  } else {
+            	       score += 0;
+            	  }
             }
             setVisible(false);
             new Score(score);
@@ -242,11 +242,11 @@ public class Quiz extends JFrame implements ActionListener {
                 }
                 
                 for (int i = 0; i < useranswers.length; i++) {
-                    if (useranswers[i][0].equals(answers[i][1])) {
-                        score += 10;
-                    } else {
-                        score += 0;
-                    }
+                	 if (useranswers[i][0].equals(answers[i][1])) {
+                	        score += 10.0 / questionsList.size(); 
+                	    } else {
+                	        score += 0;
+                	    }
                 }
                 setVisible(false);
                 new Score(score);
