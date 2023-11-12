@@ -19,6 +19,7 @@ import controller.DatabaseConnection;
 
 public class LoginController {
     private final LoginView loginView;
+    public static int studentId ;
 
     public LoginController(LoginView loginView) {
         this.loginView = loginView;
@@ -47,6 +48,7 @@ public class LoginController {
     	                    MainView mainView = new MainView();
     	                    mainView.setVisible(true);
     	                }else {
+    	                	studentId = getStudentIDForEmail(email);
     	                	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
     	                	studentAccountMainView.setVisible(true);
     	                }
@@ -147,5 +149,34 @@ public class LoginController {
     }
     public void displayLoginView() {
         loginView.setVisible(true);
+    }
+    private int getStudentIDForEmail(String email) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.connectToBB();
+            String query = "SELECT studentID FROM accounts WHERE email = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("studentID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return -1; // Trả về -1 nếu không tìm thấy studentID
     }
 }
