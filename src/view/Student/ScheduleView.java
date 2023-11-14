@@ -35,7 +35,7 @@ public class ScheduleView extends JPanel {
     JButton btnNextWeek;
     public int currentWeek=1;
    
-    public ScheduleView(Student student) {
+    public ScheduleView() {
     	
         setLayout(null);
         setBounds(162, 0, 835, 640);
@@ -157,7 +157,7 @@ public class ScheduleView extends JPanel {
         
         
             updateSchedule(scheduleData);
-            ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this,student);
+            ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
             
             setVisible(true);
     }

@@ -245,7 +245,7 @@ public class StudentAccountMainView extends JFrame {
 		
 		
 	}
-	final ScheduleView scheduleView = new ScheduleView(student);
+	final ScheduleView scheduleView = new ScheduleView();
 	final InformationView infoView=new InformationView();
 	final ExaminationView examView=new  ExaminationView();
 	final CuriculumView curView=new CuriculumView();

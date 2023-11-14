@@ -15,6 +15,7 @@ import org.w3c.dom.css.Rect;
 import com.mysql.cj.xdevapi.Statement;
 
 import controller.DatabaseConnection;
+import controller.Admin.LoginController;
 import model.ClassesManager;
 import model.Classroom;
 import model.Student;
@@ -22,14 +23,14 @@ import view.Student.ScheduleView;
 import java.sql.*;
 public class ScheduleCtrl {
 	public ScheduleView view;
-	public Student student;
+	public int studentID;
 	String[] registeredClassCodes = {"C104","C105"};
-	public ScheduleCtrl(ScheduleView view, Student stu) {
+	public ScheduleCtrl(ScheduleView view) {
 		super();
 		this.view = view;
 		
-		student=stu;
-		System.out.println("aaaaaaaaaaaaaaaaaaaa"+stu.getStudentID());
+		studentID= LoginController.studentId;
+		//System.out.println("aaaaaaaaaaaaaaaaaaaa"+stu.getStudentID());
 		registeredClassCodes=getRegisteredClassCodes();
 		view.nextWeekListener(new NextWeekListener());
 		view.periviousWeekListener(new PeriviousWeekListener() );
@@ -45,7 +46,7 @@ public class ScheduleCtrl {
 	        // Thực hiện truy vấn để lấy các mã lớp đã đăng ký của học sinh từ bảng "studentclassroom"
 	        String query = "SELECT classCode FROM studentclassroom WHERE studentID = ?";
 	        PreparedStatement pstmt = con.prepareStatement(query);
-	        pstmt.setString(1, Integer.toString(student.getStudentID()));
+	        pstmt.setString(1, Integer.toString(studentID));
 	        ResultSet resultSet = pstmt.executeQuery();
 
 	        // Lặp qua các bản ghi trong ResultSet và lưu các mã lớp vào danh sách registeredClassCodes
