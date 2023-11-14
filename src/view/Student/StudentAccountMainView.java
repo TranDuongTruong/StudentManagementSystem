@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.DatabaseConnection;
+import controller.Admin.LoginController;
 import model.Student;
 import view.Teacher.MainView;
 
@@ -14,6 +16,10 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.io.File;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,12 +53,9 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					 LocalDate localDate = LocalDate.now();
-					Student a=new Student(1, "AAA", localDate, "AAA", true, "AAA", 1, 2);
-					
-					System.out.println("aaaa");
-					   student=a;
-					StudentAccountMainView frame = new StudentAccountMainView(a);
+					LoginController.studentId=2;
+					retrieveStudent();
+					StudentAccountMainView frame = new StudentAccountMainView();
 					
 					System.out.println("aaaa");
 					
@@ -65,12 +68,45 @@ public class StudentAccountMainView extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public StudentAccountMainView(  Student student) {
+	public static void retrieveStudent() {
+		 DatabaseConnection db = new DatabaseConnection();
+		    Connection con = db.connectToBB();
+		    int studentID;
+		    String name;
+		    LocalDate dob;
+		    String address;
+		    boolean gender;
+		    String phoneNumber;
+		    int creditsCompleted;
+		    int creditsOwed;
+		    
+		    try {
+		        String query =  "SELECT * FROM student WHERE studentID = ?";
+		        PreparedStatement stmt = con.prepareStatement(query);
+		        stmt.setInt(1, LoginController.studentId);
+		        ResultSet rs = stmt.executeQuery();
+		        while (rs.next()) {
+		            studentID = rs.getInt("studentID");
+		            name = rs.getString("name");
+		            Date dobDate = rs.getDate("dob");
+		            dob = dobDate.toLocalDate();
+		            address = rs.getString("address");
+		            gender = rs.getBoolean("gender");
+		            phoneNumber = rs.getString("phoneNumber");
+		            creditsCompleted = rs.getInt("creditsCompleted");
+		            creditsOwed = rs.getInt("creditsOwed");
+		            System.out.println("Aaa"+creditsOwed);
+		             student = new Student(studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed);
+		           
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    
+	}
+	public StudentAccountMainView(  ) {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.student=student;
+	
 		System.out.println("aaaaa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 677);

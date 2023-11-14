@@ -29,7 +29,7 @@ public class ScheduleCtrl {
 		this.view = view;
 		
 		student=stu;
-		//System.out.println("aaaaaaaaaaaaaaaaaaaa"+stu.getStudentID());
+		System.out.println("aaaaaaaaaaaaaaaaaaaa"+stu.getStudentID());
 		registeredClassCodes=getRegisteredClassCodes();
 		view.nextWeekListener(new NextWeekListener());
 		view.periviousWeekListener(new PeriviousWeekListener() );
