@@ -49,8 +49,8 @@ public class LoginController {
     	                    mainView.setVisible(true);
     	                }else {
     	                	studentId = getStudentIDForEmail(email);
-//    	                	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
-//    	                	studentAccountMainView.setVisible(true);
+    	                	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
+    	                	studentAccountMainView.setVisible(true);
 
     	                }
     	                loginView.dispose(); // Đóng cửa sổ đăng nhập

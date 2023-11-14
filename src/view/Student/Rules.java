@@ -76,9 +76,9 @@ public class Rules extends JFrame implements ActionListener{
             
         } 
         else {
-        	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
-        	studentAccountMainView.setVisible(true);
-        	setVisible(false);
+        	//StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
+        	//studentAccountMainView.setVisible(true);
+        	//setVisible(false);
         }
     }
     

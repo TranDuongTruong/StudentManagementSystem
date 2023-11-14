@@ -53,7 +53,7 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginController.studentId=2;
+				//LoginController.studentId=2;
 					retrieveStudent();
 					StudentAccountMainView frame = new StudentAccountMainView();
 					
@@ -104,7 +104,7 @@ public class StudentAccountMainView extends JFrame {
 		    }
 		    
 	}
-	public StudentAccountMainView(  ) {
+	public StudentAccountMainView() {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 	
 		System.out.println("aaaaa");

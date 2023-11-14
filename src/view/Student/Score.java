@@ -45,8 +45,8 @@ public class Score extends JFrame implements ActionListener {
 //        new Login();
     	
     	//StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
-    	// studentAccountMainView.setVisible(true);
-    	setVisible(false);
+    	//studentAccountMainView.setVisible(true);
+    	//setVisible(false);
 
     }
 
