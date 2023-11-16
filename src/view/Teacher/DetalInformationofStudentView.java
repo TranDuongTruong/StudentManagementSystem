@@ -185,6 +185,7 @@ public class DetalInformationofStudentView extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(28, 47, 623, 24);
 		contentPane.add(separator);
+		
 		SetStudentInfo(stu);
 		setVisible(true);
 	}

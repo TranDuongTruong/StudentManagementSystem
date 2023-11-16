@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,26 @@ public class Classroom {
 	    private int maximumNumOfStudents;
 	    private List<Student> studentList;
 	    
+	    private List<LocalDateTime> thoiGian;
+        private String diadiem;
+        private int soTinchi;
 	    
-	    public int getMaximumNumOfStudents() {
+        
+	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents,
+				List<Student> studentList, List<LocalDateTime> thoiGian, String diadiem, int soTinchi) {
+			super();
+			this.classCode = classCode;
+			this.className = className;
+			this.numOfCurentStudents = numOfCurentStudents;
+			this.maximumNumOfStudents = maximumNumOfStudents;
+			this.studentList = studentList;
+			this.thoiGian = thoiGian;
+			this.diadiem = diadiem;
+			this.soTinchi = soTinchi;
+		}
+
+
+		public int getMaximumNumOfStudents() {
 			return maximumNumOfStudents;
 		}
 

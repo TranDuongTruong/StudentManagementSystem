@@ -4,6 +4,7 @@ import view.Student.ExaminationView;
 import javax.swing.table.DefaultTableModel;
 
 import controller.DatabaseConnection;
+import controller.Admin.LoginController;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +20,7 @@ public class ExaminationController {
     }
 
     public void loadDataFromDatabase() {
+        int studentId = LoginController.studentId;
 
         try {
             // Establish a connection
@@ -28,7 +30,12 @@ public class ExaminationController {
             Statement statement = connection.createStatement();
 
             // Execute the query to get data from the database
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM classroom");
+            String query = "SELECT classroom.classCode, classroom.className " +
+                           "FROM classroom " +
+                           "JOIN studentclassroom ON classroom.classCode = studentclassroom.classCode " +
+                           "WHERE studentclassroom.studentID = " + studentId;
+
+            ResultSet resultSet = statement.executeQuery(query);
 
             // Create a DefaultTableModel to hold the data
             DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
@@ -51,4 +58,5 @@ public class ExaminationController {
             e.printStackTrace();
         }
     }
+
 }
