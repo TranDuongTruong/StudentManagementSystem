@@ -41,7 +41,7 @@ public class LoginView extends JFrame {
 
     private void initializeUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 503, 371);
+        setBounds(100, 100, 656, 456);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -51,27 +51,27 @@ public class LoginView extends JFrame {
         JLabel logoLabel = new JLabel();
         ImageIcon logoIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/login.png"));
         logoLabel.setIcon(logoIcon);
-        logoLabel.setBounds(150, 11, 200, 112);
+        logoLabel.setBounds(208, 29, 200, 112);
         contentPane.add(logoLabel);
 
         // Email Label and Field
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-        emailLabel.setBounds(77, 150, 83, 20);
+        emailLabel.setBounds(131, 187, 83, 20);
         contentPane.add(emailLabel);
 
         emailField = new JTextField();
-        emailField.setBounds(170, 150, 200, 20);
+        emailField.setBounds(261, 189, 200, 20);
         contentPane.add(emailField);
 
         // Password Label and Field
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-        passwordLabel.setBounds(77, 180, 83, 20);
+        passwordLabel.setBounds(131, 240, 83, 20);
         contentPane.add(passwordLabel);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(170, 180, 200, 20);
+        passwordField.setBounds(261, 242, 200, 20);
         contentPane.add(passwordField);
 
         // Login Button
@@ -82,20 +82,20 @@ public class LoginView extends JFrame {
         });
         ImageIcon loginIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/login1.png"));
         loginButton.setIcon(loginIcon);
-        loginButton.setBounds(77, 229, 100, 30);
+        loginButton.setBounds(126, 316, 100, 30);
         contentPane.add(loginButton);
 
         // Cancel Button
         cancelButton = new JButton("Cancel");
         ImageIcon cancelIcon = new ImageIcon(LoginView.class.getResource("/Assert/admin/cancel1.png"));
         cancelButton.setIcon(cancelIcon);
-        cancelButton.setBounds(260, 229, 111, 30);
+        cancelButton.setBounds(297, 316, 111, 30);
         contentPane.add(cancelButton);
 
         // Error Label for displaying error messages
         errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
-        errorLabel.setBounds(77, 260, 300, 20);
+        errorLabel.setBounds(126, 289, 300, 20);
         contentPane.add(errorLabel);
 
         JLabel lblNewLabel = new JLabel("Login");
