@@ -15,10 +15,11 @@ import model.ClassesManager;
 public class ClassesController  {
     ClassesManager classes;
     public ClassesView view;
-   
+    DatabaseConnection db;
     public ClassesController(ClassesView view){
     	classes=new ClassesManager();
         this.view=view;
+        db=new DatabaseConnection();
         DatabaseConnection a= new DatabaseConnection();
         classes=a.retrieveClassesFromDatabase();
         view.searchClassListener(new SearchListener() );
@@ -64,6 +65,7 @@ public class ClassesController  {
         	classroom=view.getNewClass();
         	classes.addClassroom(classroom);
         	displayClasses();
+        	db.addClassToDatabase(classroom);
         }
 
        
@@ -71,8 +73,10 @@ public class ClassesController  {
     private class DeleteClassListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {       	
         	int index= view.getIndexofClassToDelete();
+        	db.deleteClassFromDatabase(classes.getClassroom(index).getClassCode());
         	classes.remove(index);
         	displayClasses();
+        
         }
 
        
@@ -87,6 +91,7 @@ public class ClassesController  {
 	            // Hiển thị thông tin lớp lên các textfield
 	            view.setClassInfo(view.currentClassroom);
 	        }
+	        
 	    }
 	}
     private class SaveClassListener implements ActionListener {
@@ -99,7 +104,7 @@ public class ClassesController  {
                 
                 // Lưu lại thông tin lớp trong danh sách lớp
                 classes.updateClassroom(view.currentClassroom);
-                
+                db.updateClassInDatabase(view.currentClassroom);
                 // Hiển thị lại danh sách lớp
                 displayClasses();
                 

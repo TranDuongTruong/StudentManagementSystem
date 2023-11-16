@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 import com.mysql.cj.result.LocalDateTimeValueFactory;
 
+import controller.DatabaseConnection;
 import model.Classroom;
 import model.Student;
 import view.Teacher.MainView;
@@ -22,7 +23,7 @@ import view.Teacher.StudentView;
 
 public class StudentController implements ActionListener{
 	public StudentView studentView;
-	List<Student> studentList;
+	List<Student> studentList;DatabaseConnection db;
 	public Classroom classRoom;
 	 
 	public Classroom getClassRoom() {
@@ -41,6 +42,7 @@ public class StudentController implements ActionListener{
 		super();
 		this.studentView = view;
 		this.classRoom=classRoom;
+		db=new DatabaseConnection();
 		view.searchStudentListener(new SearchListener());
 		view.huyTimListener(new HuyTimListener());
 		view.addStudentListener(new AddNewStudentListener ());
@@ -107,12 +109,13 @@ public class StudentController implements ActionListener{
 	        //	}
 	        	System.out.println("adding");
 	        
-	        	
+	        	db.addStudentToDatabase(st);
 
 	        }
 	    }
 	 private class DeleteStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
+	        	db.deleteStudentFromDatabase(studentView.getIndexofSelectedRow());
 	        	classRoom.removeStudent(studentView.getIndexofSelectedRow());
 	        	displayListOfStudent();
 	        	
@@ -144,7 +147,7 @@ public class StudentController implements ActionListener{
 	        	
 	        	displayListOfStudent();
 	        	studentView.xoaForm();
-	        	
+	        	db.updateStudentInDatabase(st);
 	        }
 	      
 	    }

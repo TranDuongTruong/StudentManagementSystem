@@ -19,9 +19,9 @@ public class PerformanceController_Admin {
 		
 		
 		this.performanceView_Admin = performanceView_Admin;		
-		System.out.println("Aaaaaaaaaa22");
+		
 		performanceView_Admin.creditsChartListener(new CreditsChartListener());
-		System.out.println("Aaaaaaaaaa2232");
+		
 		
 	}
 	
@@ -48,13 +48,6 @@ public class PerformanceController_Admin {
         }
       
     }
-	public static void main(String []args) {
-//		DatabaseConnection con=new DatabaseConnection();
-//		
-//		if(con==null) System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-//		List<Student> student=con.retrieveStudentsCredited();
-//		
-    	//System.out.println(student.get(0).getCreditsOwed());
-	}
+	
 	
 }

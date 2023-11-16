@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="spm">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="C:/Users/ADmin/eclipse/java-2023-03/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="spm.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.AdminHomeView (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.AdminHomeView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.AdminOperationView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.ClassesView (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.ClassesView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.CreateUserAccountsView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.CreditsPerformance.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.DatabaseConnection.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.DetalInformationofStudentView (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.DetalInformationofStudentView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.DisplayUserAccountsView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.LoginView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.mainInterface.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.MainView (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.MainView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.PerformanceController_Admin.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.PerformanceView_Admin.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.Rules.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.ScheduleFrame (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.Sprint1_test.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.StudentAccountMainView (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.StudentAccountMainView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.StudentController.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.StudentView (1).classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.StudentView.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.test.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <path id="run.ttt.classpath">
+        <path refid="spm.classpath"/>
+        <pathelement location="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
+        <pathelement location="src/Assert/Library/jfreechart-1.5.0.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="spm.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="AdminHomeView (1)">
+        <java classname="view.Admin.AdminHomeView" failonerror="true" fork="yes">
+            <classpath refid="run.AdminHomeView (1).classpath"/>
+        </java>
+    </target>
+    <target name="AdminHomeView">
+        <java classname="view.AdminAccount.AdminHomeView" failonerror="true" fork="yes">
+            <classpath refid="run.AdminHomeView.classpath"/>
+        </java>
+    </target>
+    <target name="AdminOperationView">
+        <java classname="view.AdminAccount.AdminOperationView" failonerror="true" fork="yes">
+            <classpath refid="run.AdminOperationView.classpath"/>
+        </java>
+    </target>
+    <target name="ClassesView (1)">
+        <java classname="view.Teacher.ClassesView" failonerror="true" fork="yes">
+            <classpath refid="run.ClassesView (1).classpath"/>
+        </java>
+    </target>
+    <target name="ClassesView">
+        <java classname="view.ClassesView" failonerror="true" fork="yes">
+            <classpath refid="run.ClassesView.classpath"/>
+        </java>
+    </target>
+    <target name="CreateUserAccountsView">
+        <java classname="view.AdminAccount.CreateUserAccountsView" failonerror="true" fork="yes">
+            <classpath refid="run.CreateUserAccountsView.classpath"/>
+        </java>
+    </target>
+    <target name="CreditsPerformance">
+        <java classname="model.CreditsPerformance" failonerror="true" fork="yes">
+            <classpath refid="run.CreditsPerformance.classpath"/>
+        </java>
+    </target>
+    <target name="DatabaseConnection">
+        <java classname="controller.DatabaseConnection" failonerror="true" fork="yes">
+            <classpath refid="run.DatabaseConnection.classpath"/>
+        </java>
+    </target>
+    <target name="DetalInformationofStudentView (1)">
+        <java classname="view.Teacher.DetalInformationofStudentView" failonerror="true" fork="yes">
+            <classpath refid="run.DetalInformationofStudentView (1).classpath"/>
+        </java>
+    </target>
+    <target name="DetalInformationofStudentView">
+        <java classname="view.DetalInformationofStudentView" failonerror="true" fork="yes">
+            <classpath refid="run.DetalInformationofStudentView.classpath"/>
+        </java>
+    </target>
+    <target name="DisplayUserAccountsView">
+        <java classname="view.AdminAccount.DisplayUserAccountsView" failonerror="true" fork="yes">
+            <classpath refid="run.DisplayUserAccountsView.classpath"/>
+        </java>
+    </target>
+    <target name="LoginView">
+        <java classname="view.AdminAccount.LoginView" failonerror="true" fork="yes">
+            <classpath refid="run.LoginView.classpath"/>
+        </java>
+    </target>
+    <target name="mainInterface">
+        <java classname="view.mainInterface" failonerror="true" fork="yes">
+            <classpath refid="run.mainInterface.classpath"/>
+        </java>
+    </target>
+    <target name="MainView (1)">
+        <java classname="view.Teacher.MainView" failonerror="true" fork="yes">
+            <classpath refid="run.MainView (1).classpath"/>
+        </java>
+    </target>
+    <target name="MainView">
+        <java classname="view.MainView" failonerror="true" fork="yes">
+            <classpath refid="run.MainView.classpath"/>
+        </java>
+    </target>
+    <target name="PerformanceController_Admin">
+        <java classname="controller.PerformanceController_Admin" failonerror="true" fork="yes">
+            <classpath refid="run.PerformanceController_Admin.classpath"/>
+        </java>
+    </target>
+    <target name="PerformanceView_Admin">
+        <java classname="view.PerformanceView_Admin" failonerror="true" fork="yes">
+            <classpath refid="run.PerformanceView_Admin.classpath"/>
+        </java>
+    </target>
+    <target name="Rules">
+        <java classname="view.Student.Rules" failonerror="true" fork="yes">
+            <classpath refid="run.Rules.classpath"/>
+        </java>
+    </target>
+    <target name="ScheduleFrame (1)">
+        <java classname="test.ScheduleFrame" failonerror="true" fork="yes">
+            <classpath refid="run.ScheduleFrame (1).classpath"/>
+        </java>
+    </target>
+    <target name="Sprint1_test">
+        <java classname="test.Sprint1_test" failonerror="true" fork="yes">
+            <classpath refid="run.Sprint1_test.classpath"/>
+        </java>
+    </target>
+    <target name="StudentAccountMainView (1)">
+        <java classname="view.Student.StudentAccountMainView" failonerror="true" fork="yes">
+            <classpath refid="run.StudentAccountMainView (1).classpath"/>
+        </java>
+    </target>
+    <target name="StudentAccountMainView">
+        <java classname="view.StudentAccount.StudentAccountMainView" failonerror="true" fork="yes">
+            <classpath refid="run.StudentAccountMainView.classpath"/>
+        </java>
+    </target>
+    <target name="StudentController">
+        <java classname="controller.StudentController" failonerror="true" fork="yes">
+            <classpath refid="run.StudentController.classpath"/>
+        </java>
+    </target>
+    <target name="StudentView (1)">
+        <java classname="view.Teacher.StudentView" failonerror="true" fork="yes">
+            <classpath refid="run.StudentView (1).classpath"/>
+        </java>
+    </target>
+    <target name="StudentView">
+        <java classname="view.StudentView" failonerror="true" fork="yes">
+            <classpath refid="run.StudentView.classpath"/>
+        </java>
+    </target>
+    <target name="test">
+        <java classname="view.test" failonerror="true" fork="yes">
+            <classpath refid="run.test.classpath"/>
+        </java>
+    </target>
+    <target name="ttt">
+        <java classname="view.ttt" failonerror="true" fork="yes">
+            <classpath refid="run.ttt.classpath"/>
+        </java>
+    </target>
+</project>

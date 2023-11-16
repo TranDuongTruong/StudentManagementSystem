@@ -115,7 +115,7 @@ public class DatabaseConnection {
 	        }
 	        return students;
 	    }
-	    void addClassToDatabase(Classroom classroom) {
+	    public  void addClassToDatabase(Classroom classroom) {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -145,7 +145,76 @@ public class DatabaseConnection {
 	            }
 	        }
 	    }
-	    void addStudentToDatabase(Student student) {
+	    public void updateClassInDatabase(Classroom classroom) {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            con = DriverManager.getConnection(URL, USER, PASSWORD);
+
+	            String query = "UPDATE classroom SET className = ?, totalStudents = ?, maxCapacity = ? WHERE classCode = ?";
+	            PreparedStatement stmt = con.prepareStatement(query);
+	            stmt.setString(1, classroom.getClassName());
+	            stmt.setInt(2, classroom.getNumberOfStudents());
+	            stmt.setInt(3, classroom.getMaximumNumOfStudents());
+	            stmt.setString(4, classroom.getClassCode());
+
+	            int rowsAffected = stmt.executeUpdate();
+	            if (rowsAffected > 0) {
+	                System.out.println("Class updated successfully in the database.");
+	            } else {
+	                System.out.println("Failed to update class in the database.");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    public void updateStudentInDatabase(Student student) {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            con = DriverManager.getConnection(URL, USER, PASSWORD);
+
+	            String query = "UPDATE student SET name = ?, dob = ?, address = ?, gender = ?, phoneNumber = ?, creditsCompleted = ?, creditsOwed = ? WHERE studentID = ?";
+	            PreparedStatement stmt = con.prepareStatement(query);
+	            stmt.setString(1, student.getName());
+
+	            LocalDate dob = student.getDob();
+	            // Chuyển đổi LocalDate thành java.sql.Date
+	            Date dobDate = Date.valueOf(dob);
+	            stmt.setDate(2, dobDate);
+
+	            stmt.setString(3, student.getAddress());
+	            stmt.setBoolean(4, student.isGender());
+	            stmt.setString(5, student.getPhoneNumber());
+	            stmt.setInt(6, student.getCreditsCompleted());
+	            stmt.setInt(7, student.getCreditsOwed());
+	            stmt.setInt(8, student.getStudentID());
+
+	            int rowsAffected = stmt.executeUpdate();
+	            if (rowsAffected > 0) {
+	                System.out.println("Student updated successfully in the database.");
+	            } else {
+	                System.out.println("Failed to update student in the database.");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    public  void addStudentToDatabase(Student student) {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -184,7 +253,7 @@ public class DatabaseConnection {
 	            }
 	        }
 	    }
-	    void deleteStudentFromDatabase(int studentID) {
+	    public   void deleteStudentFromDatabase(int studentID) {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -211,7 +280,7 @@ public class DatabaseConnection {
 	            }
 	        }
 	    }
-	    void deleteClassFromDatabase(String classCode) {
+	    public   void deleteClassFromDatabase(String classCode) {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);

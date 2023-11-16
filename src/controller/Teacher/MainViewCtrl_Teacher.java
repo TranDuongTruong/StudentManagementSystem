@@ -19,6 +19,7 @@ public class MainViewCtrl_Teacher {
 		super();
 		this.view = view;
 		view.classesListener(new ClassesListener ());
+		
 		}
 	private class ClassesListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {

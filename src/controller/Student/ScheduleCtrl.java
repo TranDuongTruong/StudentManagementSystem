@@ -30,7 +30,7 @@ public class ScheduleCtrl {
 		this.view = view;
 		
 		studentID= LoginController.studentId;
-		//System.out.println("aaaaaaaaaaaaaaaaaaaa"+stu.getStudentID());
+		
 		registeredClassCodes=getRegisteredClassCodes();
 		view.nextWeekListener(new NextWeekListener());
 		view.periviousWeekListener(new PeriviousWeekListener() );
