@@ -37,6 +37,7 @@ public class DisplayUserAccountsController implements ActionListener {
         }
     }
     
+
     public void loadDataFromDatabase() {
         try {
             Connection connection = DatabaseConnection.connectToBB(); 
@@ -52,6 +53,14 @@ public class DisplayUserAccountsController implements ActionListener {
                 row.add(resultSet.getString("email"));
                 row.add(resultSet.getString("password"));
                 row.add(resultSet.getString("name"));
+
+                // Kiểm tra nếu studentID là null, thì thêm giá trị trống (null)
+                if (resultSet.getObject("studentID") == null) {
+                    row.add(null);
+                } else {
+                    row.add(resultSet.getInt("studentID"));
+                }
+
                 data.add(row);
             }
 
@@ -61,6 +70,7 @@ public class DisplayUserAccountsController implements ActionListener {
             columnNames.add("Email");
             columnNames.add("Password");
             columnNames.add("Name");
+            columnNames.add("Student ID"); // Thêm tên cột "Student ID"
 
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             view.getTable().setModel(model);
