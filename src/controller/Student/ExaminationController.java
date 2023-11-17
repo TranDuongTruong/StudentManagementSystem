@@ -45,9 +45,10 @@ public class ExaminationController {
             while (resultSet.next()) {
                 String classCode = resultSet.getString("classCode");
                 String className = resultSet.getString("className");
-
-                // Add a new row to the table model
-                model.addRow(new Object[] { classCode, className });
+                
+                // Thêm trạng thái vào mô hình bảng
+                String examStatus = getExamStatus(classCode);
+                model.addRow(new Object[] { classCode, className, examStatus });
             }
 
             // Close the connections
@@ -57,6 +58,38 @@ public class ExaminationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+    }
+ // Phương thức kiểm tra xem có bài kiểm tra nào cho lớp cụ thể hay không
+    public boolean hasExams(String classCode) {
+        try {
+            Connection connection = DatabaseConnection.connectToBB();
+            Statement statement = connection.createStatement();
+
+            // Truy vấn kiểm tra xem có bài kiểm tra nào cho lớp này hay không
+            String query = "SELECT COUNT(*) as examCount FROM questions WHERE classCode = '" + classCode + "'";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Lấy kết quả
+            if (resultSet.next()) {
+                int examCount = resultSet.getInt("examCount");
+                return examCount > 0; // Nếu số lượng bài kiểm tra lớn hơn 0, có ít nhất một bài kiểm tra
+            }
+
+            // Đóng kết nối
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false; // Trả về false nếu có lỗi xảy ra
+    }
+    
+    // Hàm này trả về trạng thái (Yes/No) dựa trên việc có bài kiểm tra hay không
+    public String getExamStatus(String classCode) {
+        return hasExams(classCode) ? "Yes" : "No";
     }
 
 }

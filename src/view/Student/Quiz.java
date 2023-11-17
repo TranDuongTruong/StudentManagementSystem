@@ -32,33 +32,38 @@ public class Quiz extends JFrame implements ActionListener {
     
     private Connection connection;
     private ResultSet questionsResultSet;
+    private String classCode;  // Mã lớp học
     
-    Quiz() {
+    public Quiz(String classCode) {
+        this.classCode = classCode;
     	  // Khởi tạo kết nối đến CSDL
-    	 try {
-             connection = DatabaseConnection.connectToBB();
-             String sql = "SELECT * FROM questions";
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             questionsResultSet = preparedStatement.executeQuery();
+        try {
+            connection = DatabaseConnection.connectToBB();
 
-             while (questionsResultSet.next()) {
-                 String[] questionData = {
-                         questionsResultSet.getString("question_text"),
-                         questionsResultSet.getString("option1"),
-                         questionsResultSet.getString("option2"),
-                         questionsResultSet.getString("option3"),
-                         questionsResultSet.getString("option4"),
-                         questionsResultSet.getString("correct_option")
-                 };
-                 questionsList.add(questionData);
-             }
+            // Thay đổi câu truy vấn để lấy câu hỏi theo mã lớp học
+            String sql = "SELECT * FROM questions WHERE classCode = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, classCode);
+            questionsResultSet = preparedStatement.executeQuery();
 
-             answers = new String[questionsList.size()][2];
-             useranswers = new String[questionsList.size()][1];
+            while (questionsResultSet.next()) {
+                String[] questionData = {
+                        questionsResultSet.getString("question_text"),
+                        questionsResultSet.getString("option1"),
+                        questionsResultSet.getString("option2"),
+                        questionsResultSet.getString("option3"),
+                        questionsResultSet.getString("option4"),
+                        questionsResultSet.getString("correct_option")
+                };
+                questionsList.add(questionData);
+            }
 
-         } catch (SQLException e) {
-             e.printStackTrace();
-         }
+            answers = new String[questionsList.size()][2];
+            useranswers = new String[questionsList.size()][1];
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         setBounds(50, 0, 1440, 850);
         getContentPane().setBackground(Color.WHITE);
@@ -281,8 +286,10 @@ public class Quiz extends JFrame implements ActionListener {
             groupoptions.clearSelection();
         }
     }
+
     
     public static void main(String[] args) {
-        new Quiz();
+    	 // Mã lớp học cụ thể cần được truyền vào constructor
+        new Quiz("C105");
     }
 }

@@ -9,8 +9,10 @@ import java.awt.event.*;
 public class Rules extends JFrame implements ActionListener{
 
     JButton start, back;
+    private String classCode;  // Mã lớp học
     
-    Rules() {
+    Rules(String classCode) {
+    	this.classCode = classCode;
         getContentPane().setBackground(Color.WHITE);
         getContentPane().setLayout(null);
         
@@ -41,15 +43,15 @@ public class Rules extends JFrame implements ActionListener{
 
         getContentPane().add(rules);
         
-        back = new JButton("Back");
-        back.setBounds(229, 535, 100, 30);
+        back = new JButton("Close");
+        back.setBounds(447, 535, 100, 30);
         back.setBackground(new Color(30, 144, 254));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         getContentPane().add(back);
         
         start = new JButton("Start");
-        start.setBounds(395, 535, 100, 30);
+        start.setBounds(231, 535, 100, 30);
         start.setBackground(new Color(30, 144, 254));
         start.setForeground(Color.WHITE);
         start.addActionListener(this);
@@ -72,17 +74,17 @@ public class Rules extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == start) {
             setVisible(false);
-            new Quiz();
+            new Quiz(classCode);
             
         } 
         else {
         	//StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
         	//studentAccountMainView.setVisible(true);
-        	//setVisible(false);
+        	setVisible(false);
         }
     }
     
     public static void main(String[] args) {
-        new Rules();
+        new Rules("C105");
     }
 }
