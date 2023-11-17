@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -68,6 +69,9 @@ public class ExaminationView extends JPanel {
                         // Kiểm tra xem có bài kiểm tra nào không
                         if (controller.hasExams(classCode)) {
                             new Rules(classCode);
+                            // Đóng studentaccountView
+                            StudentAccountMainView studentAccountView = (StudentAccountMainView) SwingUtilities.getWindowAncestor(ExaminationView.this);
+                            studentAccountView.dispose();
                         } else {
                             // Hiển thị thông báo nếu không có bài kiểm tra
                             JOptionPane.showMessageDialog(null, "There are no exams available for this class.",
