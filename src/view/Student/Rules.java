@@ -44,14 +44,14 @@ public class Rules extends JFrame implements ActionListener{
         getContentPane().add(rules);
         
         back = new JButton("Close");
-        back.setBounds(447, 535, 100, 30);
+        back.setBounds(192, 535, 100, 30);
         back.setBackground(new Color(30, 144, 254));
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         getContentPane().add(back);
         
         start = new JButton("Start");
-        start.setBounds(231, 535, 100, 30);
+        start.setBounds(431, 535, 100, 30);
         start.setBackground(new Color(30, 144, 254));
         start.setForeground(Color.WHITE);
         start.addActionListener(this);
