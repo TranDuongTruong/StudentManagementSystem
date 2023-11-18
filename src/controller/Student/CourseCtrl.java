@@ -33,8 +33,8 @@ public class CourseCtrl {
         classes=a.retrieveClassesFromDatabase();
         view.model=classes;
         setDataToCombobox();
-        view.FilteredButtonListener(new FilterClassListener());
-//        view.displayAvailableClasses(classes);
+//        view.FilteredButtonListener(new FilterClassListener());
+        view.displayAvailableClasses(classes);
 //		className = getClassName();
 //		studentID= LoginController.studentId;
 //		view.setDataToCombobox(className);
@@ -49,18 +49,6 @@ public class CourseCtrl {
 	        }
 	        view.setDataToCombobox(classCodes);
 	    }
-	}
-	private class FilterClassListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {  
-			String selectedCourse = (String) view.comboBoxTenMon.getSelectedItem();
-			String classCode=selectedCourse;
-        	ClassesManager findClassroomList=new ClassesManager();
-        	Classroom classroom;
-        	classroom=classes.findClassroomByCode(classCode);
-        	findClassroomList.addClassroom(classroom);
-        	view.displayAvailableClasses(findClassroomList);           
-			
-		}
 	}
 //	public String[] getClassName() {
 //        List<String> classNames = new ArrayList<>();

@@ -32,8 +32,8 @@ public class CourseView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	public ClassesManager currentRegisteredClass;
 	public ClassesManager model;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textField_MaDangki;
+	private JTextField textField_MaXacNhan;
 	private JTextField textField_2;
 	private JTable tableDSDK;
 	public JTable table_Timlop;
@@ -63,16 +63,16 @@ public class CourseView extends JPanel {
 		lblNewLabel_1.setBounds(451, 42, 61, 16);
 		add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(154, 37, 130, 26);
-		add(textField);
-		textField.setColumns(10);
+		textField_MaDangki = new JTextField();
+		textField_MaDangki.setBounds(154, 37, 130, 26);
+		add(textField_MaDangki);
+		textField_MaDangki.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(524, 37, 130, 26);
-		add(textField_1);
-		textField_1.setColumns(10);
-        textField_1.setForeground(Color.GRAY);
+		textField_MaXacNhan = new JTextField();
+		textField_MaXacNhan.setBounds(524, 37, 130, 26);
+		add(textField_MaXacNhan);
+		textField_MaXacNhan.setColumns(10);
+        textField_MaXacNhan.setForeground(Color.GRAY);
 		
 		textField_2 = new JTextField();
 		textField_2.setBounds(655, 37, 48, 26);
@@ -144,13 +144,12 @@ public class CourseView extends JPanel {
 			
 		btnngK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String confirmationCode = textField_1.getText();
+                String confirmationCode = textField_MaXacNhan.getText();
                 
                 // Kiểm tra nếu confirmationCode trùng với số ngẫu nhiên đã tạo
                 if (confirmationCode.equals(String.valueOf(randomNumber))) {
-                    // Thực hiện hành động khi confirmationCode trùng
-                	
-                	 JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
+                	displayRegisteredClasses(currentRegisteredClass);
+                	JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
                 	 
                 } else {
                     // Thực hiện hành động khi confirmationCode không trùng
@@ -169,8 +168,15 @@ public class CourseView extends JPanel {
 		
 		
 		btn_Tim = new JButton("Find");
-		 btn_Tim.addActionListener(new ActionListener() {
+		btn_Tim.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
+		 		String selectedCourse = (String) comboBoxTenMon.getSelectedItem();
+				String classCode=selectedCourse;
+	        	ClassesManager findClassroomList=new ClassesManager();
+	        	Classroom classroom;
+	        	classroom=model.findClassroomByCode(classCode);
+	        	findClassroomList.addClassroom(classroom);
+	        	displayAvailableClasses(findClassroomList);   
 		 	}
 		 });
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -183,46 +189,25 @@ public class CourseView extends JPanel {
         setVisible(true);
         
 	    }
-		// Phương thức để hiển thị danh sách đã đăng ký thành công
-	    private void displayRegisteredCourses() {
-	        // Thực hiện logic để hiển thị danh sách đã đăng ký thành công
-	        // ...
-	    }
-	
-	    // Phương thức để tìm kiếm lớp học
-	    private void searchForCourses() {
-	        // Thực hiện logic để tìm kiếm lớp học
-	        // ...
-	    }
-	
-	    // Phương thức để cập nhật bảng danh sách đã đăng ký
-	    private void updateRegisteredCoursesTable() {
-	        // Thực hiện logic để cập nhật bảng danh sách đã đăng ký
-	        // ...
-	    }// Phương thức để cập nhật bảng tìm kiếm lớp học
-	    private void updateSearchCoursesTable() {
-	        // Thực hiện logic để cập nhật bảng tìm kiếm lớp học
-	        // ...
-	    }
 	    
 	    
-	    //Hoang Nghia Quyen
-//	    public void setDataToCombobox(String[] data) {
-//	    	DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(data);
-//
-//	        // Tạo JComboBox sử dụng DefaultComboBoxModel
-//	        
-//	    	comboBoxTenMon.setBounds(338, 365, 40, 28);
-//
-//	        // Thêm ActionListener để xử lý sự kiện khi một phần tử được chọn
-//	    	comboBoxTenMon.addActionListener(new ActionListener() {
-//	            @Override
-//	            public void actionPerformed(ActionEvent e) {
-//	                // Xử lý sự kiện ở đây...
-//	                System.out.println("Selected Item: " + comboBoxTenMon.getSelectedItem());
-//	            }
-//	        });
-//	    }
+	    public void displayRegisteredClasses(ClassesManager classes) {		
+			if(table_Timlop==null) return;
+		    DefaultTableModel tableModel = (DefaultTableModel) table_Timlop.getModel();
+		    // Xóa tất cả các dòng hiện tại trong model
+		    tableModel.setRowCount(0);
+		    for (Classroom classroom : classes.getClassroomList()){
+		        Object[] rowData = new Object[5];
+		        rowData[0] = classroom.getClassCode();
+		        rowData[1] = classroom.getClassName();
+		        rowData[2] = classroom.getLichhoc();
+		        rowData[3] = classroom.getDiadiem();
+		        rowData[4] = classroom.getSoTinchi();
+		        tableModel.addRow(rowData);
+		    }
+		    // Cập nhật model của JTable
+		    table_Timlop.setModel(tableModel);
+		}
 	    public void displayAvailableClasses(ClassesManager classes) {		
 			if(table_Timlop==null) return;
 		    DefaultTableModel tableModel = (DefaultTableModel) table_Timlop.getModel();
@@ -245,10 +230,6 @@ public class CourseView extends JPanel {
 	        comboBoxTenMon.setModel(new DefaultComboBoxModel<>(data));
 	    }
 	    
-	    public void FilteredButtonListener(ActionListener listener) {
-	    	if(btn_Tim==null) return;
-	    	btn_Tim.addActionListener(listener);
-		}
 	    
 }
 
