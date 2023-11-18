@@ -41,6 +41,8 @@ public class DatabaseConnection {
 	        ClassesManager classes = new ClassesManager();
 	        String f1, f2;
 	        int f3, f4;
+	        String f5,f6,f7;
+	        int f8;
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -53,10 +55,15 @@ public class DatabaseConnection {
 	                f2 = rs.getString(2);
 	                f3 = rs.getInt(3);
 	                f4 = rs.getInt(4);
+	                f5=rs.getString(5);
+	                f6=rs.getString(6);
+	                f7=rs.getString(7);
+	                f8=rs.getInt(8);
+
 
 	                List<Student> students = retrieveStudentsFromClassroom(f1);
 
-	                Classroom classroom = new Classroom(f1, f2, f3, f4, students);
+	                Classroom classroom = new Classroom(f1, f2, f3, f4, students,f5,f6,f7,f8);
 	                classes.addClassroom(classroom);
 
 	                System.out.println(f1 + "  " + f2);

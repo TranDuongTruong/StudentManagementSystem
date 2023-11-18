@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.util.Random;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,27 +19,34 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
 
 import controller.Student.ScheduleCtrl;
+import controller.Teacher.ClassesController;
 import model.ClassesManager;
+import model.Classroom;
+import view.Teacher.ClassesView;
 import view.Teacher.DetalInformationofStudentView;
 
 import controller.Student.CourseCtrl;
+import java.awt.Font;
 public class CourseView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	public ClassesManager currentRegisteredClass;
+	public ClassesManager model;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTable tableDSDK;
-	private JTable table_Timlop;
+	public JTable table_Timlop;
 	private Object confirmationCode;
-	private JTextField textField_3;
 	private JTable table_dangky;
-	private 	JComboBox comboBoxTenMon;
+	public 	JComboBox comboBoxTenMon;
+	JButton btn_Tim;
 	
+
 	/**
 	 * Create the panel.
 	 */
+	
 	public CourseView() {
 		
 		setLayout(null);
@@ -65,10 +73,6 @@ public class CourseView extends JPanel {
 		add(textField_1);
 		textField_1.setColumns(10);
         textField_1.setForeground(Color.GRAY);
-		
-		JButton btnNewButton = new JButton("tìm kiếm");
-		btnNewButton.setBounds(586, 365, 117, 29);
-		add(btnNewButton);
 		
 		textField_2 = new JTextField();
 		textField_2.setBounds(655, 37, 48, 26);
@@ -107,13 +111,13 @@ public class CourseView extends JPanel {
 		table_Timlop = new JTable();
 		table_Timlop.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, "", null, null},
-				{null, null, null, "", null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
+				{null, null, null, null, "", null, null},
+				{null, null, null, null, "", null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"T\u00EAn l\u1EDBp", "M\u00E3 \u0111\u0103ng k\u00ED", "S\u1ED1 t\u00EDn ch\u1EC9", "\u0110\u1ECBa \u0111i\u1EC3m", "L\u1ECBch h\u1ECDc", "Ch\u1ECDn"
+				"M\u00E3 l\u1EDBp", "T\u00EAn l\u1EDBp", "M\u00E3 \u0111\u0103ng k\u00ED", "S\u1ED1 t\u00EDn ch\u1EC9", "\u0110\u1ECBa \u0111i\u1EC3m", "L\u1ECBch h\u1ECDc", "Ch\u1ECDn"
 			}
 		));
 		scrollPane_1.setViewportView(table_Timlop);
@@ -135,14 +139,8 @@ public class CourseView extends JPanel {
 		});
 			
 			 comboBoxTenMon = new JComboBox();
-			comboBoxTenMon.setBounds(338, 365, 40, 28);
+			comboBoxTenMon.setBounds(344, 364, 120, 33);
 			add(comboBoxTenMon);
-			
-			textField_3 = new JTextField();
-			textField_3.setText("chọn cn");
-			textField_3.setColumns(10);
-			textField_3.setBounds(235, 358, 104, 41);
-			add(textField_3);
 			
 		btnngK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -163,6 +161,23 @@ public class CourseView extends JPanel {
             
         });
 		CourseCtrl courseCtrl = new CourseCtrl(this);
+		
+		JLabel lblNewLabel_3 = new JLabel("Chọn cn");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(252, 370, 80, 21);
+		add(lblNewLabel_3);
+		
+		
+		btn_Tim = new JButton("Find");
+		 btn_Tim.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 	}
+		 });
+		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btn_Tim.setBounds(544, 364, 103, 39);
+		add(btn_Tim);
+		
+		
         //ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
         
         setVisible(true);
@@ -189,22 +204,52 @@ public class CourseView extends JPanel {
 	        // Thực hiện logic để cập nhật bảng tìm kiếm lớp học
 	        // ...
 	    }
+	    
+	    
+	    //Hoang Nghia Quyen
+//	    public void setDataToCombobox(String[] data) {
+//	    	DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(data);
+//
+//	        // Tạo JComboBox sử dụng DefaultComboBoxModel
+//	        
+//	    	comboBoxTenMon.setBounds(338, 365, 40, 28);
+//
+//	        // Thêm ActionListener để xử lý sự kiện khi một phần tử được chọn
+//	    	comboBoxTenMon.addActionListener(new ActionListener() {
+//	            @Override
+//	            public void actionPerformed(ActionEvent e) {
+//	                // Xử lý sự kiện ở đây...
+//	                System.out.println("Selected Item: " + comboBoxTenMon.getSelectedItem());
+//	            }
+//	        });
+//	    }
+	    public void displayAvailableClasses(ClassesManager classes) {		
+			if(table_Timlop==null) return;
+		    DefaultTableModel tableModel = (DefaultTableModel) table_Timlop.getModel();
+		    // Xóa tất cả các dòng hiện tại trong model
+		    tableModel.setRowCount(0);
+		    for (Classroom classroom : classes.getClassroomList()){
+		        Object[] rowData = new Object[6];
+		        rowData[0] = classroom.getClassCode();
+		        rowData[1] = classroom.getClassName();
+		        rowData[2] = classroom.getClass_registration_code();
+		        rowData[3] = classroom.getSoTinchi();
+		        rowData[4] = classroom.getDiadiem();
+		        rowData[5] = classroom.getLichhoc();
+		        tableModel.addRow(rowData);
+		    }
+		    // Cập nhật model của JTable
+		    table_Timlop.setModel(tableModel);
+		}
 	    public void setDataToCombobox(String[] data) {
-	    	DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(data);
-
-	        // Tạo JComboBox sử dụng DefaultComboBoxModel
-	        
-	    	comboBoxTenMon.setBounds(50, 50, 150, 30);
-
-	        // Thêm ActionListener để xử lý sự kiện khi một phần tử được chọn
-	    	comboBoxTenMon.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                // Xử lý sự kiện ở đây...
-	                System.out.println("Selected Item: " + comboBoxTenMon.getSelectedItem());
-	            }
-	        });
+	        comboBoxTenMon.setModel(new DefaultComboBoxModel<>(data));
 	    }
-	   
-	
+	    
+	    public void FilteredButtonListener(ActionListener listener) {
+	    	if(btn_Tim==null) return;
+	    	btn_Tim.addActionListener(listener);
+		}
+	    
 }
+
+

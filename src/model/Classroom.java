@@ -13,22 +13,64 @@ public class Classroom {
 	    private int maximumNumOfStudents;
 	    private List<Student> studentList;
 	    
-	    private List<LocalDateTime> thoiGian;
-        private String diadiem;
-        private int soTinchi;
+	    private String schedule;
+        private String location;
+        private int creditHours;
+        private String Class_registration_code;
 	    
         
 	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents,
-				List<Student> studentList, List<LocalDateTime> thoiGian, String diadiem, int soTinchi) {
+				List<Student> studentList,String Class_registration_code, String thoiGian, String diadiem, int soTinchi) {
 			super();
 			this.classCode = classCode;
 			this.className = className;
 			this.numOfCurentStudents = numOfCurentStudents;
 			this.maximumNumOfStudents = maximumNumOfStudents;
 			this.studentList = studentList;
-			this.thoiGian = thoiGian;
-			this.diadiem = diadiem;
-			this.soTinchi = soTinchi;
+			this.schedule = thoiGian;
+			this.location = diadiem;
+			this.creditHours = soTinchi;
+			this.Class_registration_code=Class_registration_code;
+		}
+
+	    
+		public String getClass_registration_code() {
+			return Class_registration_code;
+		}
+
+
+		public void setClass_registration_code(String class_registration_code) {
+			Class_registration_code = class_registration_code;
+		}
+
+
+		public String getLichhoc() {
+			return schedule;
+		}
+
+
+		public void setLichhoc(String lichhoc) {
+			this.schedule = lichhoc;
+		}
+
+
+		public String getDiadiem() {
+			return location;
+		}
+
+
+		public void setDiadiem(String diadiem) {
+			this.location = diadiem;
+		}
+
+
+		public int getSoTinchi() {
+			return creditHours;
+		}
+
+
+		public void setSoTinchi(int soTinchi) {
+			this.creditHours = soTinchi;
 		}
 
 

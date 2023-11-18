@@ -36,6 +36,7 @@ public class ClassesController  {
         
         view.model=classes;
         view.displayClassList(classes);
+        
     }
   
    
@@ -76,7 +77,6 @@ public class ClassesController  {
         	db.deleteClassFromDatabase(classes.getClassroom(index).getClassCode());
         	classes.remove(index);
         	displayClasses();
-        
         }
 
        
