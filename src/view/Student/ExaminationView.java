@@ -68,7 +68,7 @@ public class ExaminationView extends JPanel {
 
                         // Kiểm tra xem có bài kiểm tra nào không
                         if (controller.hasExams(classCode)) {
-                            new Quiz(classCode);
+                            new Rules(classCode);
                             // Đóng studentaccountView
                             StudentAccountMainView studentAccountView = (StudentAccountMainView) SwingUtilities.getWindowAncestor(ExaminationView.this);
                             studentAccountView.dispose();
