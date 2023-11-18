@@ -198,8 +198,13 @@ public class Quiz extends JFrame implements ActionListener {
             	       score += 0;
             	  }
             }
+            // Reset các giá trị khi kết thúc bài kiểm tra
+            ans_given = 0;
+            timer = 15;
+            count = 0;
             setVisible(false);
             new Score(score);
+            score = 0;
         }
     }
     
@@ -284,6 +289,10 @@ public class Quiz extends JFrame implements ActionListener {
             opt4.setActionCommand(questionData[4]);
             answers[questionIndex][1] = questionData[5];
             groupoptions.clearSelection();
+            
+            // Reset các giá trị cần thiết khi bắt đầu một câu hỏi mới
+            ans_given = 0;
+            timer = 15;
         }
     }
 
