@@ -140,7 +140,7 @@ public class Classroom {
 	        studentList.add(student);
 	        numOfCurentStudents++;
 	        
-	       
+	    
 	        
 	    }
 	    public void removeStudent(int index) {

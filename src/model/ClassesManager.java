@@ -29,7 +29,14 @@ public class ClassesManager {
         }
         return null;
     }
-   
+    public Classroom findClassroomByCodeRegister(String classCodeRegister) {
+        for (Classroom classroom : classroomList) {
+            if (classroom.getClass_registration_code().equals(classCodeRegister)) {
+                return classroom;
+            }
+        }
+        return null;
+    }
     public Student findStudentById(int studentId) {
         for (Classroom classroom : classroomList) {
             for (Student student : classroom.getStudentList()) {
