@@ -42,6 +42,8 @@ public class StudentAccountMainView extends JFrame {
     JButton btn_Examination ;
     JButton btn_Information;
     JButton btn_Schedule;
+    JButton btn_Syllabli;
+
     final JPanel content;
     static Student student;
     
@@ -111,7 +113,7 @@ public class StudentAccountMainView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 677);
 		contentPane = new JPanel();
-		 contentPane.setBackground(new Color(255, 255, 255));
+		 contentPane.setBackground(new Color(255, 0, 0));
 	        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -179,7 +181,10 @@ public class StudentAccountMainView extends JFrame {
 	     btn_Curriculum.setMaximumSize(new Dimension(lBtn, wBtn));
 	     btn_Examination = new JButton("Examination");
 	     btn_Examination.setMaximumSize(new Dimension(lBtn, wBtn));
-
+	     
+	     btn_Syllabli=new JButton("Syllabli");
+	     
+	     btn_Syllabli.setMaximumSize(new Dimension(lBtn, wBtn));
 	    // Set the initial visibility and size of the additional buttons
 	    setAdditionalButtonsVisible(false);
 	    setAdditionalButtonsSize(80, 20);
@@ -219,8 +224,12 @@ public class StudentAccountMainView extends JFrame {
 	    verticalBox_1.add(verticalStrut_2_1_4);
 	    verticalBox_1.add(btn_Examination);
 		
-		Component verticalStrut_2_1_5 = Box.createVerticalStrut(300);
-		verticalBox_1.add(verticalStrut_2_1_5);
+	    Component verticalStrut_2_1_5 = Box.createVerticalStrut(10);
+	    verticalBox_1.add(verticalStrut_2_1_5);
+	    verticalBox_1.add(btn_Syllabli);
+	    
+		Component verticalStrut_2_1_6 = Box.createVerticalStrut(300);
+		verticalBox_1.add(verticalStrut_2_1_6);
 		
 		JButton btn_Logout = new JButton("<- Logout"); // Updated button label
 		btn_Logout.setMaximumSize(new Dimension(100, 20));
@@ -251,12 +260,14 @@ public class StudentAccountMainView extends JFrame {
 	final CuriculumView curView=new CuriculumView();
 	final CourseView courView=new CourseView();
 	final TranscriptView transView=new TranscriptView();
+	final SyllabiView syllabiView=new SyllabiView();
 	boolean hasScheduleView = false;
 	boolean hasInformationView = false;
 	 boolean hasExaminationView = false;
 	 boolean hasCurriculumView = false;
 	 boolean hasCourseView = false;
 	 boolean hasTranscriptView = false;
+	 boolean hasSyllabi=false;
 	public void setButtonListener() {
 
 		btn_Schedule.addActionListener(new ActionListener() {
@@ -318,6 +329,18 @@ public class StudentAccountMainView extends JFrame {
 			    }
 			});
 	     
+	     btn_Syllabli.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				contentPane.remove(content);removeContent();
+		    	contentPane.add(syllabiView);
+		    	contentPane.invalidate();
+		    	contentPane.repaint();hasSyllabi =true;
+			}
+		});
+	     
 	}
 	public void removeContent() {
 		if (hasScheduleView) {
@@ -348,6 +371,10 @@ public class StudentAccountMainView extends JFrame {
 		    contentPane.remove(transView);
 		    hasTranscriptView = false;
 		  }
+		  if(hasSyllabi) {
+			  contentPane.remove(syllabiView);
+			  hasSyllabi=false;
+		  }
 		}
 
 	
@@ -357,6 +384,7 @@ public class StudentAccountMainView extends JFrame {
 	    btn_Transcript.setVisible(visible);
 	    btn_Curriculum.setVisible(visible);
 	    btn_Examination.setVisible(visible);
+	    btn_Syllabli.setVisible(visible);
 	}
 
 	// Helper method to set the size of the additional buttons
@@ -366,5 +394,6 @@ public class StudentAccountMainView extends JFrame {
 	    btn_Transcript.setPreferredSize(size);
 	    btn_Curriculum.setPreferredSize(size);
 	    btn_Examination.setPreferredSize(size);
+	    btn_Syllabli.setPreferredSize(size);
 	}
 }

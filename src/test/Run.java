@@ -14,7 +14,9 @@ public class Run {
 	                    LoginController controller = new LoginController(frame); // Pass the view to the controller
 	                    frame.setVisible(true);
 	                } catch (Exception e) {
+	                	
 	                    e.printStackTrace();
+
 	                }
 	            }
 	        });
