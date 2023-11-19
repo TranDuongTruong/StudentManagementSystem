@@ -30,7 +30,7 @@ public class Score extends JFrame implements ActionListener {
         lblscore.setFont(new Font("Tahoma", Font.PLAIN, 26));
         getContentPane().add(lblscore);
         
-        JButton submit = new JButton("Close");
+        JButton submit = new JButton("Back");
         submit.setBounds(380, 270, 120, 30);
         submit.setBackground(new Color(30, 144, 255));
         submit.setForeground(Color.WHITE);
@@ -44,8 +44,8 @@ public class Score extends JFrame implements ActionListener {
 //        setVisible(false);
 //        new Login();
     	
-    	//StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
-    	//studentAccountMainView.setVisible(true);
+    	StudentAccountMainView studentAccountMainView = new StudentAccountMainView();
+    	studentAccountMainView.setVisible(true);
     	setVisible(false);
 
     }

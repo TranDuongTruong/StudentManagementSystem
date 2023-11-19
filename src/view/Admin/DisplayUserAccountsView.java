@@ -43,7 +43,7 @@ public class DisplayUserAccountsView extends JFrame {
     
     public DisplayUserAccountsView() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 485, 395);
+        setBounds(100, 100, 696, 425);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -55,33 +55,31 @@ public class DisplayUserAccountsView extends JFrame {
         contentPane.add(lblStudents);
 
         JSeparator separator = new JSeparator();
-        separator.setBounds(0, 31, 469, 13);
+        separator.setBounds(0, 31, 680, 13);
         contentPane.add(separator);
 
         JScrollPane scrollPane = new JScrollPane((Component) null);
-        scrollPane.setBounds(0, 61, 469, 156);
+        scrollPane.setBounds(0, 61, 680, 139);
         contentPane.add(scrollPane);
 
         table = new JTable();
         table.setModel(new DefaultTableModel(
-            new Object[][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-            },
-            new String[] {
-                "ID", "Role", "Email", "Password", "Name"
-            }
+        	new Object[][] {
+        		{null, null, null, null, null, null},
+        		{null, null, null, null, null, null},
+        		{null, null, null, null, null, null},
+        		{null, null, null, null, null, null},
+        		{null, null, null, null, null, null},
+        		{null, null, null, null, null, null},
+        	},
+        	new String[] {
+        		"ID", "Role", "Email", "Password", "Name", "Student ID"
+        	}
         ));
         scrollPane.setViewportView(table);
 
         backButton = new JButton("Back");
-        backButton.setBounds(168, 272, 103, 30);
+        backButton.setBounds(241, 284, 103, 30);
         contentPane.add(backButton);
         ImageIcon backIcon = new ImageIcon(DisplayUserAccountsView.class.getResource("/Assert/admin/back.png"));
         backButton.setIcon(backIcon);

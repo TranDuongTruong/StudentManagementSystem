@@ -337,7 +337,6 @@ public class ClassesView extends JFrame {
 		classesPane.add(btn_CapNhat);
 		
 		 btn_Luu = new JButton("Save");
-	
 		btn_Luu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
