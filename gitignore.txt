@@ -1,21 +1,43 @@
-# Ignore all files in the project
-*
+# Compiled class files
+*.class
 
-# Except for directories
-!*/
+# Bytecode
+*.jar
 
-# Allow specific file types
-!*.java
-!*.xml
-!*.properties
-# Add more file types as needed
+# IDE-specific files
+/.idea/
+/.vscode/
 
-# Ignore build artifacts
-bin/
-target/
+# Logs
+*.log
 
-# Ignore Eclipse specific files
+# User-specific files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Build directories
+/target/
+/out/
+/dist/
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Eclipse
 .settings/
-.classpath
-.project
-# Add more Eclipse specific files as needed
+bin/
+lib/
+
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
