@@ -72,7 +72,7 @@ public class DetalInformationofStudentView extends JFrame {
 		 avatar = new JLabel("hinh");
 		avatar.setBounds(317, 81, 252, 268);
 		ImageIcon imageIcon = new ImageIcon();
-		 URL imageUrl=MainView.class.getClassLoader().getResource("Assert/teacher/avatarForStudent.png");
+		 URL imageUrl=TeacherAccountMainView.class.getClassLoader().getResource("Assert/teacher/avatarForStudent.png");
 	            File file = new File(imageUrl.getPath());
 	              imageIcon = new ImageIcon(file.getAbsolutePath());
 	              Image image = imageIcon.getImage();

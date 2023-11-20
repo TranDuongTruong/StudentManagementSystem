@@ -4,7 +4,7 @@ import view.Admin.AdminHomeView;
 import view.Admin.CreateUserAccountsView;
 import view.Admin.LoginView;
 import view.Student.StudentAccountMainView;
-import view.Teacher.MainView;
+import view.Teacher.TeacherAccountMainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +45,7 @@ public class LoginController {
     	                    adminView.setVisible(true);
     	                } else if("teacher".equals(role)) {
     	                    // Redirect to MainView for teacher 
-    	                    MainView mainView = new MainView();
+    	                	TeacherAccountMainView mainView = new TeacherAccountMainView();
     	                    mainView.setVisible(true);
     	                }else {
     	                	studentId = getStudentIDForEmail(email);

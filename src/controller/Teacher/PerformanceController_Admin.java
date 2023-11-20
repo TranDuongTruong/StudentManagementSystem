@@ -9,7 +9,6 @@ import model.Classroom;
 import model.Student;
 import view.Teacher.CreditsPerformanceView_Admin;
 import view.Teacher.PerformanceView_Admin;
-import view.Teacher.StudentView;
 
 public class PerformanceController_Admin {
 	public CreditsPerformanceView_Admin  creditsPerformanceView;

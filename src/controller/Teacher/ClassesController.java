@@ -9,14 +9,15 @@ import javax.swing.*;
 import controller.DatabaseConnection;
 import model.Classroom;
 import model.Student;
-import view.Teacher.ClassesView;
+
+import view.Teacher.ClassesViewP;
 import model.ClassesManager;
 
 public class ClassesController  {
     ClassesManager classes;
-    public ClassesView view;
+    public ClassesViewP view;
     DatabaseConnection db;
-    public ClassesController(ClassesView view){
+    public ClassesController(ClassesViewP view){
     	classes=new ClassesManager();
         this.view=view;
         db=new DatabaseConnection();

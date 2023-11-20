@@ -18,11 +18,12 @@ import com.mysql.cj.result.LocalDateTimeValueFactory;
 import controller.DatabaseConnection;
 import model.Classroom;
 import model.Student;
-import view.Teacher.MainView;
-import view.Teacher.StudentView;
+
+
+import view.Teacher.StudentViewP;
 
 public class StudentController implements ActionListener{
-	public StudentView studentView;
+	public StudentViewP studentView;
 	List<Student> studentList;DatabaseConnection db;
 	public Classroom classRoom;
 	 
@@ -38,7 +39,7 @@ public class StudentController implements ActionListener{
 	public void setStudentList(List<Student> studentList) {
 		this.studentList = studentList;
 	}
-	public StudentController(StudentView view,Classroom classRoom) {
+	public StudentController(StudentViewP view,Classroom classRoom) {
 		super();
 		this.studentView = view;
 		this.classRoom=classRoom;
@@ -53,7 +54,7 @@ public class StudentController implements ActionListener{
 		displayListOfStudent();
 	}
 
-	public StudentController(StudentView view) {
+	public StudentController(StudentViewP view) {
 		super();
 		this.studentView = view;
 	
