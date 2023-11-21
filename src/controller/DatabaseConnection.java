@@ -13,9 +13,9 @@ import model.ClassesManager;
 public class DatabaseConnection {
 	 private static Connection con = null;
 	 //FOR Local
-	    private static final String URL = "jdbc:mysql://localhost:3306/spmdatabase11";   
-	    private static final String USER = "root";
-	    private static final String PASSWORD = "";
+	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663967";   
+	    private static final String USER = "sql12663967";
+	    private static final String PASSWORD = "ASq18HYwTP";
 
 	 
 	 //FOR OTHER
