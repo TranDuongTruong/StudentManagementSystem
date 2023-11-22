@@ -135,31 +135,36 @@ public class CourseView extends JPanel {
 			comboBoxTenMon.setBounds(344, 364, 120, 33);
 			add(comboBoxTenMon);
 			
+			
+			DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+			comboBoxModel.addElement(""); 
+			comboBoxTenMon.setModel(comboBoxModel);
+			
 			btnngK.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
 			        String registrationCode = textField_MaDangki.getText();
-			        
+			        Boolean check=true;
 			        // Tìm lớp học tương ứng với mã đăng ký trong biến "model"
 			        Classroom registeredClass = model.findClassroomByCodeRegister(registrationCode);
-			        
 			        if (registeredClass != null) {
-			            // Thêm lớp học vào biến "currentRegisteredClass"
-			           currentRegisteredClass.addClassroom(registeredClass);
-			            
-			            // Xoá lớp học khỏi biến "model"
-			            model.getClassroomList().remove(registeredClass);
-			            
-			            // Hiển thị danh sách "currentRegisteredClass" trên table_dangky
-			            displayRegisteredClasses(currentRegisteredClass);
-			            displayAvailableClasses(model);
-			            setDataToCombobox();
-			            insertStudentClassroom(LoginController.studentId,registeredClass.getClassCode());
-			            JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
+			        	for(int i=0;i<currentRegisteredClass.getClassroomList().size();i++) 
+			        		if(registrationCode.equals(currentRegisteredClass.getClassroom(i).getClass_registration_code())) {
+			        			check =false;
+			        			JOptionPane.showMessageDialog(null, "Lớp đã đăng ký, đăng ký không thành công");
+			        		}
+			        	if(check==true) {
+				        	currentRegisteredClass.addClassroom(registeredClass);
+				            // Hiển thị danh sách "currentRegisteredClass" trên table_dangky
+				            displayRegisteredClasses(currentRegisteredClass);
+				            insertStudentClassroom(LoginController.studentId,registeredClass.getClassCode());
+				            JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
+			        	}
 			        } else {
 			            JOptionPane.showMessageDialog(null, "Mã đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
 			        }
 			    }
 			});
+			
 		CourseCtrl courseCtrl = new CourseCtrl(this);
 		
 		JLabel lblNewLabel_3 = new JLabel("Course");
@@ -172,12 +177,17 @@ public class CourseView extends JPanel {
 		btn_Tim.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
 		 		String selectedCourse = (String) comboBoxTenMon.getSelectedItem();
+		 		if(selectedCourse=="")
+		 		{
+		 			displayAvailableClasses(model);  
+		 		}
+		 		else {
 				String classCode=selectedCourse;
 	        	ClassesManager findClassroomList=new ClassesManager();
 	        	Classroom classroom;
 	        	classroom=model.findClassroomByCode(classCode);
 	        	findClassroomList.addClassroom(classroom);
-	        	displayAvailableClasses(findClassroomList);   
+	        	displayAvailableClasses(findClassroomList);   }
 		 	}
 		 });
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -220,8 +230,6 @@ public class CourseView extends JPanel {
 		
 		
         //ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
-		 displayRegisteredClasses(currentRegisteredClass);
-        setVisible(true);
         
 	    }
 	    
@@ -272,6 +280,14 @@ public class CourseView extends JPanel {
 		            classCodes[i] = model.getClassroomList().get(i).getClassCode();
 		        }
 		        setDataToCombobox(classCodes);
+		        DefaultComboBoxModel<String> existingModel = (DefaultComboBoxModel<String>) comboBoxTenMon.getModel();
+		        DefaultComboBoxModel<String> newModel = new DefaultComboBoxModel<>();
+		        // Sao chép dữ liệu từ existingModel sang newModel
+		        newModel.addElement("");
+		        for (int i = 0; i < existingModel.getSize(); i++) {
+		            newModel.addElement(existingModel.getElementAt(i));
+		        }
+		        comboBoxTenMon.setModel(newModel);
 		    }
 		}
 	    public void insertStudentClassroom(int studentID, String classCode) {
