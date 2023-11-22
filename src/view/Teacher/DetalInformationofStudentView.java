@@ -12,12 +12,15 @@ import model.Student;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URL;
 
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JSeparator;
+import javax.swing.JButton;
 
 public class DetalInformationofStudentView extends JFrame {
 
@@ -70,9 +73,9 @@ public class DetalInformationofStudentView extends JFrame {
 		contentPane.add(lblStudentId);
 		
 		 avatar = new JLabel("hinh");
-		avatar.setBounds(317, 81, 252, 268);
+		avatar.setBounds(316, 47, 252, 268);
 		ImageIcon imageIcon = new ImageIcon();
-		 URL imageUrl=TeacherAccountMainView.class.getClassLoader().getResource("Assert/teacher/avatarForStudent.png");
+		 URL imageUrl=TeacherAccountMainView.class.getClassLoader().getResource("Assert/student/Examination/avvatar.png");
 	            File file = new File(imageUrl.getPath());
 	              imageIcon = new ImageIcon(file.getAbsolutePath());
 	              Image image = imageIcon.getImage();
@@ -186,6 +189,18 @@ public class DetalInformationofStudentView extends JFrame {
 		separator.setBounds(28, 47, 623, 24);
 		contentPane.add(separator);
 		
+		JButton btnBack = new JButton("Back");
+		btnBack.setBounds(483, 350, 85, 21);
+		
+		btnBack.addActionListener(new ActionListener() {
+			
+		    public void actionPerformed(ActionEvent e) {	
+		    	setVisible(false);
+		    	
+		    	  
+		    }
+		});
+		contentPane.add(btnBack);
 		SetStudentInfo(stu);
 		setVisible(true);
 	}

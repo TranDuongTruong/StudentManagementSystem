@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Admin.DisplayUserAccountsController;
 import controller.Admin.LoginController;
+import view.Teacher.PerformanceView_Admin;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -74,13 +75,13 @@ public class AdminHomeView extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("");
 		ImageIcon configurationIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/configuration1.png"));
 		lblNewLabel_1.setIcon(configurationIcon);
-		lblNewLabel_1.setBounds(261, 219, 178, 128);
+		lblNewLabel_1.setBounds(193, 219, 178, 128);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		ImageIcon showAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/showAdmin.png"));
 		lblNewLabel_2.setIcon(showAdminIcon);
-		lblNewLabel_2.setBounds(505, 219, 178, 128);
+		lblNewLabel_2.setBounds(363, 219, 128, 128);
 		contentPane.add(lblNewLabel_2);
 		
 		JButton btnNewButton = new JButton("Create User");
@@ -91,11 +92,11 @@ public class AdminHomeView extends JFrame {
                 dispose();
 			}
 		});
-		btnNewButton.setBounds(39, 392, 103, 23);
+		btnNewButton.setBounds(20, 392, 119, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Operation");
-		btnNewButton_1.setBounds(273, 392, 98, 23);
+		btnNewButton_1.setBounds(193, 392, 119, 23);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminOperationView adminOperationView = new AdminOperationView();
@@ -118,7 +119,7 @@ public class AdminHomeView extends JFrame {
 
 
 		});
-		btnNewButton_2.setBounds(513, 392, 119, 23);
+		btnNewButton_2.setBounds(363, 392, 119, 23);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Logout");
@@ -134,5 +135,25 @@ public class AdminHomeView extends JFrame {
 		});
 		btnNewButton_3.setBounds(564, 25, 119, 31);
 		contentPane.add(btnNewButton_3);
+		
+		JLabel accdemic = new JLabel("");
+		accdemic.setBounds(528, 219, 128, 128);
+		ImageIcon accdemicIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/showAdmin.png"));
+		accdemic.setIcon(showAdminIcon);
+		contentPane.add(accdemic);
+		
+		JButton btnAccade = new JButton("Academic Performance");
+		btnAccade.setBounds(528, 392, 119, 22);
+		btnAccade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PerformanceView_Admin frame = new PerformanceView_Admin();
+                frame.setVisible(true);
+                dispose();
+
+			}
+		});
+		contentPane.add(btnAccade);
+		
+		
 	}
 }

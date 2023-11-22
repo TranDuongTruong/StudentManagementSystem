@@ -142,12 +142,14 @@ public class StudentViewP extends JPanel {
 	                    int row = table.getSelectedRow();
 	                   
 				    	 
-				    	 DetalInformationofStudentView stu=new DetalInformationofStudentView(classRoom.getStudentList().get(row));
-				    	 stu.setVisible(true);
-				    	 
+				    	 DetalInformationofStudentView stu=new DetalInformationofStudentView(classRoom.getStudentList().get(row));				    				    	
+				    	 stu.requestFocus();
+				    	 stu.setVisible(true);			    	
+				          			          
 	                    	                   
 	                }
 			    }
+			   
 			});
 	        scrollPane.setViewportView(table);
 	        

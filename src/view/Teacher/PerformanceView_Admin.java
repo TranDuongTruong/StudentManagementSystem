@@ -24,7 +24,13 @@ import org.jfree.data.general.DefaultPieDataset;
 import controller.DatabaseConnection;
 import controller.Teacher.PerformanceController_Admin;
 import model.CreditsPerformance;
+import view.Admin.AdminHomeView;
+import view.Admin.DisplayUserAccountsView;
+
 import org.jfree.chart.plot.PiePlot;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 public class PerformanceView_Admin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -63,7 +69,23 @@ public class PerformanceView_Admin extends JFrame {
 	         chartPanel = new ChartPanel(chart);
 	        chartPanel.setBounds(10, 10, 479, 259);
 	        contentPane.add(chartPanel);
-	        System.out.println("ddddđ"); 
+	        
+	        JButton btnBack = new JButton("Back");
+	        btnBack.setBounds(740, 511, 103, 30);
+	        
+	        ImageIcon backIcon = new ImageIcon(DisplayUserAccountsView.class.getResource("/Assert/admin/back.png"));
+	        btnBack.setIcon(backIcon);
+	        btnBack.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AdminHomeView adminhomeView = new AdminHomeView();
+		            adminhomeView.setVisible(true);
+	                
+	                dispose();
+
+				}
+			});
+	        contentPane.add(btnBack);
+	        //System.out.println("ddddđ"); 
 	        PerformanceController_Admin perCtrl=new PerformanceController_Admin(this);
 	        //System.out.println("ddddđ");
 	        setVisible(true);
@@ -99,6 +121,7 @@ public class PerformanceView_Admin extends JFrame {
 		    chartPanel.addChartMouseListener(new ChartMouseListener() {
 		        public void chartMouseClicked(ChartMouseEvent event) {
 		            listener.actionPerformed(new ActionEvent(event, ActionEvent.ACTION_PERFORMED, "ChartMouseClicked"));
+		            dispose();
 		        }
 
 				public void chartMouseMoved(ChartMouseEvent arg0) {

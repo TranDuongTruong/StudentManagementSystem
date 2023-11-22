@@ -41,6 +41,7 @@ public class PerformanceController_Admin {
         	System.out.println("Aaaaaaaaaa");
         	DatabaseConnection con=new DatabaseConnection();
         	student=con.retrieveStudentsCredited();
+        	performanceView_Admin.setVisible(false);
         	
         	displayListOfStudent();
         	
