@@ -35,6 +35,10 @@ public class AdminOperationView extends JFrame {
 	private JTextField textField_ID;
 	private JTextField passwordField;
 	private JLabel errorLabel;
+	private JLabel studentIDLabel;
+	private JTextField studentIDField;
+	private JTextField roleField;
+
 
 	/**
 	 * Launch the application.
@@ -57,7 +61,7 @@ public class AdminOperationView extends JFrame {
 	 */
 	public AdminOperationView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 539, 371);
+		setBounds(100, 100, 568, 414);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -88,30 +92,36 @@ public class AdminOperationView extends JFrame {
 		contentPane.add(nameField);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 44, 523, 13);
+		separator.setBounds(0, 44, 559, 13);
 		contentPane.add(separator);
 		
-		final JComboBox<String> roleComboBox = new JComboBox<String>();
-		roleComboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Admin", "Teacher"}));
-		roleComboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
-		roleComboBox.setBounds(150, 213, 200, 20);
-		contentPane.add(roleComboBox);
-		
+
 		JLabel setRoleLabel = new JLabel("Role:");
 		setRoleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		setRoleLabel.setBounds(61, 211, 83, 20);
 		contentPane.add(setRoleLabel);
 		
+		roleField = new JTextField();
+		roleField.setFont(new Font("Tahoma", Font.BOLD, 14));
+		roleField.setBounds(150, 213, 200, 20);
+		contentPane.add(roleField);
+		roleField.setEditable(false);
+		
+		roleField.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    }
+		});
+		
 		JButton updateButton = new JButton("Update");
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminOperationController.updateButtonClicked(textField_ID.getText(), emailField, passwordField, 
-						nameField, roleComboBox, errorLabel);
+						nameField, roleField, errorLabel);
 			}
 		});
 		ImageIcon updateIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/submit.png"));
 		updateButton.setIcon(updateIcon);
-		updateButton.setBounds(61, 263, 103, 30);
+		updateButton.setBounds(61, 311, 103, 33);
 		contentPane.add(updateButton);
 		
 		JButton backButton = new JButton("Back");
@@ -124,13 +134,22 @@ public class AdminOperationView extends JFrame {
 		});
 		ImageIcon backIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/back.png"));
         backButton.setIcon(backIcon);
-		backButton.setBounds(293, 263, 103, 30);
+		backButton.setBounds(328, 311, 103, 33);
 		contentPane.add(backButton);
 		
 		errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.RED);
-		errorLabel.setBounds(61, 312, 335, 20);
+		errorLabel.setBounds(61, 280, 335, 20);
 		contentPane.add(errorLabel);
+		
+		 studentIDLabel = new JLabel("Student ID:");
+	     studentIDLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+	     studentIDLabel.setBounds(61, 249, 83, 20);
+	     contentPane.add(studentIDLabel);
+
+	     studentIDField = new JTextField();
+	     studentIDField.setBounds(150, 249, 200, 20);
+	     contentPane.add(studentIDField);
 		
 		JLabel lblAdmin = new JLabel("Admin: Operation");
 		lblAdmin.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -150,23 +169,23 @@ public class AdminOperationView extends JFrame {
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminOperationController.deleteButtonClicked(textField_ID.getText(), emailField, passwordField, 
-																		nameField, roleComboBox, errorLabel);
+																		nameField, roleField, errorLabel);
 			}
 		});
 		ImageIcon deleteIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/cancel1.png"));
 		deleteButton.setIcon(deleteIcon);
-		deleteButton.setBounds(180, 263, 103, 30);
+		deleteButton.setBounds(190, 311, 103, 33);
 		contentPane.add(deleteButton);
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                AdminOperationController.searchButtonClicked(textField_ID.getText(), emailField, passwordField, nameField, roleComboBox, errorLabel);
+                AdminOperationController.searchButtonClicked(textField_ID.getText(), emailField, passwordField, nameField, roleField, errorLabel,studentIDLabel, studentIDField);
             }
 		});
 		ImageIcon searchIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/loupe.png"));
 		btnSearch.setIcon(searchIcon);
-		btnSearch.setBounds(396, 77, 103, 30);
+		btnSearch.setBounds(424, 77, 103, 30);
 		contentPane.add(btnSearch);
 		
 		passwordField = new JTextField();
@@ -193,6 +212,10 @@ public class AdminOperationView extends JFrame {
                 clearError();
             }
         });
+        
+        
+        updateStudentIDFieldVisibility(roleField.getText().trim().toLowerCase());
+
 	}
 
 	private void clearError() {
@@ -202,4 +225,19 @@ public class AdminOperationView extends JFrame {
 	     nameField.setBackground(Color.WHITE);
 		
 	}
+	private void updateStudentIDFieldVisibility(String selectedRole) {
+	    if ("student".equals(selectedRole)) {
+	        System.out.println("Displaying studentIDField");
+	        studentIDLabel.setVisible(true);
+	        studentIDField.setVisible(true);
+	        studentIDField.setEditable(false);
+	    } else {
+	        System.out.println("Hiding studentIDField");
+	        studentIDLabel.setVisible(false);
+	        studentIDField.setVisible(false);
+	        studentIDField.setEditable(false);
+	    }
+	}
+
+
 }
