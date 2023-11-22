@@ -13,13 +13,15 @@ import java.awt.event.ActionEvent;
 
 public class CreateUserAccountsView extends JFrame {
     private JPanel contentPane;
-    private JTextField emailField;
-    private JPasswordField passwordField;
-    private JTextField nameField;
-    private JComboBox<String> roleComboBox;
+    public JTextField emailField;
+    public JPasswordField passwordField;
+    public JTextField nameField;
+    public JComboBox<String> roleComboBox;
     private JButton submitButton;
     private JButton backButton;
     private JLabel errorLabel;
+    private JLabel studentIDLabel;
+    public JComboBox<String> studentIDComboBox;
     
 
     public static void main(String[] args) {
@@ -40,7 +42,7 @@ public class CreateUserAccountsView extends JFrame {
 
     private void initializeUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 327);
+        setBounds(100, 100, 450, 374);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -79,9 +81,14 @@ public class CreateUserAccountsView extends JFrame {
 
         roleComboBox = new JComboBox<String>();
         roleComboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
-        roleComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Student", "Admin", "Teacher"}));
+        roleComboBox.setModel(new DefaultComboBoxModel(new String[] {"Teacher", "Student", "Admin"}));
         roleComboBox.setBounds(150, 168, 200, 20);
         contentPane.add(roleComboBox);
+        roleComboBox.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        updateStudentIDFieldVisibility(roleComboBox.getSelectedItem().toString());
+		    }
+		});
 
         JLabel setRoleLabel = new JLabel("Set role:");
         setRoleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -99,7 +106,7 @@ public class CreateUserAccountsView extends JFrame {
         ImageIcon submitIcon = new ImageIcon(CreateUserAccountsView.class.getResource("/Assert/admin/submit.png"));
         submitButton.setIcon(submitIcon);
 
-        submitButton.setBounds(61, 223, 103, 30);
+        submitButton.setBounds(61, 270, 103, 30);
         contentPane.add(submitButton);
 
         backButton = new JButton("Back");
@@ -109,7 +116,7 @@ public class CreateUserAccountsView extends JFrame {
         });
         ImageIcon backIcon = new ImageIcon(CreateUserAccountsView.class.getResource("/Assert/admin/back.png"));
         backButton.setIcon(backIcon);
-        backButton.setBounds(234, 223, 103, 30);
+        backButton.setBounds(234, 270, 103, 30);
         contentPane.add(backButton);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -121,13 +128,25 @@ public class CreateUserAccountsView extends JFrame {
 
         errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
-        errorLabel.setBounds(61, 260, 300, 20);
+        errorLabel.setBounds(62, 237, 300, 20);
         contentPane.add(errorLabel);
         
         JLabel lblAdmin = new JLabel("Admin: Create User Accounts");
         lblAdmin.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblAdmin.setBounds(10, 11, 322, 30);
         contentPane.add(lblAdmin);
+        
+        studentIDLabel = new JLabel("StudentID:");
+        studentIDLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+        studentIDLabel.setBounds(61, 206, 83, 20);
+        contentPane.add(studentIDLabel);
+        
+        studentIDComboBox = new JComboBox<String>();
+        studentIDComboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
+        studentIDComboBox.setBounds(150, 207, 200, 20);
+        contentPane.add(studentIDComboBox);
+       
+
 
         // Add focus listeners to clear error status when the user starts typing
         emailField.addFocusListener(new FocusAdapter() {
@@ -147,6 +166,24 @@ public class CreateUserAccountsView extends JFrame {
                 clearError();
             }
         });
+        updateStudentIDFieldVisibility(roleComboBox.getSelectedItem().toString());
+        updateStudentIDComboBox();
+
+    }
+    public void updateStudentIDFieldVisibility(String selectedRole) {
+	    if (selectedRole.equals("Student")) {
+	        studentIDLabel.setVisible(true);
+	        studentIDComboBox.setVisible(true);
+	    } else {
+	        studentIDLabel.setVisible(false);
+	        studentIDComboBox.setVisible(false);
+	    }
+	}
+    public void updateStudentIDComboBox() {
+        CreateUserAccountsController controller = new CreateUserAccountsController(this);
+        String[] studentIDs = controller.getStudentIDs();
+        studentIDComboBox.setModel(new DefaultComboBoxModel<>(studentIDs));
+        
     }
 
     public String getEmail() {
@@ -164,6 +201,20 @@ public class CreateUserAccountsView extends JFrame {
     public String getRole() {
         return roleComboBox.getSelectedItem().toString();
     }
+    public String getStudentID() {
+        String selectedValue = studentIDComboBox.getSelectedItem().toString();
+        
+        // Chia chuỗi thành mảng sử dụng dấu hai chấm (":")
+        String[] parts = selectedValue.split(":");
+        
+        // Lấy phần tử đầu tiên sau khi chia
+        if (parts.length > 0) {
+            return parts[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng
+        } else {
+            return ""; // Trả về chuỗi rỗng nếu không tìm thấy
+        }
+    }
+
 
     public void addSubmitListener(ActionListener listener) {
         submitButton.addActionListener(listener);
