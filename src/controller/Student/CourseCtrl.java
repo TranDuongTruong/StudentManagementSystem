@@ -17,6 +17,8 @@ import model.Classroom;
 import view.Student.CourseView;
 import view.Student.ScheduleView;
 import view.Student.StudentAccountMainView;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 public class CourseCtrl {
@@ -49,6 +51,14 @@ public class CourseCtrl {
 	            classCodes[i] = classes.getClassroomList().get(i).getClassCode();
 	        }
 	        view.setDataToCombobox(classCodes);
+	        DefaultComboBoxModel<String> existingModel = (DefaultComboBoxModel<String>) view.comboBoxTenMon.getModel();
+	        DefaultComboBoxModel<String> newModel = new DefaultComboBoxModel<>();
+	        // Sao chép dữ liệu từ existingModel sang newModel
+	        newModel.addElement("");
+	        for (int i = 0; i < existingModel.getSize(); i++) {
+	            newModel.addElement(existingModel.getElementAt(i));
+	        }
+	        view.comboBoxTenMon.setModel(newModel);
 	    }
 	}
 //	public String[] getClassName() {
