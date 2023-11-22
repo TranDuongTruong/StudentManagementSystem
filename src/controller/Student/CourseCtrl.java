@@ -33,10 +33,10 @@ public class CourseCtrl {
         db=new DatabaseConnection();
         DatabaseConnection a= new DatabaseConnection();
         classes=a.retrieveClassesFromDatabaseWithSchedule();
-        
         view.model=classes;
         setDataToCombobox();
 //        view.FilteredButtonListener(new FilterClassListener());
+        view.displayRegisteredClasses(view.currentRegisteredClass);
         view.displayAvailableClasses(classes);
 //		className = getClassName();
 //		studentID= LoginController.studentId;
@@ -61,6 +61,14 @@ public class CourseCtrl {
 	        view.comboBoxTenMon.setModel(newModel);
 	    }
 	}
+//	public void removeClassesRegistered(ClassesManager classes) {
+//		String[] classCode = new String[view.currentRegisteredClass.getClassroomList().size()];
+//		for (int i = 0; i<view.model.getClassroomList().size();i++) {
+//            for(int j=0;j<view.currentRegisteredClass.getClassroomList().size();i++)
+////            	if(view.model.)
+//
+//    }
+//		}
 //	public String[] getClassName() {
 //        List<String> classNames = new ArrayList<>();
 //        DatabaseConnection db = new DatabaseConnection();

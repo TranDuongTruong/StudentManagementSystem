@@ -143,28 +143,28 @@ public class CourseView extends JPanel {
 			btnngK.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
 			        String registrationCode = textField_MaDangki.getText();
-			        
+			        Boolean check=true;
 			        // Tìm lớp học tương ứng với mã đăng ký trong biến "model"
 			        Classroom registeredClass = model.findClassroomByCodeRegister(registrationCode);
-			        
 			        if (registeredClass != null) {
-			            // Thêm lớp học vào biến "currentRegisteredClass"
-			           currentRegisteredClass.addClassroom(registeredClass);
-			            
-			            // Xoá lớp học khỏi biến "model"
-			            model.getClassroomList().remove(registeredClass);
-			            
-			            // Hiển thị danh sách "currentRegisteredClass" trên table_dangky
-			            displayRegisteredClasses(currentRegisteredClass);
-			            displayAvailableClasses(model);
-			            setDataToCombobox();
-			            insertStudentClassroom(LoginController.studentId,registeredClass.getClassCode());
-			            JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
+			        	for(int i=0;i<currentRegisteredClass.getClassroomList().size();i++) 
+			        		if(registrationCode.equals(currentRegisteredClass.getClassroom(i).getClass_registration_code())) {
+			        			check =false;
+			        			JOptionPane.showMessageDialog(null, "Lớp đã đăng ký, đăng ký không thành công");
+			        		}
+			        	if(check==true) {
+				        	currentRegisteredClass.addClassroom(registeredClass);
+				            // Hiển thị danh sách "currentRegisteredClass" trên table_dangky
+				            displayRegisteredClasses(currentRegisteredClass);
+				            insertStudentClassroom(LoginController.studentId,registeredClass.getClassCode());
+				            JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
+			        	}
 			        } else {
 			            JOptionPane.showMessageDialog(null, "Mã đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
 			        }
 			    }
 			});
+			
 		CourseCtrl courseCtrl = new CourseCtrl(this);
 		
 		JLabel lblNewLabel_3 = new JLabel("Course");
@@ -230,8 +230,6 @@ public class CourseView extends JPanel {
 		
 		
         //ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
-		 displayRegisteredClasses(currentRegisteredClass);
-        setVisible(true);
         
 	    }
 	    
