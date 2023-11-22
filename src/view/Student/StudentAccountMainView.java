@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.DatabaseConnection;
 import controller.Admin.LoginController;
+import controller.Student.MainViewCtrl;
 import model.Student;
 import view.Admin.LoginView;
 
@@ -138,10 +139,13 @@ public class StudentAccountMainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		String studentName = retrieveStudentName(LoginController.studentId);
+		btn_DashBoard_1.setText(studentName);
 		btn_DashBoard_1.setMaximumSize(new Dimension(100, 20));
 		btn_DashBoard_1.setBorder(null);
 		btn_DashBoard_1.setBackground(Color.RED); // Set the name label color to red
 		verticalBox_1.add(btn_DashBoard_1);
+		
 		
 		Component verticalStrut_4 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_4);
@@ -403,5 +407,24 @@ public class StudentAccountMainView extends JFrame {
 	    btn_Curriculum.setPreferredSize(size);
 	    btn_Examination.setPreferredSize(size);
 	    btn_Syllabli.setPreferredSize(size);
+	}
+	
+	private String retrieveStudentName(int studentId) {
+	    DatabaseConnection db = new DatabaseConnection();
+	    Connection con = db.connectToBB();
+
+	    try {
+	        String query = "SELECT name FROM student WHERE studentID = ?";
+	        PreparedStatement stmt = con.prepareStatement(query);
+	        stmt.setInt(1, studentId);
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            return rs.getString("name");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ""; // Trả về chuỗi trống nếu có lỗi
 	}
 }
