@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class AdminOperationController {
 
 	public static void searchButtonClicked(String id, JTextField emailField, JTextField passwordField,
-			JTextField nameField, JComboBox<String> roleComboBox, JLabel errorLabel) {
+			JTextField nameField, JTextField roleField, JLabel errorLabel,JLabel studentIDLabel, JTextField studentIDField) {
 		String[] result = searchInDatabase(id);
 		errorLabel.setText("");
 	    emailField.setBackground(Color.WHITE);
@@ -25,18 +25,20 @@ public class AdminOperationController {
 			emailField.setText(result[0]);
 			passwordField.setText(result[1]);
 			nameField.setText(result[2]);
-			// Chuyển đổi giá trị "role" từ cơ sở dữ liệu để trùng khớp với JComboBox
-			String role = result[3];
-			if (role.equals("admin")) {
-				roleComboBox.setSelectedItem("Admin");
-			} else if (role.equals("student")) {
-				roleComboBox.setSelectedItem("Student");
-			} else if (role.equals("teacher")) {
-				roleComboBox.setSelectedItem("Teacher");
-			}
+			roleField.setText(result[3]);
+			studentIDField.setText(result[4]);
+			if(roleField.getText().toString().equals("student")) {
+				studentIDLabel.setVisible(true);
+				studentIDField.setVisible(true);
+		        studentIDField.setEditable(false);
+			}else {
+		        studentIDLabel.setVisible(false);
+		        studentIDField.setVisible(false);
+		        studentIDField.setEditable(false);
+		    }
 		} else {
 			// Xử lý trường hợp không tìm thấy dữ liệu
-			clearFields(emailField, passwordField, nameField, roleComboBox, errorLabel);
+			clearFields(emailField, passwordField, nameField, roleField, errorLabel);
 			JOptionPane.showMessageDialog(null, "No data found with this ID.", "Search Account",
 					JOptionPane.INFORMATION_MESSAGE);
 
@@ -44,42 +46,43 @@ public class AdminOperationController {
 	}
 
 	private static String[] searchInDatabase(String id) {
-		String[] result = null;
-		Connection connection = null;
+	    String[] result = null;
+	    Connection connection = null;
 
-		try {
+	    try {
+	        connection = DatabaseConnection.connectToBB();
 
-			connection = connection = DatabaseConnection.connectToBB();
+	        String query = "SELECT email, password, name, role, studentID FROM accounts WHERE id = ?";
+	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, id);
+	        ResultSet resultSet = preparedStatement.executeQuery();
 
-			String query = "SELECT email, password, name, role FROM accounts WHERE id = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, id);
-			ResultSet resultSet = preparedStatement.executeQuery();
+	        if (resultSet.next()) {
+	            result = new String[5];  // Increase the array size to accommodate studentID
+	            result[0] = resultSet.getString("email");
+	            result[1] = resultSet.getString("password");
+	            result[2] = resultSet.getString("name");
+	            result[3] = resultSet.getString("role");
+	            result[4] = resultSet.getString("studentID");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 
-			if (resultSet.next()) {
-				result = new String[4];
-				result[0] = resultSet.getString("email");
-				result[1] = resultSet.getString("password");
-				result[2] = resultSet.getString("name");
-				result[3] = resultSet.getString("role");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return result;
+	    return result;
 	}
 
+
 	public static void deleteButtonClicked(String id, JTextField emailField, JTextField passwordField,
-			JTextField nameField, JComboBox<String> roleComboBox, JLabel errorLabel) {
+			JTextField nameField, JTextField roleField, JLabel errorLabel) {
 		String[] result = searchInDatabase(id);
 
 		if (result != null) {
@@ -92,7 +95,7 @@ public class AdminOperationController {
 				if (deleted) {
 					JOptionPane.showMessageDialog(null, "Deleted Success", "Delete Account",
 							JOptionPane.INFORMATION_MESSAGE);
-					clearFields(emailField, passwordField, nameField, roleComboBox, errorLabel);
+					clearFields(emailField, passwordField, nameField, roleField, errorLabel);
 				} else {
 					JOptionPane.showMessageDialog(null, "Delete Failed", "Delete Account", JOptionPane.ERROR_MESSAGE);
 				}
@@ -135,7 +138,7 @@ public class AdminOperationController {
 	}
 
 	private static void clearFields(JTextField emailField, JTextField passwordField, JTextField nameField,
-			JComboBox<String> roleComboBox, JLabel errorLabel) {
+			JTextField roleField, JLabel errorLabel) {
 		errorLabel.setText("");
 	    emailField.setBackground(Color.WHITE);
 	    passwordField.setBackground(Color.WHITE);
@@ -143,7 +146,7 @@ public class AdminOperationController {
 		emailField.setText("");
 		passwordField.setText("");
 		nameField.setText("");
-		roleComboBox.setSelectedItem("Student");
+		roleField.setText("");
 	}
 	 private static boolean isValidEmail(String email) {
 	        // Basic email validation using regex
@@ -183,14 +186,14 @@ public class AdminOperationController {
 	 }
 
 	public static void updateButtonClicked(String id, JTextField emailField, JTextField passwordField,
-			JTextField nameField, JComboBox<String> roleComboBox,JLabel errorLabel) {
+			JTextField nameField, JTextField roleField,JLabel errorLabel) {
 		  String[] result = searchInDatabase(id);
 
 		    if (result != null) {
 		        String email = emailField.getText();
 		        String password = passwordField.getText();
 		        String name = nameField.getText();
-		        String role = roleComboBox.getSelectedItem().toString().toLowerCase();
+		      
 
 		        if (isValidEmail(email) && isValidPassword(password) && isValidName(name)) {
 		        	if (isEmailExists(email)  && !email.equals(result[0])) {
@@ -199,7 +202,7 @@ public class AdminOperationController {
 		                errorLabel.setForeground(Color.RED);
 		            }
 		        	else {
-		            	boolean updated = updateInDatabase(id, email, password, name, role);
+		            	boolean updated = updateInDatabase(id, email, password, name);
 
 //			            if (updated) {
 //			                errorLabel.setText("Updated data successfully.");
@@ -240,25 +243,24 @@ public class AdminOperationController {
 //		        errorLabel.setForeground(Color.RED);
 		    	JOptionPane.showMessageDialog(null, "No data found with this ID", "Update",
 						JOptionPane.INFORMATION_MESSAGE);
-				clearFields(emailField, passwordField, nameField, roleComboBox, errorLabel);
+				clearFields(emailField, passwordField, nameField, roleField, errorLabel);
 
 		    }
 	}
 
-	private static boolean updateInDatabase(String id, String email, String password, String name, String role) {
+	private static boolean updateInDatabase(String id, String email, String password, String name) {
 		boolean updated = false;
 		Connection connection = null;
 
 		try {
 			connection = DatabaseConnection.connectToBB();
 
-			String query = "UPDATE accounts SET email = ?, password = ?, name = ?, role = ? WHERE id = ?";
+			String query = "UPDATE accounts SET email = ?, password = ?, name = ? WHERE id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, password);
 			preparedStatement.setString(3, name);
-			preparedStatement.setString(4, role);
-			preparedStatement.setString(5, id);
+			preparedStatement.setString(4, id);
 
 			int rowsAffected = preparedStatement.executeUpdate();
 
