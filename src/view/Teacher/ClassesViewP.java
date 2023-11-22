@@ -50,7 +50,7 @@ public class ClassesViewP extends JPanel {
 	        
 	         classesPane = new JPanel();
 	        classesPane.setBackground(new Color(255, 255, 255));
-	        classesPane.setBounds(10, 10, 815, 620);
+	        classesPane.setBounds(0, 0, 835, 640);
 	        add(classesPane);
 	   
 	        

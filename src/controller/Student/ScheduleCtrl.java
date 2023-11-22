@@ -95,23 +95,30 @@ public class ScheduleCtrl {
 		    Object[][] data = new Object[7][9]; // Kích thước của mảng dữ liệu tương ứng với JTable "schedule"
 		    DatabaseConnection db = new DatabaseConnection();
 		    Connection con = db.connectToBB();
-		    
+		    System.out.println("dAY: ");
+		   
+		    // Check if the registeredClassCodes array is empty
+		    if (registeredClassCodes.length == 0) {
+		        // Handle the empty case, you may return an empty data array or log a message
+		        System.out.println("No class codes provided.");
+		        return data;
+		    }
+
 		    try {
-		    	String query = "SELECT * FROM schedule WHERE classCode IN (";
+		        String query = "SELECT * FROM schedule WHERE classCode IN (";
 
-		    	// Tạo phần danh sách các mã lớp trong câu truy vấn
-		    	for (int i = 0; i < registeredClassCodes.length; i++) {
-		    	    query += "'" + registeredClassCodes[i] + "'";
-		    	    if (i < registeredClassCodes.length - 1) {
-		    	        query += ",";
-		    	    }
-		    	}
+		        // Tạo phần danh sách các mã lớp trong câu truy vấn
+		        for (int i = 0; i < registeredClassCodes.length; i++) {
+		            query += "'" + registeredClassCodes[i] + "'";
+		            if (i < registeredClassCodes.length - 1) {
+		                query += ",";
+		            }
+		        }
 
-		    	query += ")";
-		    	
-		    	
-		        java.sql.Statement stmt =  con.createStatement();
-		        ResultSet resultSet = ((java.sql.Statement) stmt).executeQuery(query);
+		        query += ")";
+
+		        java.sql.Statement stmt = con.createStatement();
+		        ResultSet resultSet = stmt.executeQuery(query);
 
 		        // Lặp qua các bản ghi trong ResultSet và lưu dữ liệu vào mảng data
 		        while (resultSet.next()) {
@@ -136,7 +143,7 @@ public class ScheduleCtrl {
 		            data[row][column] = new Object[] { classCode, dayOfWeek, startTime, endTime, startDate, endDate, roomNumber };
 		           
 		            List<Object> newData = new ArrayList<>(Arrays.asList(classCode,startDate, endDate, roomNumber));
-		          //  System.out.println("dAY: "+startDate);
+		           System.out.println("dAY: "+startDate);
 		            this.view.setValueInTable(row,column,newData);
 		            }
 		        }

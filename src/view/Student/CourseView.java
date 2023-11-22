@@ -14,6 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
@@ -24,7 +28,8 @@ import model.ClassesManager;
 import model.Classroom;
 
 import view.Teacher.DetalInformationofStudentView;
-
+import controller.DatabaseConnection;
+import controller.Admin.LoginController;
 import controller.Student.CourseCtrl;
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -47,7 +52,12 @@ public class CourseView extends JPanel {
 	 */
 	
 	public CourseView() {
-		currentRegisteredClass=new ClassesManager();
+		LoginController.studentId=9;
+		 DatabaseConnection db = new DatabaseConnection();
+	     String [] classCode=db.getRegisteredClassCodes(LoginController.studentId);
+	     
+	     currentRegisteredClass=db.retrieveClassesFromDatabase(classCode);
+	     
 		setLayout(null);
 		this.setBounds(162, 0, 835, 640);
 		JButton btnngK = new JButton("Enroll");
@@ -134,7 +144,7 @@ public class CourseView extends JPanel {
 			        
 			        if (registeredClass != null) {
 			            // Thêm lớp học vào biến "currentRegisteredClass"
-			            currentRegisteredClass.addClassroom(registeredClass);
+			           currentRegisteredClass.addClassroom(registeredClass);
 			            
 			            // Xoá lớp học khỏi biến "model"
 			            model.getClassroomList().remove(registeredClass);
@@ -143,7 +153,7 @@ public class CourseView extends JPanel {
 			            displayRegisteredClasses(currentRegisteredClass);
 			            displayAvailableClasses(model);
 			            setDataToCombobox();
-			            
+			            insertStudentClassroom(LoginController.studentId,registeredClass.getClassCode());
 			            JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
 			        } else {
 			            JOptionPane.showMessageDialog(null, "Mã đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
@@ -197,6 +207,7 @@ public class CourseView extends JPanel {
 				            displayRegisteredClasses(currentRegisteredClass);
 				            displayAvailableClasses(model);
 			                setDataToCombobox();
+			                deleteStudentClassroom(LoginController.studentId,classCode);
 			                JOptionPane.showMessageDialog(null, "Huỷ đăng ký môn thành công!");
 			            }
 			            else 
@@ -209,7 +220,7 @@ public class CourseView extends JPanel {
 		
 		
         //ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
-        
+		 displayRegisteredClasses(currentRegisteredClass);
         setVisible(true);
         
 	    }
@@ -236,6 +247,7 @@ public class CourseView extends JPanel {
 			if(table_Timlop==null) return;
 		    DefaultTableModel tableModel = (DefaultTableModel) table_Timlop.getModel();
 		    // Xóa tất cả các dòng hiện tại trong model
+		   
 		    tableModel.setRowCount(0);
 		    for (Classroom classroom : classes.getClassroomList()){
 		        Object[] rowData = new Object[6];
@@ -262,6 +274,63 @@ public class CourseView extends JPanel {
 		        setDataToCombobox(classCodes);
 		    }
 		}
+	    public void insertStudentClassroom(int studentID, String classCode) {
+	        DatabaseConnection db = new DatabaseConnection();
+	        Connection con = db.connectToBB();
+
+	        try {
+	            String query = "INSERT INTO studentclassroom (studentID, classCode) VALUES (?, ?)";
+	            PreparedStatement stmt = con.prepareStatement(query);
+	            stmt.setInt(1, studentID);
+	            stmt.setString(2, classCode);
+
+	            int rowsAffected = stmt.executeUpdate();
+	            if (rowsAffected > 0) {
+	                System.out.println("Row inserted successfully.");
+	            } else {
+	                System.out.println("Failed to insert row.");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+
+	    public void deleteStudentClassroom(int studentID, String classCode) {
+	        DatabaseConnection db = new DatabaseConnection();
+	        Connection con =  db.connectToBB();
+
+	        try {
+	            String query = "DELETE FROM studentclassroom WHERE studentID = ? AND classCode = ?";
+	            PreparedStatement stmt = con.prepareStatement(query);
+	            stmt.setInt(1, studentID);
+	            stmt.setString(2, classCode);
+
+	            int rowsAffected = stmt.executeUpdate();
+	            if (rowsAffected > 0) {
+	                System.out.println("Row deleted successfully.");
+	            } else {
+	                System.out.println("Failed to delete row.");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 }
 
 

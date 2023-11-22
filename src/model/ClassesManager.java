@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.DatabaseConnection;
+import controller.Admin.LoginController;
+
 public class ClassesManager {
 	private List<Classroom> classroomList;
     private String luachon;
@@ -10,9 +13,10 @@ public class ClassesManager {
 	public ClassesManager() {
     	
         classroomList = new ArrayList();
+       
         luachon="";
     }
-
+	
     // Other methods
     public void addClassroom(Classroom classroom) {
         classroomList.add(classroom);

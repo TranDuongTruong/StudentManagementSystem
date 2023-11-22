@@ -30,7 +30,8 @@ public class CourseCtrl {
         this.view=view;
         db=new DatabaseConnection();
         DatabaseConnection a= new DatabaseConnection();
-        classes=a.retrieveClassesFromDatabase();
+        classes=a.retrieveClassesFromDatabaseWithSchedule();
+        
         view.model=classes;
         setDataToCombobox();
 //        view.FilteredButtonListener(new FilterClassListener());

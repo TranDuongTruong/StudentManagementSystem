@@ -55,8 +55,12 @@ public class TeacherAccountMainView extends JFrame {
 	  JButton btn_DashBoard;
 	private static final long serialVersionUID = 1L;
 	private JPanel main_Panel;
-	final ClassesViewP classes=new ClassesViewP(this);StudentViewP student;
+	final ClassesViewP classes=new ClassesViewP(this);
+	final DashboardView dashboard=new DashboardView();
+	
+	StudentViewP student;
 	boolean hasClassesView = false;
+	boolean hasDashboardView=true;
 	boolean hasStudentView = false;
 	 boolean hasBlogView = false;
 	/**
@@ -76,8 +80,14 @@ public class TeacherAccountMainView extends JFrame {
 		});
 	}
 	public void removeContent() {
+		if (hasDashboardView) {
+			main_Panel.remove(dashboard);
+			btn_DashBoard.setBackground(new Color(192, 192, 192));;
+			hasDashboardView=false;
+			}
 		if (hasClassesView) {
 			main_Panel.remove(classes);
+			btn_classes.setBackground(new Color(192, 192, 192));;
 			hasClassesView=false;
 			}
 		  if (hasStudentView) {
@@ -94,7 +104,7 @@ public class TeacherAccountMainView extends JFrame {
 
 		    	main_Panel.remove(content_panel);
 		    	removeContent();
-		    	
+		    	btn_classes.setBackground(new Color(255, 255, 255));
 		    	main_Panel.add(classes);
 		    	main_Panel.invalidate();
 		    	main_Panel.repaint();hasClassesView=true;
@@ -141,8 +151,8 @@ public class TeacherAccountMainView extends JFrame {
 	         image.getScaledInstance(60, 60, Image.SCALE_SMOOTH));
 			        System.out.println(imageWidth+" "+ imageHeight);
 			        Panel panel = new Panel();
-			        panel.setBackground(new Color(192, 192, 192));
-			        panel.setBounds(0, 10, 104, 620);
+			        panel.setBackground(new Color(245, 89, 37));
+			        panel.setBounds(0, 0, 104, 640);
 			        main_Panel.add(panel);
 			        JLabel label = new JLabel();
 			        panel.add(label);
@@ -205,7 +215,7 @@ public class TeacherAccountMainView extends JFrame {
 			        panel.add(btn_Classes_1);
 			        
 			         content_panel = new JPanel();
-			        content_panel.setBounds(103, 10, 894, 620);
+			        content_panel.setBounds(103, 0, 904, 640);
 
 			        
 			        main_Panel.add(content_panel);

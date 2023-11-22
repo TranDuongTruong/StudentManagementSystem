@@ -3,6 +3,7 @@ package controller;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.Classroom;
@@ -46,8 +47,7 @@ public class DatabaseConnection {
 	        ClassesManager classes = new ClassesManager();
 	        String f1, f2;
 	        int f3, f4;
-	        String f5,f6,f7;
-	        int f8;
+	        
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -60,15 +60,12 @@ public class DatabaseConnection {
 	                f2 = rs.getString(2);
 	                f3 = rs.getInt(3);
 	                f4 = rs.getInt(4);
-	                f5=rs.getString(5);
-	                f6=rs.getString(6);
-	                f7=rs.getString(7);
-	                f8=rs.getInt(8);
+	              
 
 
 	                List<Student> students = retrieveStudentsFromClassroom(f1);
 
-	                Classroom classroom = new Classroom(f1, f2, f3, f4, students,f5,f6,f7,f8);
+	                Classroom classroom = new Classroom(f1, f2, f3, f4, students);
 	                classes.addClassroom(classroom);
 
 	                System.out.println(f1 + "  " + f2);
@@ -91,6 +88,141 @@ public class DatabaseConnection {
 	        return classes;
 	    }
 	    
+	    public ClassesManager retrieveClassesFromDatabase(String[] classCodes) {
+	        ClassesManager classes = new ClassesManager();
+
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            con = DriverManager.getConnection(URL, USER, PASSWORD);
+
+	            String query = "SELECT * FROM classroom WHERE classCode IN (";
+	            for (int i = 0; i < classCodes.length; i++) {
+	                if (i > 0) {
+	                    query += ",";
+	                }
+	                query += "'" + classCodes[i] + "'";
+	            }
+	            query += ")";
+
+	            Statement stmt = con.createStatement();
+	            ResultSet rs = stmt.executeQuery(query);
+	            String f5;
+	            Wrapper<String> f8= new Wrapper<>(" "),f7 =  new Wrapper<>(" ") ;
+		        int  f6;
+	            while (rs.next()) {
+	                String f1 = rs.getString(1);
+	                String f2 = rs.getString(2);
+	                int f3 = rs.getInt(3);
+	                int f4 = rs.getInt(4);
+	                f5=rs.getString(5);
+	                f6=rs.getInt(6);
+	             //   List<Student> students = retrieveStudentsFromClassroom(f1);
+	                retrieveScheduleDataFromDatabase(f1,f7,f8);
+		             Classroom classroom = new Classroom(f1, f2, f3, f4, null,f5,f8.value.toString(),f7.value.toString(),f6);
+	                classes.addClassroom(classroom);
+
+	                System.out.println(f1 + "  " + f2);
+	            }
+
+	            if (!con.isClosed()) {
+	                System.out.println("Successfully connected to MySQL server...");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return classes;
+	    }
+	    public ClassesManager retrieveClassesFromDatabaseWithSchedule() {
+	    	
+	        ClassesManager classes = new ClassesManager();
+	        String f1, f2;
+	        int f3, f4;
+	        String f5;
+	        Wrapper<String> f8= new Wrapper<>(" "),f7 =  new Wrapper<>(" ") ;
+	        int  f6;
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            con = DriverManager.getConnection(URL, USER, PASSWORD);
+
+	            String query = "SELECT * FROM classroom";
+	            Statement stmt = con.createStatement();
+	            ResultSet rs = stmt.executeQuery(query);
+	            while (rs.next()) {
+	                f1 = rs.getString(1);
+	                f2 = rs.getString(2);
+	                f3 = rs.getInt(3);
+	                f4 = rs.getInt(4);
+	                f5=rs.getString(5);
+	                f6=rs.getInt(6);
+	                //System.out.println("aaaaaaadddaaaaaadđ:"+f7);
+	                
+	                
+	                retrieveScheduleDataFromDatabase(f1,f7,f8);
+	               // System.out.println("aaaaaaaddddđ:"+f7);
+	               // List<Student> students = retrieveStudentsFromClassroom(f1);
+		            // Classroom classroom = new Classroom(f1, f2, f3, f4, students,f5,"","",f6);
+	                Classroom classroom = new Classroom(f1, f2, f3, f4, null,f5,f8.value.toString(),f7.value.toString(),f6);
+	                classes.addClassroom(classroom);
+
+	               // System.out.println(f1 + "  " + f2);
+	            }
+
+	            if (!con.isClosed()) {
+	                System.out.println("Successfully connected to MySQL server...");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return classes;
+	    }
+ 
+ 		
+ 
+ 		public String[] getRegisteredClassCodes(int studentID) {
+ 		    List<String> registeredClassCodes = new ArrayList<>();
+ 		    DatabaseConnection db = new DatabaseConnection();
+ 		    Connection con = db.connectToBB();
+
+ 		    try {
+ 		        // Thực hiện truy vấn để lấy các mã lớp đã đăng ký của học sinh từ bảng "studentclassroom"
+ 		        String query = "SELECT classCode FROM studentclassroom WHERE studentID = ?";
+ 		        PreparedStatement pstmt = con.prepareStatement(query);
+ 		        pstmt.setString(1, Integer.toString(studentID));
+ 		        ResultSet resultSet = pstmt.executeQuery();
+
+ 		        // Lặp qua các bản ghi trong ResultSet và lưu các mã lớp vào danh sách registeredClassCodes
+ 		        while (resultSet.next()) {
+ 		            String classCode = resultSet.getString("classCode");
+ 		            registeredClassCodes.add(classCode);
+ 		        }
+
+ 		        // Đóng kết nối và các đối tượng liên quan
+ 		        resultSet.close();
+ 		        pstmt.close();
+ 		        con.close();
+ 		    } catch (SQLException e) {
+ 		        e.printStackTrace();
+ 		    }
+ 		   String[] classCodeArray = registeredClassCodes.toArray(new String[registeredClassCodes.size()]);
+
+ 		    return classCodeArray;
+ 		}
 	    List<Student> retrieveStudentsFromClassroom(String classCode) {
 	        List<Student> students = new ArrayList();
 	        int studentID; String name; LocalDate dob; String address; boolean gender;
@@ -127,6 +259,72 @@ public class DatabaseConnection {
 	        }
 	        return students;
 	    }
+	    static class Wrapper<T> {
+	        T value;
+
+	        public Wrapper(T value) {
+	            this.value = value;
+	        }
+	    }
+	    private void retrieveScheduleDataFromDatabase(String registeredClassCodes, Wrapper<String> loc,  Wrapper<String>  shed) {
+	    	DatabaseConnection db = new DatabaseConnection();
+		    Connection con = db.connectToBB();
+		   // System.out.println("dAY: "+registeredClassCodes);
+		   
+		    // Check if the registeredClassCodes array is empty
+		    if (registeredClassCodes == null) {
+		        // Handle the empty case, you may return an empty data array or log a message
+		        System.out.println("No class codes provided.");
+		        return ;
+		    }
+
+		    try {
+		        String query = "SELECT * FROM schedule WHERE classCode IN (";
+		        query += "'" + registeredClassCodes + "'";
+		        
+
+		        query += ")";
+
+		        java.sql.Statement stmt = con.createStatement();
+		        ResultSet resultSet = stmt.executeQuery(query);
+		        System.out.println("dAaY: "+registeredClassCodes);
+
+		        // Lặp qua các bản ghi trong ResultSet và lưu dữ liệu vào mảng data
+		        while (resultSet.next()) {
+		            String classCode = resultSet.getString("classCode");
+		            String dayOfWeek = resultSet.getString("dayOfWeek");
+		            String startTime = resultSet.getTime("startTime").toString();
+		            String endTime = resultSet.getTime("endTime").toString();
+		            Date startDay=resultSet.getDate("startDate");
+		            String startDate = startDay.toString();
+		            Date endDay= resultSet.getDate("endDate");
+		            String endDate = endDay.toString();
+		            
+		            String roomNumber = resultSet.getString("roomNumber");
+		            System.out.println(classCode+roomNumber);
+		            
+		            loc.value=roomNumber;
+		            shed.value=startDate+"\n"+startTime+"-"+endTime; 
+		          //  System.out.println("llllllll:"+loc+shed);
+		            
+		        }
+	          
+
+		        // Đóng kết nối và các đối tượng liên quan
+		        resultSet.close();
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		   
+		}
+	    
+	    
+	    
+	    
+	    
 	    public  void addClassToDatabase(Classroom classroom) {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");

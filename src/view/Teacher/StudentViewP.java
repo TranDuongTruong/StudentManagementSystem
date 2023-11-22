@@ -69,7 +69,7 @@ public class StudentViewP extends JPanel {
 	        ActionListener action=new StudentController(this);
 	        contentPane_1 = new JPanel();
 	         contentPane_1.setBackground(new Color(255, 255, 255));
-	        contentPane_1.setBounds(10, 10, 815, 620);
+	        contentPane_1.setBounds(0, 0, 835, 640);
 	        add(contentPane_1);
 	        contentPane_1.setLayout(null);
 	       

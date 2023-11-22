@@ -15,7 +15,7 @@ public class Classroom {
 	    
 	    private String schedule;
         private String location;
-        private int creditHours;
+        private int creditNumbers;
         private String Class_registration_code;
 	    
         
@@ -29,7 +29,7 @@ public class Classroom {
 			this.studentList = studentList;
 			this.schedule = thoiGian;
 			this.location = diadiem;
-			this.creditHours = soTinchi;
+			this.creditNumbers = soTinchi;
 			this.Class_registration_code=Class_registration_code;
 		}
 
@@ -65,12 +65,12 @@ public class Classroom {
 
 
 		public int getSoTinchi() {
-			return creditHours;
+			return creditNumbers;
 		}
 
 
 		public void setSoTinchi(int soTinchi) {
-			this.creditHours = soTinchi;
+			this.creditNumbers = soTinchi;
 		}
 
 
