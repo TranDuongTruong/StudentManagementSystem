@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 import controller.DatabaseConnection;
 import controller.Admin.LoginController;
 import model.Student;
-
+import view.Admin.LoginView;
 
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -234,6 +234,14 @@ public class StudentAccountMainView extends JFrame {
 		JButton btn_Logout = new JButton("<- Logout"); // Updated button label
 		btn_Logout.setMaximumSize(new Dimension(100, 20));
 		btn_Logout.setBackground(Color.WHITE);
+		btn_Logout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginController loginController = new LoginController(new LoginView());
+                loginController.displayLoginView();
+                dispose();
+
+			}
+		});
 		
 		verticalBox_1.add(btn_Logout);
 		
