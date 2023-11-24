@@ -18,12 +18,12 @@ public class DatabaseConnection {
 	    private static final String USER = "root";
 	    private static final String PASSWORD = "";
 	    
-	 //FOR Online
+//	 //FOR Online
 //	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12664007";   
 //	    private static final String USER = "sql12664007";
 //	    private static final String PASSWORD = "NJ3l7Ikjd1";
-
-	 
+//
+//	 
 	 //FOR OTHER
 //	 private static final String URL = "jdbc:mysql://192.168.1.11:3306/spmdatabase11";
 //     private static final String USER = "truongdaica";
@@ -87,7 +87,49 @@ public class DatabaseConnection {
 	        }
 	        return classes;
 	    }
-	    
+	    public ClassesManager retrieveClassesFromDatabase(int teacherID) {
+	        ClassesManager classes = new ClassesManager();
+	        String f1, f2;
+	        int f3, f4;
+
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            con = DriverManager.getConnection(URL, USER, PASSWORD);
+
+	            String query = "SELECT * FROM classroom INNER JOIN teacherClassroom ON classroom.classCode = teacherClassroom.classCode WHERE teacherClassroom.teacherID = ?";
+	            PreparedStatement stmt = con.prepareStatement(query);
+	            stmt.setInt(1, teacherID);
+	            ResultSet rs = stmt.executeQuery();
+	            while (rs.next()) {
+	                f1 = rs.getString(1);
+	                f2 = rs.getString(2);
+	                f3 = rs.getInt(3);
+	                f4 = rs.getInt(4);
+
+	                List<Student> students = retrieveStudentsFromClassroom(f1);
+
+	                Classroom classroom = new Classroom(f1, f2, f3, f4, students);
+	                classes.addClassroom(classroom);
+
+	                System.out.println(f1 + "  " + f2);
+	            }
+
+	            if (!con.isClosed()) {
+	                System.out.println("Successfully connected to MySQL server...");
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Exception: " + e.getMessage());
+	        } finally {
+	            try {
+	                if (con != null) {
+	                    con.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return classes;
+	    }
 	    public ClassesManager retrieveClassesFromDatabase(String[] classCodes) {
 	        ClassesManager classes = new ClassesManager();
 

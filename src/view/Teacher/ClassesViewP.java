@@ -26,17 +26,8 @@ import javax.swing.JLabel;
 public class ClassesViewP extends JPanel {
 	public JTextField textField_FindMaLop;
 	private JTable table;
-	public JTextField textField_MaLop;
-	public JTextField textField_TenLop;
-	public JTextField textField_SoHSHT;
-	public JTextField textField_SoHSTD;
 	JButton btn_Tim;
-	JButton btnHuyTim;
-	JButton btn_Them;
-	JButton btn_Huy;
-	JButton btn_Luu;
-	JButton btn_CapNhat;	public ClassesManager model=new ClassesManager();
-	JButton btn_Xoa;JPanel classesPane;
+	JButton btnHuyTim;public ClassesManager model=new ClassesManager();JPanel classesPane;
 	public Classroom currentClassroom;
 	private static final long serialVersionUID = 1L;
 	TeacherAccountMainView mainView;
@@ -128,94 +119,16 @@ public class ClassesViewP extends JPanel {
 			//acessToListOfStudents();
 			
 			JScrollPane scrollPane = new JScrollPane(table);
-			scrollPane.setBounds(73, 153, 635, 218);
+			scrollPane.setBounds(73, 153, 635, 426);
 			classesPane.add(scrollPane);
-			
-			JLabel lb_Malop = new JLabel("Class Code");
-			lb_Malop.setHorizontalAlignment(SwingConstants.CENTER);
-			lb_Malop.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lb_Malop.setBounds(42, 410, 97, 41);
-			classesPane.add(lb_Malop);
-			
-			textField_MaLop = new JTextField();
-			textField_MaLop.setBounds(159, 414, 123, 41);
-			classesPane.add(textField_MaLop);
-			textField_MaLop.setColumns(10);
-			
-			JLabel lb_TenLop = new JLabel("Class name");
-			lb_TenLop.setHorizontalAlignment(SwingConstants.CENTER);
-			lb_TenLop.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lb_TenLop.setBounds(42, 467, 118, 41);
-			classesPane.add(lb_TenLop);
-			
-			textField_TenLop = new JTextField();
-			textField_TenLop.setColumns(10);
-			textField_TenLop.setBounds(159, 466, 123, 41);
-			classesPane.add(textField_TenLop);
-			
-			JLabel lb_SoHSHT = new JLabel("Number of current student");
-			lb_SoHSHT.setHorizontalAlignment(SwingConstants.CENTER);
-			lb_SoHSHT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lb_SoHSHT.setBounds(297, 414, 244, 41);
-			classesPane.add(lb_SoHSHT);
-			
-			textField_SoHSHT = new JTextField();
-			textField_SoHSHT.setColumns(10);
-			textField_SoHSHT.setBounds(541, 414, 164, 41);
-			classesPane.add(textField_SoHSHT);
-			
-			JLabel lb_SoHSTD = new JLabel("Number of max student");
-			lb_SoHSTD.setHorizontalAlignment(SwingConstants.CENTER);
-			lb_SoHSTD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lb_SoHSTD.setBounds(307, 467, 221, 41);
-			classesPane.add(lb_SoHSTD);
-			
-			textField_SoHSTD = new JTextField();
-			textField_SoHSTD.setColumns(10);
-			textField_SoHSTD.setBounds(541, 471, 164, 41);
-			classesPane.add(textField_SoHSTD);
 			
 			JSeparator separator = new JSeparator();
 			separator.setBounds(73, 98, 601, 2);
 			classesPane.add(separator);
 			
 			JSeparator separator_1 = new JSeparator();
-			separator_1.setBounds(73, 395, 601, 2);
+			separator_1.setBounds(63, 628, 645, 2);
 			classesPane.add(separator_1);
-			
-			 btn_Them = new JButton("Add");
-		
-			
-			btn_Them.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btn_Them.setBounds(63, 540, 97, 33);
-			classesPane.add(btn_Them);
-			
-			 btn_Xoa = new JButton("Delete");
-			
-			btn_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btn_Xoa.setBounds(181, 540, 97, 33);
-			classesPane.add(btn_Xoa);
-			
-			 btn_CapNhat = new JButton("Update");
-		
-			btn_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btn_CapNhat.setBounds(297, 540, 148, 33);
-			classesPane.add(btn_CapNhat);
-			
-			 btn_Luu = new JButton("Save");
-			btn_Luu.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			btn_Luu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btn_Luu.setBounds(455, 540, 97, 33);
-			classesPane.add(btn_Luu);
-			
-			 btn_Huy = new JButton("Cancel");
-			
-			btn_Huy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btn_Huy.setBounds(577, 540, 110, 33);
-			classesPane.add(btn_Huy);
 			
 			 btnHuyTim = new JButton("Undo");
 			btnHuyTim.addActionListener(new ActionListener() {
@@ -249,32 +162,12 @@ public class ClassesViewP extends JPanel {
 //Nguyen Hoang Viet	
 	public void deleteForm() {
 		textField_FindMaLop.setText("");
-		textField_MaLop.setText("");
-		textField_SoHSHT.setText("");
-		textField_SoHSTD.setText("");
-		textField_TenLop.setText("");
+		
 	}
 	public void hideUI() {
 	    setVisible(false);
 	}
-	public String getClassName() {
-	    return textField_TenLop.getText();
-	}
-
-	public int getNumOfCurrentStudents() {
-	    return Integer.parseInt(textField_SoHSHT.getText());
-	}
-
-	public int getMaximumNumOfStudents() {
-	    return Integer.parseInt(textField_SoHSTD.getText());
-	}
-
-	public void setClassInfo(Classroom classroom) {
-		textField_MaLop.setText(classroom.getClassCode());
-	    textField_TenLop.setText(classroom.getClassName());
-	    textField_SoHSHT.setText(String.valueOf(classroom.getNumOfCurentStudents()));
-	    textField_SoHSTD.setText(String.valueOf(classroom.getMaximumNumOfStudents()));
-	}
+	
 	public int getSelectedRowIndex() {
 	    return table.getSelectedRow();
 	}
@@ -291,36 +184,10 @@ public class ClassesViewP extends JPanel {
 		if(btnHuyTim==null)return;
 		btnHuyTim.addActionListener(listener);
     }
-	public Classroom getNewClass() {
-		String classCode = this.textField_MaLop.getText();
-        String className = this.textField_TenLop.getText();
-        int numOfCurentStudents = Integer.valueOf(this.textField_SoHSHT.getText());
-        int maximumNumOfStudents =Integer.valueOf(this.textField_SoHSTD.getText());;
-        
-        Classroom lop= new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);
-        return lop;
-	}
-	public void addClassListener(ActionListener listener) {
-		if(btn_Them==null)return;
-		btn_Them.addActionListener(listener);
-    }
-	public void deleteClassListener(ActionListener listener) {
-		if(btn_Xoa==null)return;
-		btn_Xoa.addActionListener(listener);
-    }
 	
 	public int getIndexofClassToDelete() {
 			 int index=table.getSelectedRow();;
 			 return index;
-	}
-	public void updateClassListener(ActionListener listener) {
-		  btn_CapNhat.addActionListener(listener);
-	 }
-	public void saveClassListener(ActionListener listener) {
-		btn_Luu.addActionListener(listener);
-	 }
-	public void CancelButtonListener(ActionListener listener) {
-	    btn_Huy.addActionListener(listener);
 	}
 	
 

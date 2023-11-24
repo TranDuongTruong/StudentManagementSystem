@@ -20,7 +20,7 @@ import controller.DatabaseConnection;
 public class LoginController {
     private final LoginView loginView;
     public static int studentId ;
-
+    public static int teacherId ;
     public LoginController(LoginView loginView) {
         this.loginView = loginView;
 

@@ -154,6 +154,17 @@ public class AdminHomeView extends JFrame {
 		});
 		contentPane.add(btnAccade);
 		
+		JButton btnClasses = new JButton("Classes");
+		btnClasses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClassesAdminView frame = new ClassesAdminView();
+				frame.setVisible(true);
+				setVisible(false);
+			}
+		});
+		btnClasses.setBounds(537, 162, 119, 22);
+		contentPane.add(btnClasses);
+		
 		
 	}
 }
