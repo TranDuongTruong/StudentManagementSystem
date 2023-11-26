@@ -45,6 +45,7 @@ public class LoginController {
     	                    adminView.setVisible(true);
     	                } else if("teacher".equals(role)) {
     	                    // Redirect to MainView for teacher 
+    	                	teacherId = getTeacherIDForEmail(email);
     	                	TeacherAccountMainView mainView = new TeacherAccountMainView();
     	                    mainView.setVisible(true);
     	                }else {
@@ -179,5 +180,34 @@ public class LoginController {
         }
 
         return -1; // Trả về -1 nếu không tìm thấy studentID
+    }
+    private int getTeacherIDForEmail(String email) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.connectToBB();
+            String query = "SELECT teacherID FROM accounts WHERE email = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("teacherID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return -1; // Trả về -1 nếu không tìm thấy teacherID
     }
 }
