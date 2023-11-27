@@ -36,6 +36,7 @@ public class ScheduleCtrl {
 		view.periviousWeekListener(new PeriviousWeekListener() );
 		
 		retrieveDataFromDatabase(registeredClassCodes);
+		
 	}
 	public String[] getRegisteredClassCodes() {
 	    List<String> registeredClassCodes = new ArrayList<>();
@@ -132,6 +133,7 @@ public class ScheduleCtrl {
 		            String endDate = endDay.toString();
 		            
 		            String roomNumber = resultSet.getString("roomNumber");
+		            boolean offline=resultSet.getBoolean("offline");
 		            System.out.println(classCode);
 		            
 		            
@@ -140,11 +142,11 @@ public class ScheduleCtrl {
 		            int row = findRowIndex(startTime);
 		            int column = findColumnIndex(dayOfWeek);
 		            
-		            data[row][column] = new Object[] { classCode, dayOfWeek, startTime, endTime, startDate, endDate, roomNumber };
+		            data[row][column] = new Object[] { classCode, startTime, endTime, roomNumber };
 		           
 		            List<Object> newData = new ArrayList<>(Arrays.asList(classCode,startDate, endDate, roomNumber));
 		           System.out.println("dAY: "+startDate);
-		            this.view.setValueInTable(row,column,newData);
+		            this.view.setValueInTable(row,column,newData,offline);
 		            }
 		        }
 

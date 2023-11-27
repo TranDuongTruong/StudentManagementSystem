@@ -56,7 +56,7 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//				LoginController.studentId=9;
+				LoginController.studentId=9;
 					retrieveStudent();
 					StudentAccountMainView frame = new StudentAccountMainView();
 					
@@ -134,13 +134,14 @@ public class StudentAccountMainView extends JFrame {
 		verticalBox_1.setBounds(10, 57, 132, 573);
 		panel.add(verticalBox_1);
 		
-		JButton btn_DashBoard_1 = new JButton("Tran Van A");
+		
+		String studentName = retrieveStudentName(LoginController.studentId);
+		JButton btn_DashBoard_1 = new JButton(studentName);
 		btn_DashBoard_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		String studentName = retrieveStudentName(LoginController.studentId);
-		btn_DashBoard_1.setText(studentName);
+		//btn_DashBoard_1.setText(studentName);
 		btn_DashBoard_1.setMaximumSize(new Dimension(100, 20));
 		btn_DashBoard_1.setBorder(null);
 		btn_DashBoard_1.setBackground(Color.RED); // Set the name label color to red

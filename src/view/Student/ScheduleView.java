@@ -1,6 +1,7 @@
 package view.Student;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import controller.Student.ScheduleCtrl;
 import model.Student;
@@ -159,24 +160,46 @@ public class ScheduleView extends JPanel {
             updateSchedule(scheduleData);
             ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
             
+            
+            
+            
+            
+            
             setVisible(true);
     }
-    public void setValueInTable(int row, int column, Object data) {
-    	scheduleTable.setValueAt(data, row, column);
-    	 // Tạo đối tượng DefaultTableCellRenderer
-    	   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+    public void setValueInTable(int rowS, int columnS, Object data, boolean offline) {
+        scheduleTable.setValueAt(data, rowS, columnS);
+        
+        TableCellRenderer customRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, rowS, columnS);
+               // System.out.println(column+"\t"+columnS+"\t"+row+"\t"+rowS);
+                // Kiểm tra xem ô hiện tại có phải là ô được chọn
+                if (row==rowS&&column==columnS) {
+                	
+                	if(offline)
+                    component.setBackground(Color.YELLOW);
+                	else 
+                	component.setBackground(Color.green);
+                } else {
+                    component.setBackground(table.getBackground());
+                }
+                
+                return component;
+            }
+        };
+        
+        // Thiết lập renderer cho ô được chọn
+        scheduleTable.getColumnModel().getColumn(columnS).setCellRenderer(customRenderer);
+        
+        // Thiết lập font size
+        int fontSize = 12; // Điều chỉnh kích thước font tùy ý
 
-           // Set màu nền cho ô được chọn
-           renderer.setBackground(Color.YELLOW);
-
-           // Set renderer cho ô được chọn
-           ((Component) scheduleTable.getCellRenderer(row, column)).setBackground(Color.YELLOW);
-           int fontSize=1;
-           Component component = scheduleTable.prepareRenderer(renderer, row, column);
-           Font font = component.getFont().deriveFont(Font.PLAIN, fontSize);
-           component.setFont(font);
-         
-           scheduleTable.repaint();
+        // Thiết lập font cho ô được chọn
+        scheduleTable.setFont(scheduleTable.getFont().deriveFont(Font.PLAIN, fontSize));
+        
+        scheduleTable.repaint();
     }
     public void setDataforSechduleTable() {
     	 String[] weeksInRealTime=getWeekRealTime();

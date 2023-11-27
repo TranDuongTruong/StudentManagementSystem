@@ -18,12 +18,12 @@ public class DatabaseConnection {
 	    private static final String USER = "root";
 	    private static final String PASSWORD = "";
 	    
-//	 //FOR Online
-//	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12664007";   
-//	    private static final String USER = "sql12664007";
-//	    private static final String PASSWORD = "NJ3l7Ikjd1";
-//
-//	 
+	 //FOR Online
+//	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663967";   
+//	    private static final String USER = "sql12663967";
+//	    private static final String PASSWORD = "ASq18HYwTP";
+
+	 
 	 //FOR OTHER
 //	 private static final String URL = "jdbc:mysql://192.168.1.11:3306/spmdatabase11";
 //     private static final String USER = "truongdaica";
