@@ -34,7 +34,7 @@ public class CourseCtrl {
         DatabaseConnection a= new DatabaseConnection();
         classes=a.retrieveClassesFromDatabaseWithSchedule();
         view.model=classes;
-        setDataToCombobox();
+        
 //        view.FilteredButtonListener(new FilterClassListener());
         view.displayRegisteredClasses(view.currentRegisteredClass);
         view.displayAvailableClasses(classes);
@@ -44,23 +44,7 @@ public class CourseCtrl {
 		
 	}
 	
-	public void setDataToCombobox() {
-	    if (view.model != null) {
-	        String[] classCodes = new String[classes.getClassroomList().size()];
-	        for (int i = 0; i < classes.getClassroomList().size(); i++) {
-	            classCodes[i] = classes.getClassroomList().get(i).getClassCode();
-	        }
-	        view.setDataToCombobox(classCodes);
-	        DefaultComboBoxModel<String> existingModel = (DefaultComboBoxModel<String>) view.comboBoxTenMon.getModel();
-	        DefaultComboBoxModel<String> newModel = new DefaultComboBoxModel<>();
-	        // Sao chép dữ liệu từ existingModel sang newModel
-	        newModel.addElement("");
-	        for (int i = 0; i < existingModel.getSize(); i++) {
-	            newModel.addElement(existingModel.getElementAt(i));
-	        }
-	        view.comboBoxTenMon.setModel(newModel);
-	    }
-	}
+
 //	public void removeClassesRegistered(ClassesManager classes) {
 //		String[] classCode = new String[view.currentRegisteredClass.getClassroomList().size()];
 //		for (int i = 0; i<view.model.getClassroomList().size();i++) {

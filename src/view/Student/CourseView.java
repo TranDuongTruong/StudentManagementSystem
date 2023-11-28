@@ -43,8 +43,8 @@ public class CourseView extends JPanel {
 	public JTable table_Timlop;
 	private Object confirmationCode;
 	private JTable table_dangky;
-	public 	JComboBox comboBoxTenMon;
 	JButton btn_Tim;
+	private JTextField textField_FindCourse;
 	
 
 	/**
@@ -101,44 +101,42 @@ public class CourseView extends JPanel {
 		scrollPane_1.setBounds(6, 418, 829, 216);
 		add(scrollPane_1);
 		
-		table_Timlop = new JTable();
+		table_Timlop = new JTable() {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false; // Không cho phép chỉnh sửa
+		    }
+		};
 		table_Timlop.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, "", null},
-				{null, null, null, null, "", null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"Class code", "Class name", "Enroll code ", "Credit hours", "Location", "Schedule"
-			}
+		    new Object[][] {
+		        {null, null, null, null, "", null},
+		        {null, null, null, null, "", null},
+		        {null, null, null, null, null, null},
+		        {null, null, null, null, null, null},
+		    },
+		    new String[] {
+		        "Class code", "Class name", "Enroll code ", "Credit hours", "Location", "Schedule"
+		    }
 		));
 		scrollPane_1.setViewportView(table_Timlop);
+
 		table_Timlop.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		    	if (e.getClickCount() == 2) {
-                	
-                    int row = table_Timlop.getSelectedRow();
-//                    DetalinformationofCourseView cv=new DetalinformationofCourseView(ClassesManager.)
-//                    cv.setVisible(true);
-                    
-//			    	 DetalInformationofStudentView stu=new DetalInformationofStudentView(classRoom.getStudentList().get(row));
-//			    	 stu.setVisible(true);
-			
-                    	                   
-                }
+		        if (e.getClickCount() == 2) {
+		            int row = table_Timlop.getSelectedRow();
+		            Classroom classRoom;
+		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode());
+		            cou.requestFocus();
+		            cou.setVisible(true);
+		        }
 		    }
 		});
-			
-			 comboBoxTenMon = new JComboBox();
-			comboBoxTenMon.setBounds(344, 364, 120, 33);
-			add(comboBoxTenMon);
+
 			
 			
 			DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-			comboBoxModel.addElement(""); 
-			comboBoxTenMon.setModel(comboBoxModel);
+			comboBoxModel.addElement("");
 			
 			btnngK.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -175,21 +173,25 @@ public class CourseView extends JPanel {
 		
 		btn_Tim = new JButton("Find");
 		btn_Tim.addActionListener(new ActionListener() {
-		 	public void actionPerformed(ActionEvent e) {
-		 		String selectedCourse = (String) comboBoxTenMon.getSelectedItem();
-		 		if(selectedCourse=="")
-		 		{
-		 			displayAvailableClasses(model);  
-		 		}
-		 		else {
-				String classCode=selectedCourse;
-	        	ClassesManager findClassroomList=new ClassesManager();
-	        	Classroom classroom;
-	        	classroom=model.findClassroomByCode(classCode);
-	        	findClassroomList.addClassroom(classroom);
-	        	displayAvailableClasses(findClassroomList);   }
-		 	}
-		 });
+		    public void actionPerformed(ActionEvent e) {
+		        String selectedCourse = (String) textField_FindCourse.getText();
+		        if (selectedCourse.equals("")) {
+		            JOptionPane.showMessageDialog(null, "Không có lớp để tìm");
+		            displayAvailableClasses(model);
+		        } else {
+		            String classCode = selectedCourse;
+		            ClassesManager findClassroomList = new ClassesManager();
+		            Classroom classroom = model.findClassroomByCode(classCode);
+		            
+		            if (classroom != null) {
+		                findClassroomList.addClassroom(classroom);
+		                displayAvailableClasses(findClassroomList);
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học có mã: " + classCode);
+		            }
+		        }
+		    }
+		});
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btn_Tim.setBounds(544, 364, 103, 39);
 		add(btn_Tim);
@@ -216,7 +218,7 @@ public class CourseView extends JPanel {
 				            
 				            displayRegisteredClasses(currentRegisteredClass);
 				            displayAvailableClasses(model);
-			                setDataToCombobox();
+				            setDataToTextField();
 			                deleteStudentClassroom(LoginController.studentId,classCode);
 			                JOptionPane.showMessageDialog(null, "Huỷ đăng ký môn thành công!");
 			            }
@@ -227,6 +229,11 @@ public class CourseView extends JPanel {
 		});
 		btn_delete.setBounds(279, 292, 258, 39);
 		add(btn_delete);
+		
+		textField_FindCourse = new JTextField();
+		textField_FindCourse.setBounds(330, 371, 130, 26);
+		add(textField_FindCourse);
+		textField_FindCourse.setColumns(10);
 		
 		
         //ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
@@ -270,26 +277,24 @@ public class CourseView extends JPanel {
 		    // Cập nhật model của JTable
 		    table_Timlop.setModel(tableModel);
 		}
-	    public void setDataToCombobox(String[] data) {
-	        comboBoxTenMon.setModel(new DefaultComboBoxModel<>(data));
+//	    public void setDataToCombobox(String[] data) {
+//	        comboBoxTenMon.setModel(new DefaultComboBoxModel<>(data));
+//	    }
+	    public void setDataToTextField() {
+	        if (model != null) {
+	            String[] classCodes = new String[model.getClassroomList().size()];
+	            for (int i = 0; i < model.getClassroomList().size(); i++) {
+	                classCodes[i] = model.getClassroomList().get(i).getClassCode();
+	            }
+
+	            // Chuyển đổi mảng thành chuỗi, sử dụng dấu phân cách nếu cần
+	            String classCodeString = String.join(", ", classCodes);
+
+	            // Thiết lập dữ liệu cho textField_FindCourse
+	            textField_FindCourse.setText(classCodeString);
+	        }
 	    }
-	    public void setDataToCombobox() {
-		    if (model != null) {
-		        String[] classCodes = new String[model.getClassroomList().size()];
-		        for (int i = 0; i < model.getClassroomList().size(); i++) {
-		            classCodes[i] = model.getClassroomList().get(i).getClassCode();
-		        }
-		        setDataToCombobox(classCodes);
-		        DefaultComboBoxModel<String> existingModel = (DefaultComboBoxModel<String>) comboBoxTenMon.getModel();
-		        DefaultComboBoxModel<String> newModel = new DefaultComboBoxModel<>();
-		        // Sao chép dữ liệu từ existingModel sang newModel
-		        newModel.addElement("");
-		        for (int i = 0; i < existingModel.getSize(); i++) {
-		            newModel.addElement(existingModel.getElementAt(i));
-		        }
-		        comboBoxTenMon.setModel(newModel);
-		    }
-		}
+
 	    public void insertStudentClassroom(int studentID, String classCode) {
 	        DatabaseConnection db = new DatabaseConnection();
 	        Connection con = db.connectToBB();
