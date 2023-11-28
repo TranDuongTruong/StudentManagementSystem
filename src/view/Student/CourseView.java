@@ -122,11 +122,14 @@ public class CourseView extends JPanel {
 
 		table_Timlop.addMouseListener(new MouseAdapter() {
 		    @Override
-		    public void mouseClicked(MouseEvent e) {
+		    public void mouseClicked(MouseEvent e) {  
 		        if (e.getClickCount() == 2) {
+		        	
 		            int row = table_Timlop.getSelectedRow();
-		            Classroom classRoom;
+		            
+		           //System.out.println("aaaaaaaaaaaaaaaaaaaaadkjaksaas"+row);
 		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode());
+		            cou.SetcourseInfo();
 		            cou.requestFocus();
 		            cou.setVisible(true);
 		        }
@@ -174,20 +177,21 @@ public class CourseView extends JPanel {
 		btn_Tim = new JButton("Find");
 		btn_Tim.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        String selectedCourse = (String) textField_FindCourse.getText();
+		        String selectedCourse = textField_FindCourse.getText().trim();
 		        if (selectedCourse.equals("")) {
 		            JOptionPane.showMessageDialog(null, "Không có lớp để tìm");
 		            displayAvailableClasses(model);
 		        } else {
-		            String classCode = selectedCourse;
 		            ClassesManager findClassroomList = new ClassesManager();
-		            Classroom classroom = model.findClassroomByCode(classCode);
-		            
-		            if (classroom != null) {
-		                findClassroomList.addClassroom(classroom);
-		                displayAvailableClasses(findClassroomList);
+		            for (Classroom classroom : model.getClassroomList()) {
+		                if (classroom.getClassCode().contains(selectedCourse)) {
+		                    findClassroomList.addClassroom(classroom);
+		                }
+		            }
+		            if (findClassroomList.getClassroomList().isEmpty()) {
+		                JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học có mã chứa: " + selectedCourse);
 		            } else {
-		                JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học có mã: " + classCode);
+		                displayAvailableClasses(findClassroomList);
 		            }
 		        }
 		    }
