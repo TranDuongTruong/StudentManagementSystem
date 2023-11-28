@@ -115,14 +115,31 @@ public class StudentController implements ActionListener{
 	        }
 	    }
 	 private class DeleteStudentListener implements ActionListener {
-	        public void actionPerformed(ActionEvent e) {
-	        	db.deleteStudentFromDatabase(studentView.getIndexofSelectedRow());
-	        	classRoom.removeStudent(studentView.getIndexofSelectedRow());
-	        	displayListOfStudent();
-	        	
-	        }
-	      
-	    }
+		    public void actionPerformed(ActionEvent e) {
+		        int selectedIndex = studentView.getIndexofSelectedRow();
+		        
+		        if (selectedIndex != -1) {
+		            int option = JOptionPane.showConfirmDialog(studentView,
+		                    "Are you sure you want to delete this student?",
+		                    "Confirm Deletion",
+		                    JOptionPane.YES_NO_OPTION);
+
+		            if (option == JOptionPane.YES_OPTION) {
+		                // Xoá sinh viên khỏi cơ sở dữ liệu
+		                db.deleteStudentFromDatabase(selectedIndex);
+
+		                // Xoá sinh viên khỏi danh sách lớp học
+		                classRoom.removeStudent(selectedIndex);
+
+		                // Hiển thị lại danh sách sinh viên
+		                displayListOfStudent();
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(studentView, "Please select a student to delete.", "No Student Selected", JOptionPane.INFORMATION_MESSAGE);
+		        }
+		    }
+		}
+
 	 private class UpdateStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	
