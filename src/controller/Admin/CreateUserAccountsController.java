@@ -48,10 +48,13 @@ public class CreateUserAccountsController {
             } else {
             	createUserAccountsView.clearError();
             	 // Kiểm tra nếu role là "admin" hoặc "teacher", thì đặt studentID thành null
-            	if ("admin".equalsIgnoreCase(role) || "teacher".equalsIgnoreCase(role)) {
+            	if ("admin".equalsIgnoreCase(role)) {
             	    studentID = null;
-            	} else if("admin".equalsIgnoreCase(role) || "student".equalsIgnoreCase(role)){
             	    teacherID = null;
+            	} else if("student".equalsIgnoreCase(role)){
+            	    teacherID = null;
+            	}else {
+            		 studentID = null;
             	}
                 if (addUserToDatabase(email, password, name, role, studentID, teacherID)) {
                   clearFieldsAndSetDefaultRole();
