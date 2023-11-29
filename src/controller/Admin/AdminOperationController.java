@@ -149,14 +149,14 @@ public class AdminOperationController {
 		roleField.setText("");
 	}
 	 private static boolean isValidEmail(String email) {
-	        // Basic email validation using regex
-	        String emailPattern = "^[A-Za-z0-9+_.-]+@(.+)$";
-	        return email.matches(emailPattern);
+		// Basic email validation using regex
+		    String emailPattern = "^[A-Za-z0-9]+@example\\.com$";
+		    return email.matches(emailPattern);
 	    }
 
 	 private static boolean isValidPassword(String password) {
-	        // Check for password length
-	        return password.length() >= 6;
+		// Check for password length and at least one digit
+		    return password.length() >= 6 && password.matches(".*\\d.*");
 	    }
 
 	 private static boolean isValidName(String name) {
@@ -223,14 +223,14 @@ public class AdminOperationController {
 		            
 		        } else {
 		        	  if (!isValidEmail(email)) {
-		                  errorLabel.setText("Invalid email format.");
-		                  emailField.setBackground(Color.PINK);
-		                  errorLabel.setForeground(Color.RED);
+		        		  errorLabel.setText("Invalid email format. Email must be in the format 'name@example.com'.");
+		        		    emailField.setBackground(Color.PINK);
+		        		    errorLabel.setForeground(Color.RED);
 		              }
 		              if (!isValidPassword(password)) {
-		                  errorLabel.setText("Password must be 6 characters or more.");
-		                  passwordField.setBackground(Color.PINK);
-		                  errorLabel.setForeground(Color.RED);
+		            	  errorLabel.setText("Password must be 6 characters or more and contain at least one digit.");
+		            	    passwordField.setBackground(Color.PINK);
+		            	    errorLabel.setForeground(Color.RED);
 		              }
 		              if(!isValidName(name)){
 		            	  errorLabel.setText("Name must be 4 characters or more.");
