@@ -58,7 +58,7 @@ public class AdminHomeView extends JFrame {
 		contentPane.add(lblHome);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 25, 746, 13);
+		separator.setBounds(0, 25, 769, 13);
 		contentPane.add(separator);
 		
 		JLabel logoLabel = new JLabel("logoLable");
@@ -149,7 +149,7 @@ public class AdminHomeView extends JFrame {
 		contentPane.add(accdemic);
 		
 		JButton btnAccade = new JButton("Academic Performance");
-		btnAccade.setBounds(538, 392, 119, 22);
+		btnAccade.setBounds(514, 392, 178, 23);
 		btnAccade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PerformanceView_Admin frame = new PerformanceView_Admin();
