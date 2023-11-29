@@ -178,19 +178,22 @@ public class CreateUserAccountsController {
             String salt = generateSalt();
             String hashedPassword = hashPassword(password, salt); // Mã hóa mật khẩu với salt
 
-            String query = "INSERT INTO accounts (email, password, name, role, studentID, teacherID) VALUES (?, ?, ?, ?, ?, ?)";
+
+            String query = "INSERT INTO accounts (email, password, salt, name, role, studentID, teacherID) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, hashedPassword);
-            preparedStatement.setString(3, name);
-            preparedStatement.setString(4, role);
-            preparedStatement.setString(5, studentID);
-            preparedStatement.setString(6, teacherID);
+            preparedStatement.setString(3, salt);
+            preparedStatement.setString(4, name);
+            preparedStatement.setString(5, role);
+            preparedStatement.setString(6, studentID);
+            preparedStatement.setString(7, teacherID);
 
             int rowsAffected = preparedStatement.executeUpdate();
 
             preparedStatement.close();
             connection.close();
+
 
             return rowsAffected > 0;
         } catch (SQLException e) {
