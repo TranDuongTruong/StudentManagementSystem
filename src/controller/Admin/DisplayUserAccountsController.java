@@ -61,8 +61,16 @@ public class DisplayUserAccountsController implements ActionListener {
                     row.add(resultSet.getInt("studentID"));
                 }
 
+                // Kiểm tra nếu teacherID là null, thì thêm giá trị trống (null)
+                if (resultSet.getObject("teacherID") == null) {
+                    row.add(null);
+                } else {
+                    row.add(resultSet.getInt("teacherID"));
+                }
+
                 data.add(row);
             }
+
 
             Vector<String> columnNames = new Vector<String>();
             columnNames.add("ID");
@@ -70,7 +78,8 @@ public class DisplayUserAccountsController implements ActionListener {
             columnNames.add("Email");
             columnNames.add("Password");
             columnNames.add("Name");
-            columnNames.add("Student ID"); // Thêm tên cột "Student ID"
+            columnNames.add("Student ID"); 
+            columnNames.add("Teacher ID"); 
 
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             view.getTable().setModel(model);

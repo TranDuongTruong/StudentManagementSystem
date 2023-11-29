@@ -65,15 +65,15 @@ public class DisplayUserAccountsView extends JFrame {
         table = new JTable();
         table.setModel(new DefaultTableModel(
         	new Object[][] {
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
-        		{null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null},
+        		{null, null, null, null, null, null, null},
         	},
         	new String[] {
-        		"ID", "Role", "Email", "Password", "Name", "Student ID"
+        		"ID", "Role", "Email", "Password", "Name", "Student ID", "Teacher ID"
         	}
         ));
         scrollPane.setViewportView(table);
