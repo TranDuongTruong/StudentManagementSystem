@@ -52,7 +52,7 @@ public class CourseView extends JPanel {
 	 */
 	
 	public CourseView() {
-		LoginController.studentId=9;
+//		LoginController.studentId=9;
 		 DatabaseConnection db = new DatabaseConnection();
 	     String [] classCode=db.getRegisteredClassCodes(LoginController.studentId);
 	     
