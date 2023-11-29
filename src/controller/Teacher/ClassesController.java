@@ -49,6 +49,7 @@ public class ClassesController  {
         	classroom=classes.findClassroomByCode(classCode);
         	findClassroomList.addClassroom(classroom);
         	view.displayClassList(findClassroomList);
+        	view.classes=findClassroomList;
         }
 
        

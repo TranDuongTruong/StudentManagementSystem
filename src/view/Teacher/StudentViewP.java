@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controller.DatabaseConnection;
 import controller.Teacher.StudentController;
 import model.Classroom;
 import model.Student;
@@ -64,7 +65,12 @@ public class StudentViewP extends JPanel {
 	 * Create the panel.
 	 */
 	public StudentViewP(final Classroom classRoom) {
+		
 		this.classRoom=classRoom;
+		 DatabaseConnection a= new DatabaseConnection();
+		 a.connectToBB();
+		 this.classRoom.setStudentList(a.retrieveStudentsFromClassroom(classRoom.getClassCode()));
+		
 		 setLayout(null);
 	        setBounds(162, 0, 835, 640);
 	        ActionListener action=new StudentController(this);
