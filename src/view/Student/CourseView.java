@@ -128,9 +128,10 @@ public class CourseView extends JPanel {
 		            int row = table_Timlop.getSelectedRow();
 		            
 		           //System.out.println("aaaaaaaaaaaaaaaaaaaaadkjaksaas"+row);
-		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode());
+		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode(),model.getClassroom(row).getClassName(),model.getClassroom(row).getDiadiem());
 		            cou.SetcourseInfo();
 		            cou.requestFocus();
+		            
 		            cou.setVisible(true);
 		        }
 		    }

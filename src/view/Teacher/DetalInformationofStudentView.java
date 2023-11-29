@@ -190,13 +190,13 @@ public class DetalInformationofStudentView extends JFrame {
 		separator.setBounds(28, 47, 623, 24);
 		contentPane.add(separator);
 		
-		 btnNewButton = new JButton("Back");
+		btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
-		btnNewButton.setBounds(424, 346, 117, 29);
+		btnNewButton.setBounds(474, 18, 117, 29);
 		contentPane.add(btnNewButton);
 		SetStudentInfo(stu);
 		setVisible(true);
@@ -211,11 +211,5 @@ public class DetalInformationofStudentView extends JFrame {
 		lblCreditsCompleted_info.setText(""+student.getCreditsCompleted());
 		lblCreditsOwed_info.setText(""+student.getCreditsOwed());
 		
-//		ImageIcon imageIcon = new ImageIcon();
-//		 URL imageUrl=MainView.class.getClassLoader().getResource("Assert/AvatarOfStudents/avatarForStudent.png");
-//	            File file = new File(imageUrl.getPath());
-//	              imageIcon = new ImageIcon(file.getAbsolutePath());
-//	              
-//	     avatar.setIcon(imageIcon);
 	}
 }

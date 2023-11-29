@@ -16,7 +16,7 @@ public class DatabaseConnection {
 	 //FOR Local
 	    private static final String URL = "jdbc:mysql://localhost:3306/spmdatabase11";   
 	    private static final String USER = "root";
-	    private static final String PASSWORD = "";
+	    private static final String PASSWORD = "123456";
 	    
 	 //FOR Online
 //	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663967";   
@@ -449,6 +449,7 @@ public class DatabaseConnection {
 	            stmt.setInt(8, student.getStudentID());
 
 	            int rowsAffected = stmt.executeUpdate();
+	            System.out.println(rowsAffected+"\tffff");
 	            if (rowsAffected > 0) {
 	                System.out.println("Student updated successfully in the database.");
 	            } else {
