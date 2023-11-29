@@ -25,7 +25,8 @@ import controller.DatabaseConnection;
 import controller.Teacher.PerformanceController_Admin;
 import model.CreditsPerformance;
 import view.Admin.AdminHomeView;
-import view.Admin.DisplayUserAccountsView;
+
+import view.Admin.ShowUserAccountP;
 
 import org.jfree.chart.plot.PiePlot;
 
@@ -49,7 +50,7 @@ public class PerformanceView_Admin extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
+		}); 
 	}
 
 	/**
@@ -73,7 +74,7 @@ public class PerformanceView_Admin extends JFrame {
 	        JButton btnBack = new JButton("Back");
 	        btnBack.setBounds(740, 511, 103, 30);
 	        
-	        ImageIcon backIcon = new ImageIcon(DisplayUserAccountsView.class.getResource("/Assert/admin/back.png"));
+	        ImageIcon backIcon = new ImageIcon(ShowUserAccountP.class.getResource("/Assert/admin/back.png"));
 	        btnBack.setIcon(backIcon);
 	        btnBack.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -86,7 +87,7 @@ public class PerformanceView_Admin extends JFrame {
 			});
 	        contentPane.add(btnBack);
 	        //System.out.println("ddddđ"); 
-	        PerformanceController_Admin perCtrl=new PerformanceController_Admin(this);
+	       // PerformanceController_Admin perCtrl=new PerformanceController_Admin(this);
 	        //System.out.println("ddddđ");
 	        setVisible(true);
 	       

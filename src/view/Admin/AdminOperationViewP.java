@@ -94,11 +94,11 @@ public class AdminOperationViewP extends JPanel {
 						nameField, roleField, errorLabel);
 			}
 		});
-		ImageIcon updateIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/submit.png"));
+		ImageIcon updateIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/submit.png"));
 		updateButton.setIcon(updateIcon);
 		updateButton.setBounds(245, 311, 103, 33);
 		contentPane.add(updateButton);
-		ImageIcon backIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/back.png"));
+		ImageIcon backIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/back.png"));
 		
 		errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.RED);
@@ -135,7 +135,7 @@ public class AdminOperationViewP extends JPanel {
 																		nameField, roleField, errorLabel);
 			}
 		});
-		ImageIcon deleteIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/cancel1.png"));
+		ImageIcon deleteIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/cancel1.png"));
 		deleteButton.setIcon(deleteIcon);
 		deleteButton.setBounds(385, 311, 103, 33);
 		contentPane.add(deleteButton);
@@ -146,7 +146,7 @@ public class AdminOperationViewP extends JPanel {
                 AdminOperationController.searchButtonClicked(textField_ID.getText(), emailField, passwordField, nameField, roleField, errorLabel,studentIDLabel, studentIDField);
             }
 		});
-		ImageIcon searchIcon = new ImageIcon(AdminOperationView.class.getResource("/Assert/admin/loupe.png"));
+		ImageIcon searchIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/loupe.png"));
 		btnSearch.setIcon(searchIcon);
 		btnSearch.setBounds(597, 77, 103, 30);
 		contentPane.add(btnSearch);

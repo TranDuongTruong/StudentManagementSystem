@@ -7,14 +7,15 @@ import java.util.List;
 import controller.DatabaseConnection;
 import model.Classroom;
 import model.Student;
+import view.Admin.AccademicPerfromanceP;
 import view.Teacher.CreditsPerformanceView_Admin;
 import view.Teacher.PerformanceView_Admin;
 
 public class PerformanceController_Admin {
 	public CreditsPerformanceView_Admin  creditsPerformanceView;
-	public PerformanceView_Admin performanceView_Admin;
+	public AccademicPerfromanceP performanceView_Admin;
 	public List<Student> student;
-	public PerformanceController_Admin(PerformanceView_Admin performanceView_Admin) {
+	public PerformanceController_Admin(AccademicPerfromanceP performanceView_Admin) {
 		
 		
 		this.performanceView_Admin = performanceView_Admin;		
@@ -41,7 +42,7 @@ public class PerformanceController_Admin {
         	System.out.println("Aaaaaaaaaa");
         	DatabaseConnection con=new DatabaseConnection();
         	student=con.retrieveStudentsCredited();
-        	performanceView_Admin.setVisible(false);
+        	//performanceView_Admin.setVisible(false);
         	
         	displayListOfStudent();
         	

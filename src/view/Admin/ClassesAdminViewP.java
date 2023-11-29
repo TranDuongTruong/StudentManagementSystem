@@ -137,7 +137,7 @@ public class ClassesAdminViewP extends JPanel {
 			     	
 			 		contentPane.add(student);
 			 		contentPane.invalidate();
-			 		student.setBounds(23, 0, 849, 581);
+			 		student.setBounds(0, 0, 835, 640);
 			 		contentPane.repaint();hasStudentView=true;
 			 		
 			    	// mainView.loadStudentView(classRoom);

@@ -259,31 +259,31 @@ public class StudentViewP extends JPanel {
 	      
 	        btnThem.addActionListener(action);
 	        btnThem.setFont(new Font("Tahoma", Font.PLAIN, 18));
-	        btnThem.setBounds(44, 568, 89, 42);
+	        btnThem.setBounds(44, 551, 89, 33);
 	        contentPane_1.add(btnThem);
 	        
 	        btnXoa = new JButton("Delete");
 	        btnXoa.addActionListener(action);
 	        btnXoa.setFont(new Font("Tahoma", Font.PLAIN, 18));
-	        btnXoa.setBounds(154, 568, 89, 42);
+	        btnXoa.setBounds(154, 551, 89, 33);
 	        contentPane_1.add(btnXoa);
 	        
 	         btnCapNhat = new JButton("Update");
 	        btnCapNhat.addActionListener(action);
 	        btnCapNhat.setFont(new Font("Tahoma", Font.PLAIN, 18));
-	        btnCapNhat.setBounds(264, 568, 135, 42);
+	        btnCapNhat.setBounds(264, 551, 135, 33);
 	        contentPane_1.add(btnCapNhat);
 	        
 	         btnLuu = new JButton("Save");
 	       // btnLuu.addActionListener(action);
 	        btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 18));
-	        btnLuu.setBounds(420, 568, 135, 42);
+	        btnLuu.setBounds(420, 551, 135, 33);
 	        contentPane_1.add(btnLuu);
 	        
 	        btnHuyBo = new JButton("Cancel");
 	        btnHuyBo.addActionListener(action);
 	        btnHuyBo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-	        btnHuyBo.setBounds(585, 568, 135, 42);
+	        btnHuyBo.setBounds(585, 551, 135, 33);
 	        contentPane_1.add(btnHuyBo);
 	        
 	        JSeparator separator_2 = new JSeparator();
@@ -292,7 +292,7 @@ public class StudentViewP extends JPanel {
 	        contentPane_1.add(separator_2);
 	        
 	        JSeparator separator_1_1_1 = new JSeparator();
-	        separator_1_1_1.setBounds(10, 616, 738, 2);
+	        separator_1_1_1.setBounds(15, 603, 738, 2);
 	        contentPane_1.add(separator_1_1_1);
 	        
 	         btnHuyTim = new JButton("Undo");

@@ -61,7 +61,7 @@ public class ShowUserAccountP extends JPanel {
         	}
         ));
         scrollPane.setViewportView(table);
-        ImageIcon backIcon = new ImageIcon(DisplayUserAccountsView.class.getResource("/Assert/admin/back.png"));
+        ImageIcon backIcon = new ImageIcon(ShowUserAccountP.class.getResource("/Assert/admin/back.png"));
     }
 
     public JTable getTable() {

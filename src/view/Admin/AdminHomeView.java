@@ -34,7 +34,7 @@ public class AdminHomeView extends JFrame {
 	final CreateUserAccoutViewP createUser=new CreateUserAccoutViewP();
 	final ShowUserAccountP showUser=new ShowUserAccountP();
 	final ClassesAdminViewP classes=new ClassesAdminViewP();
-
+	final AccademicPerfromanceP performace=new AccademicPerfromanceP();
 	boolean hasMainContent = false;
 	boolean hasCreateUser = false;
 	 boolean hasOperation = false;
@@ -93,6 +93,18 @@ public class AdminHomeView extends JFrame {
 			    	hasClasses=true;
 			    }
 			});
+		 btnPerformance.addActionListener(new ActionListener() {
+				
+			    public void actionPerformed(ActionEvent e) {	
+
+			    	contentPane.remove(MainContent);removeContent();			    	
+			    	contentPane.add(performace);
+			    	contentPane.invalidate();
+			    	contentPane.repaint();
+			    	hasPerformance=true;
+			    }
+			});
+		 
 	 }
 
 
@@ -113,6 +125,10 @@ public void removeContent() {
 	if (hasClasses) {
 		  contentPane.remove(classes);
 		  hasClasses=false;
+		}
+	if (hasPerformance) {
+		  contentPane.remove(performace);
+		  hasPerformance=false;
 		}
 }
 	/**
@@ -212,14 +228,13 @@ public void removeContent() {
 		
 		 btnPerformance = new JButton("Academic Performance");
 		btnPerformance.setBounds(428, 0, 119, 30);
-		btnPerformance.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PerformanceView_Admin frame = new PerformanceView_Admin();
-                frame.setVisible(true);
-                dispose();
-
-			}
-		});
+		/*
+		 * btnPerformance.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { PerformanceView_Admin frame = new
+		 * PerformanceView_Admin(); frame.setVisible(true); dispose();
+		 * 
+		 * } });
+		 */
 		contentPane.add(btnPerformance);
 		
 		 btnClasses = new JButton("Classes");

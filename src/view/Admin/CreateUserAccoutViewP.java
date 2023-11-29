@@ -85,7 +85,7 @@ public class CreateUserAccoutViewP extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		        updateStudentIDFieldVisibility(roleComboBox.getSelectedItem().toString());
 		    }
-		});
+		}); 
 
         JLabel setRoleLabel = new JLabel("Set role:");
         setRoleLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -100,12 +100,12 @@ public class CreateUserAccoutViewP extends JPanel {
                 controller.handleCreateAccount(); 
             }
         });
-        ImageIcon submitIcon = new ImageIcon(CreateUserAccountsView.class.getResource("/Assert/admin/submit.png"));
+        ImageIcon submitIcon = new ImageIcon(CreateUserAccoutViewP.class.getResource("/Assert/admin/submit.png"));
         submitButton.setIcon(submitIcon);
 
         submitButton.setBounds(161, 267, 103, 30);
         contentPane.add(submitButton);
-        ImageIcon backIcon = new ImageIcon(CreateUserAccountsView.class.getResource("/Assert/admin/back.png"));
+        ImageIcon backIcon = new ImageIcon(CreateUserAccoutViewP.class.getResource("/Assert/admin/back.png"));
 
         errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
