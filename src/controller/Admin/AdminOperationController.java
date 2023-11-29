@@ -6,6 +6,9 @@ import controller.DatabaseConnection;
 import view.Admin.AdminOperationView;
 
 import java.awt.Color;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -274,20 +277,58 @@ public class AdminOperationController {
 
 		    }
 	}
+	 private static String hashPassword(String password, String salt) {
+	        try {
+	            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
+	            // Kết hợp mật khẩu và salt trước khi băm
+	            String passwordWithSalt = password + salt;
+
+	            byte[] hashedBytes = md.digest(passwordWithSalt.getBytes());
+
+	            // Chuyển đổi byte array thành chuỗi hex
+	            StringBuilder sb = new StringBuilder();
+	            for (byte b : hashedBytes) {
+	                sb.append(String.format("%02x", b));
+	            }
+
+	            return sb.toString();
+	        } catch (NoSuchAlgorithmException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+
+	    private static String generateSalt() {
+	        SecureRandom random = new SecureRandom();
+	        byte[] saltBytes = new byte[16];
+	        random.nextBytes(saltBytes);
+	        
+	        // Chuyển đổi byte array thành chuỗi hex
+	        StringBuilder sb = new StringBuilder();
+	        for (byte b : saltBytes) {
+	            sb.append(String.format("%02x", b));
+	        }
+
+	        return sb.toString();
+	    }
 	private static boolean updateInDatabase(String id, String email, String password, String name) {
 		boolean updated = false;
 		Connection connection = null;
 
 		try {
 			connection = DatabaseConnection.connectToBB();
+			 // Tạo salt mới cho mỗi lần thêm người dùng
+            String salt = generateSalt();
+            String hashedPassword = hashPassword(password, salt); // Mã hóa mật khẩu với salt
 
-			String query = "UPDATE accounts SET email = ?, password = ?, name = ? WHERE id = ?";
+			String query = "UPDATE accounts SET email = ?, password = ?,salt = ?, name = ? WHERE id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, email);
-			preparedStatement.setString(2, password);
-			preparedStatement.setString(3, name);
-			preparedStatement.setString(4, id);
+			preparedStatement.setString(2, hashedPassword);
+			preparedStatement.setString(3, salt);
+			preparedStatement.setString(4, name);
+			preparedStatement.setString(5, id);
 
 			int rowsAffected = preparedStatement.executeUpdate();
 
