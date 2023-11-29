@@ -1,9 +1,20 @@
 package view.Admin;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,23 +24,7 @@ import model.ClassesManager;
 import model.Classroom;
 import view.Teacher.StudentViewP;
 
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import java.awt.Component;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-
-public class ClassesAdminView extends JFrame {
+public class ClassesAdminViewP extends JPanel {
 	public JTextField textField_FindMaLop;
 	private JTable table;
 	public JTextField textField_MaLop;
@@ -47,63 +42,25 @@ public class ClassesAdminView extends JFrame {
 	public Classroom currentClassroom;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnBack;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClassesAdminView frame = new ClassesAdminView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	boolean hasStudentView=false;StudentViewP student;
 	/**
-	 * Create the frame.
+	 * Create the panel.
 	 */
-	public ClassesAdminView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 setBounds(162, 0, 835, 660);
+	public ClassesAdminViewP() {
+		setBounds(10, 40, 926, 612);
+		setLayout(null);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBounds(10, 10, 906, 599);
+		contentPane.setBackground(new Color(192, 192, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
+		add(contentPane);
 		contentPane.setLayout(null);
-		
-		btnBack = new JButton("Back");
-		btnBack.setBounds(784, 0, 37, 31);
-		contentPane.add(btnBack);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(hasStudentView) {
-				contentPane.remove(student);
-		     	
-		     	
-		 		contentPane.add(classesPane);
-		 		contentPane.invalidate();		 		
-		 		contentPane.repaint();
-		 		hasStudentView=false;
-				} else {
-					AdminHomeView adminhomeView = new AdminHomeView();
-	            	adminhomeView.setVisible(true);
-	                dispose();
-	                setVisible(false);
-					
-				}
-			}
-		});
 		classesPane = new JPanel();
         classesPane.setBackground(new Color(255, 255, 255));
-        classesPane.setBounds(0, 0, 766, 623);
-        getContentPane().add(classesPane);
+        classesPane.setBounds(23, 0, 849, 581);
+       // contentPane.add(classesPane);
    
         
         classesPane.setLayout(null);
@@ -112,7 +69,7 @@ public class ClassesAdminView extends JFrame {
 		lb_FindMaLop.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lb_FindMaLop.setBounds(63, 30, 140, 48);
 		classesPane.add(lb_FindMaLop);
-		
+		//add(classesPane);
 		textField_FindMaLop = new JTextField();
 		textField_FindMaLop.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_FindMaLop.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -180,7 +137,7 @@ public class ClassesAdminView extends JFrame {
 			     	
 			 		contentPane.add(student);
 			 		contentPane.invalidate();
-			 		student.setBounds(0, 0, 764, 623);
+			 		student.setBounds(23, 0, 849, 581);
 			 		contentPane.repaint();hasStudentView=true;
 			 		
 			    	// mainView.loadStudentView(classRoom);
@@ -293,7 +250,7 @@ public class ClassesAdminView extends JFrame {
 		classesPane.add(btnHuyTim);
 		
 		contentPane.add( classesPane);
-	//	ClassesAdminCtrl ctrl=new ClassesAdminCtrl(this);
+		ClassesAdminCtrl ctrl=new ClassesAdminCtrl(this);
 		
 	}
 	public void displayClassList(ClassesManager classes) {		

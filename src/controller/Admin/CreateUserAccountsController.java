@@ -16,12 +16,13 @@ import javax.swing.JTextField;
 
 import controller.DatabaseConnection;
 import view.Admin.CreateUserAccountsView;
+import view.Admin.CreateUserAccoutViewP;
 import view.Admin.LoginView;
 
 public class CreateUserAccountsController {
-    private final CreateUserAccountsView createUserAccountsView;
+    private final CreateUserAccoutViewP createUserAccountsView;
 
-    public CreateUserAccountsController(CreateUserAccountsView createUserAccountsView) {
+    public CreateUserAccountsController(CreateUserAccoutViewP createUserAccountsView) {
         this.createUserAccountsView = createUserAccountsView;
 
 //        createUserAccountsView.addSubmitListener(new SubmitListener());

@@ -28,7 +28,7 @@ public class DisplayUserAccountsView extends JFrame {
             public void run() {
                 try {
                 	DisplayUserAccountsView frame = new DisplayUserAccountsView();
-                	DisplayUserAccountsController controller = new DisplayUserAccountsController(frame); // Pass the view to the controller
+                //	DisplayUserAccountsController controller = new DisplayUserAccountsController(frame); // Pass the view to the controller
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
