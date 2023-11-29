@@ -294,7 +294,7 @@ public class CourseView extends JPanel {
 	            // Chuyển đổi mảng thành chuỗi, sử dụng dấu phân cách nếu cần
 	            String classCodeString = String.join(", ", classCodes);
 
-	            // Thiết lập dữ liệu cho textField_FindCourse
+	            // Thiết lập dữ liệu cho` textField_FindCourse
 	            textField_FindCourse.setText(classCodeString);
 	        }
 	    }

@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -415,6 +416,10 @@ public class StudentViewP extends JPanel {
 				 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
 			 return st; 
 		 }
+		 public boolean isLeapYear(int year) {
+			    // Kiểm tra xem năm có phải là năm nhuận không
+			    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+			}
 		 public boolean test() {
 			    try {
 			        int studentID = Integer.parseInt(textField_ID.getText());
@@ -423,54 +428,70 @@ public class StudentViewP extends JPanel {
 			        int day = Integer.parseInt(textField_dob_day.getText());
 			        int month = Integer.parseInt(textField_dob_month.getText());
 			        int year = Integer.parseInt(textField_dob_year.getText());
-			        LocalDate dob = LocalDate.of(year, month, day);
 			        boolean gender = false;
+
 			        if (rdbtnFemale.isSelected()) {
 			            gender = false;
 			        } else if (rdbtnMale.isSelected()) {
 			            gender = true;
 			        }
 			        String phoneNumber = textField_phone.getText();
-			        int creditsCompleted=Integer.parseInt(textField_phone.getText());
-					int creditsOwed=Integer.parseInt(textField_owed.getText());
+			        int creditsCompleted = Integer.parseInt(textField_phone.getText());
+			        int creditsOwed = Integer.parseInt(textField_owed.getText());
 
-					if (studentID<=0) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai ma sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    }
-					else if (classRoom.checkAStudent(studentID)) {
-				        JOptionPane.showMessageDialog(null, "Ma sinh vien da ton tai", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    }
-					else if (name.isEmpty()) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai ten sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    } else if (address.isEmpty()) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai dia chi sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    } else if (day <= 0 || month <= 0 || year <= 0) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai ngay sinh cua sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    } else if (phoneNumber.isEmpty()) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai so dien thoai cua sinh vien", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    } else if (creditsCompleted < 0) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai Credits Completed", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    } else if (creditsOwed < 0) {
-				        JOptionPane.showMessageDialog(null, "Nhap sai Credits Owed", "Loi", JOptionPane.ERROR_MESSAGE);
-				        return false;
-				    }
+			        if (studentID <= 0) {
+			            JOptionPane.showMessageDialog(null, "Invalid student ID", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } else if (classRoom.checkAStudent(studentID)) {
+			            JOptionPane.showMessageDialog(null, "Student ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } // Kiểm tra xem tên có ít nhất 2 từ hay không
+			        String[] nameWords = name.split("\\s+");
+			         if (nameWords.length < 2) {
+			            JOptionPane.showMessageDialog(null, "Name must have at least 2 words", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        }else if (name.isEmpty()) {
+			            JOptionPane.showMessageDialog(null, "Invalid student name", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } else if (address.isEmpty()) {
+			            JOptionPane.showMessageDialog(null, "Invalid student address", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        }  else if (day < 1 || day > 31) {
+			            JOptionPane.showMessageDialog(null, "Invalid day", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        }  else if (month < 1 || month > 12) {
+			            JOptionPane.showMessageDialog(null, "Invalid month", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } else if (year < 1900 || year > 2024) {
+			            JOptionPane.showMessageDialog(null, "Invalid year", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } else if (day > 28 && month == 2 && !isLeapYear(year)) {
+			            JOptionPane.showMessageDialog(null, "February can have a maximum of 28 days in a non-leap year", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } else if ((day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)) || (day > 31)) {
+			            JOptionPane.showMessageDialog(null, "Month " + month + " can have a maximum of 30 days", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } 
+			        else if (phoneNumber.length() < 10) {
+			            JOptionPane.showMessageDialog(null, "Phone number must be at least 10 digits", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        }else if (creditsCompleted < 0) {
+			            JOptionPane.showMessageDialog(null, "Invalid Credits Completed value", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        } else if (creditsOwed < 0) {
+			            JOptionPane.showMessageDialog(null, "Invalid Credits Owed value", "Error", JOptionPane.ERROR_MESSAGE);
+			            return false;
+			        }
 			        return true;
 			    } catch (NumberFormatException e) {
-			        JOptionPane.showMessageDialog(null, "Nhap sai ", "Loi", JOptionPane.ERROR_MESSAGE);
+			        JOptionPane.showMessageDialog(null, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
 			    } catch (IllegalArgumentException e) {
-			        JOptionPane.showMessageDialog(null, e.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
-			        JOptionPane.showMessageDialog(null, e.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
+			        JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			    }
 
 			    return false;
 			}
+
 		 
 
 		 public int getIndexofSelectedRow() {
@@ -505,7 +526,6 @@ public class StudentViewP extends JPanel {
 			    textField_ID.setText(""+student.getStudentID());
 			    textField_name.setText(student.getName());
 			    textField_Add.setText(student.getAddress());
-			    System.out.println("aaaaaaaaas");
 			    textField_dob_day.setText(String.valueOf(student.getDob().getDayOfMonth()));
 			    textField_dob_month.setText(String.valueOf(student.getDob().getMonthValue()));
 			    textField_dob_year.setText(String.valueOf(student.getDob().getYear()));	    

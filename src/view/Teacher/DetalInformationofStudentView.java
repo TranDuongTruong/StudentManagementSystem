@@ -36,6 +36,7 @@ public class DetalInformationofStudentView extends JFrame {
 	JLabel lblID_info;
 	JLabel lblCreditsOwed_info;
 	JLabel avatar;
+	private JButton btnNewButton;
 	static Student student;
 	/**
 	 * Launch the application.
@@ -189,18 +190,14 @@ public class DetalInformationofStudentView extends JFrame {
 		separator.setBounds(28, 47, 623, 24);
 		contentPane.add(separator);
 		
-		JButton btnBack = new JButton("Back");
-		btnBack.setBounds(483, 350, 85, 21);
-		
-		btnBack.addActionListener(new ActionListener() {
-			
-		    public void actionPerformed(ActionEvent e) {	
-		    	setVisible(false);
-		    	
-		    	  
-		    }
+		 btnNewButton = new JButton("Back");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
 		});
-		contentPane.add(btnBack);
+		btnNewButton.setBounds(424, 346, 117, 29);
+		contentPane.add(btnNewButton);
 		SetStudentInfo(stu);
 		setVisible(true);
 	}
