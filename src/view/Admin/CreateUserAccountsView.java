@@ -7,6 +7,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.border.EmptyBorder;
 
+
 import controller.Admin.CreateUserAccountsController;
 
 import java.awt.event.ActionEvent;
@@ -22,6 +23,8 @@ public class CreateUserAccountsView extends JFrame {
     private JLabel errorLabel;
     private JLabel studentIDLabel;
     public JComboBox<String> studentIDComboBox;
+    private JLabel teacherIDLabel;
+    public JComboBox<String> teacherIDComboBox;
     
 
     public static void main(String[] args) {
@@ -86,7 +89,7 @@ public class CreateUserAccountsView extends JFrame {
         contentPane.add(roleComboBox);
         roleComboBox.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        updateStudentIDFieldVisibility(roleComboBox.getSelectedItem().toString());
+		    	updateFieldIDFieldVisibility(roleComboBox.getSelectedItem().toString());
 		    }
 		});
 
@@ -146,6 +149,15 @@ public class CreateUserAccountsView extends JFrame {
         studentIDComboBox.setBounds(150, 207, 200, 20);
         contentPane.add(studentIDComboBox);
        
+        teacherIDLabel = new JLabel("TeacherID:");
+        teacherIDLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+        teacherIDLabel.setBounds(61, 206, 83, 20);
+        contentPane.add(teacherIDLabel);
+
+        teacherIDComboBox = new JComboBox<String>();
+        teacherIDComboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
+        teacherIDComboBox.setBounds(150, 207, 200, 20);
+        contentPane.add(teacherIDComboBox);
 
 
         // Add focus listeners to clear error status when the user starts typing
@@ -166,26 +178,41 @@ public class CreateUserAccountsView extends JFrame {
                 clearError();
             }
         });
-        updateStudentIDFieldVisibility(roleComboBox.getSelectedItem().toString());
+        updateFieldIDFieldVisibility(roleComboBox.getSelectedItem().toString());
         updateStudentIDComboBox();
+        updateTeacherIDComboBox();
 
     }
-    public void updateStudentIDFieldVisibility(String selectedRole) {
+    public void updateFieldIDFieldVisibility(String selectedRole) {
 	    if (selectedRole.equals("Student")) {
 	        studentIDLabel.setVisible(true);
 	        studentIDComboBox.setVisible(true);
-	    } else {
+	        teacherIDLabel.setVisible(false);
+            teacherIDComboBox.setVisible(false);
+	    } else if(selectedRole.equals("Teacher")){
+	    	teacherIDLabel.setVisible(true);
+            teacherIDComboBox.setVisible(true);
 	        studentIDLabel.setVisible(false);
+	        studentIDComboBox.setVisible(false);
+	    }else {
+	    	teacherIDLabel.setVisible(false);
+            teacherIDComboBox.setVisible(false);
+            studentIDLabel.setVisible(false);
 	        studentIDComboBox.setVisible(false);
 	    }
 	}
+ 
     public void updateStudentIDComboBox() {
         CreateUserAccountsController controller = new CreateUserAccountsController(this);
         String[] studentIDs = controller.getStudentIDs();
         studentIDComboBox.setModel(new DefaultComboBoxModel<>(studentIDs));
         
     }
-
+    public void updateTeacherIDComboBox() {
+        CreateUserAccountsController controller = new CreateUserAccountsController(this);
+        String[] teacherIDs = controller.getTeacherIDs();
+        teacherIDComboBox.setModel(new DefaultComboBoxModel<>(teacherIDs));
+    }
     public String getEmail() {
         return emailField.getText();
     }
@@ -203,6 +230,20 @@ public class CreateUserAccountsView extends JFrame {
     }
     public String getStudentID() {
         String selectedValue = studentIDComboBox.getSelectedItem().toString();
+        
+        // Chia chuỗi thành mảng sử dụng dấu hai chấm (":")
+        String[] parts = selectedValue.split(":");
+        
+        // Lấy phần tử đầu tiên sau khi chia
+        if (parts.length > 0) {
+            return parts[0].trim(); // Lấy phần tử đầu tiên và loại bỏ khoảng trắng
+        } else {
+            return ""; // Trả về chuỗi rỗng nếu không tìm thấy
+        }
+    }
+
+    public String getTeacherID() {
+    	String selectedValue = teacherIDComboBox.getSelectedItem().toString();
         
         // Chia chuỗi thành mảng sử dụng dấu hai chấm (":")
         String[] parts = selectedValue.split(":");

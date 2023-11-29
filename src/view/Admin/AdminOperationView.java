@@ -33,13 +33,13 @@ public class AdminOperationView extends JFrame {
 	private JTextField emailField;
 	private JTextField nameField;
 	private JTextField textField_ID;
-	private JTextField passwordField;
 	private JLabel errorLabel;
 	private JLabel studentIDLabel;
 	private JTextField studentIDField;
 	private JTextField roleField;
 	private JLabel teacherIDLabel;
 	private JTextField teacherIDField;
+	private JPasswordField passwordField;
 
 
 	/**
@@ -199,20 +199,13 @@ public class AdminOperationView extends JFrame {
 		btnSearch.setBounds(424, 77, 103, 30);
 		contentPane.add(btnSearch);
 		
-		passwordField = new JTextField();
+		passwordField = new JPasswordField();
 		passwordField.setBounds(150, 177, 200, 20);
 		contentPane.add(passwordField);
-		passwordField.setColumns(10);
 		
 		
 		// Add focus listeners to clear error status when the user starts typing
 		emailField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                clearError();
-            }
-        });
-
-        passwordField.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
                 clearError();
             }
@@ -268,5 +261,4 @@ public class AdminOperationView extends JFrame {
 	        teacherIDField.setEditable(false);
 	    }
 	}
-
 }

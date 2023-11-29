@@ -17,6 +17,10 @@ import javax.swing.JTextField;
 import controller.DatabaseConnection;
 import view.Admin.CreateUserAccountsView;
 import view.Admin.LoginView;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class CreateUserAccountsController {
     private final CreateUserAccountsView createUserAccountsView;
@@ -34,6 +38,8 @@ public class CreateUserAccountsController {
         String name = createUserAccountsView.getName();
         String role = createUserAccountsView.getRole();
         String studentID = createUserAccountsView.getStudentID();
+        String teacherID = createUserAccountsView.getTeacherID();
+
         
 
         if (isValidEmail(email) && isValidPassword(password) && isValidName(name)) {
@@ -42,18 +48,22 @@ public class CreateUserAccountsController {
             } else {
             	createUserAccountsView.clearError();
             	 // Kiểm tra nếu role là "admin" hoặc "teacher", thì đặt studentID thành null
-                if ("admin".equalsIgnoreCase(role) || "teacher".equalsIgnoreCase(role)) {
-                    studentID = null;
-                }
-                if (addUserToDatabase(email, password, name, role, studentID)) {
+            	if ("admin".equalsIgnoreCase(role) || "teacher".equalsIgnoreCase(role)) {
+            	    studentID = null;
+            	} else if("admin".equalsIgnoreCase(role) || "student".equalsIgnoreCase(role)){
+            	    teacherID = null;
+            	}
+                if (addUserToDatabase(email, password, name, role, studentID, teacherID)) {
                   clearFieldsAndSetDefaultRole();
                   createUserAccountsView.updateStudentIDComboBox();
+                  createUserAccountsView.updateTeacherIDComboBox();
 //                  createUserAccountsView.displaySuccessMessage("User added successfully.");
                   JOptionPane.showMessageDialog(null, "User added successfully.", "Add User",
   						JOptionPane.INFORMATION_MESSAGE);
                
 
                 } else {
+                	createUserAccountsView.updateTeacherIDComboBox();
                 	createUserAccountsView.updateStudentIDComboBox();
                     createUserAccountsView.displayErrorMessage("Failed to add user.");
                 }
@@ -79,7 +89,7 @@ public class CreateUserAccountsController {
         createUserAccountsView.nameField.setText("");
         
         // Set role to "Teacher"
-        createUserAccountsView.roleComboBox.setSelectedItem("Teacher");
+        createUserAccountsView.roleComboBox.setSelectedItem("Admin");
         
         // Clear studentID-related fields (if visible)
         createUserAccountsView.studentIDComboBox.setSelectedIndex(0);
@@ -121,17 +131,58 @@ public class CreateUserAccountsController {
             return false;
         }
     }
+    private String hashPassword(String password, String salt) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-    private boolean addUserToDatabase(String email, String password, String name, String role, String studentID) {
+            // Kết hợp mật khẩu và salt trước khi băm
+            String passwordWithSalt = password + salt;
+
+            byte[] hashedBytes = md.digest(passwordWithSalt.getBytes());
+
+            // Chuyển đổi byte array thành chuỗi hex
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+        
+        // Chuyển đổi byte array thành chuỗi hex
+        StringBuilder sb = new StringBuilder();
+        for (byte b : saltBytes) {
+            sb.append(String.format("%02x", b));
+        }
+
+        return sb.toString();
+    }
+
+    private boolean addUserToDatabase(String email, String password, String name, String role, String studentID, String teacherID) {
         try {
             Connection connection = DatabaseConnection.connectToBB();
-            String query = "INSERT INTO accounts (email, password, name, role, studentID) VALUES (?, ?, ?, ?, ?)";
+
+            // Tạo salt mới cho mỗi lần thêm người dùng
+            String salt = generateSalt();
+            String hashedPassword = hashPassword(password, salt); // Mã hóa mật khẩu với salt
+
+            String query = "INSERT INTO accounts (email, password, name, role, studentID, teacherID) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(2, hashedPassword);
             preparedStatement.setString(3, name);
             preparedStatement.setString(4, role);
             preparedStatement.setString(5, studentID);
+            preparedStatement.setString(6, teacherID);
 
             int rowsAffected = preparedStatement.executeUpdate();
 
@@ -144,6 +195,7 @@ public class CreateUserAccountsController {
             return false;
         }
     }
+
 
     public String[] getStudentIDs() {
         try {
@@ -169,6 +221,35 @@ public class CreateUserAccountsController {
             connection.close();
 
             return studentIDs.toArray(new String[0]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
+    }
+    public String[] getTeacherIDs() {
+        try {
+            Connection connection = DatabaseConnection.connectToBB();
+            String query = "SELECT teacher.teacherID, teacher.name " +
+                           "FROM teacher " +
+                           "LEFT JOIN accounts ON teacher.teacherID = accounts.teacherID " +
+                           "WHERE accounts.teacherID IS NULL";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<String> teacherIDs = new ArrayList<>();
+            while (resultSet.next()) {
+                String teacherID = resultSet.getString("teacherID");
+                String teacherName = resultSet.getString("name");
+                String formattedID = String.format("%s: %s", teacherID, teacherName);
+                teacherIDs.add(formattedID);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+
+            return teacherIDs.toArray(new String[0]);
         } catch (SQLException e) {
             e.printStackTrace();
             return new String[0];
