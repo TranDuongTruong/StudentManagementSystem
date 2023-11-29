@@ -293,7 +293,7 @@ public class ClassesAdminView extends JFrame {
 		classesPane.add(btnHuyTim);
 		
 		contentPane.add( classesPane);
-	//	ClassesAdminCtrl ctrl=new ClassesAdminCtrl(this);
+		ClassesAdminCtrl ctrl=new ClassesAdminCtrl(this);
 		
 	}
 	public void displayClassList(ClassesManager classes) {		

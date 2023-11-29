@@ -8,14 +8,13 @@ import controller.DatabaseConnection;
 import model.ClassesManager;
 import model.Classroom;
 import view.Admin.ClassesAdminView;
-import view.Admin.ClassesAdminViewP;
 import view.Teacher.ClassesViewP;
 
 public class ClassesAdminCtrl {
 	ClassesManager classes;
-    public ClassesAdminViewP view;
+    public ClassesAdminView view;
     DatabaseConnection db;
-    public ClassesAdminCtrl(ClassesAdminViewP view){
+    public ClassesAdminCtrl(ClassesAdminView view){
     	classes=new ClassesManager();
         this.view=view;
         db=new DatabaseConnection();

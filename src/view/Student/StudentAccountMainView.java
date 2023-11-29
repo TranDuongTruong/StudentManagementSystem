@@ -56,8 +56,7 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-				//LoginController.studentId=9;
-					LoginController.studentId=5;
+				LoginController.studentId=9;
 					retrieveStudent();
 					StudentAccountMainView frame = new StudentAccountMainView();
 					

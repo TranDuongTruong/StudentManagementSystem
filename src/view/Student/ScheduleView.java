@@ -35,7 +35,7 @@ public class ScheduleView extends JPanel {
     JButton btnPeriviousWeek;
     JButton btnNextWeek;
     public int currentWeek=1;
-    JLabel titleLb ;
+   
     public ScheduleView() {
     	
         setLayout(null);
@@ -76,7 +76,7 @@ public class ScheduleView extends JPanel {
         panel.setLayout(null);
         panel.add(scheduleTable);
         
-        titleLb = new JLabel("Learning Schedule week 12: November 6, 2023 - November 12, 2023");
+        JLabel titleLb = new JLabel("Learning Schedule week 12: November 6, 2023 - November 12, 2023");
         titleLb.setBounds(10, 10, 600, 43);
         
         panel.add(titleLb);
@@ -110,34 +110,6 @@ public class ScheduleView extends JPanel {
         	}
         ));
         colorTable .setRowHeight(40);
-        
-        
-        TableCellRenderer customRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-               // System.out.println(column+"\t"+columnS+"\t"+row+"\t"+rowS);
-                // Kiểm tra xem ô hiện tại có phải là ô được chọn
-                if (row==1&&column==0) {
-                	
-                
-                    component.setBackground(Color.green);
-                	
-                	
-                } else if(row==2&&column==0) {
-                	 component.setBackground(Color.YELLOW);
-                }
-                
-                else {
-                    component.setBackground(table.getBackground());
-                }
-                
-                return component;
-            }
-        };
-        
-        // Thiết lập renderer cho ô được chọn
-        colorTable.getColumnModel().getColumn(0).setCellRenderer(customRenderer);
         
         
         colorTable.getColumnModel().getColumn(0).setPreferredWidth(67);

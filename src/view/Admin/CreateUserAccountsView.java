@@ -99,8 +99,8 @@ public class CreateUserAccountsView extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Xử lý sự kiện khi người dùng nhấn nút "Submit"
-              //  CreateUserAccountsController controller = new CreateUserAccountsController(CreateUserAccountsView.this);
-               // controller.handleCreateAccount(); 
+                CreateUserAccountsController controller = new CreateUserAccountsController(CreateUserAccountsView.this);
+                controller.handleCreateAccount(); 
             }
         });
         ImageIcon submitIcon = new ImageIcon(CreateUserAccountsView.class.getResource("/Assert/admin/submit.png"));
@@ -180,9 +180,9 @@ public class CreateUserAccountsView extends JFrame {
 	    }
 	}
     public void updateStudentIDComboBox() {
-     //   CreateUserAccountsController controller = new CreateUserAccountsController(this);
-     //   String[] studentIDs = controller.getStudentIDs();
-       // studentIDComboBox.setModel(new DefaultComboBoxModel<>(studentIDs));
+        CreateUserAccountsController controller = new CreateUserAccountsController(this);
+        String[] studentIDs = controller.getStudentIDs();
+        studentIDComboBox.setModel(new DefaultComboBoxModel<>(studentIDs));
         
     }
 

@@ -16,26 +16,25 @@ import javax.swing.table.DefaultTableModel;
 import controller.DatabaseConnection;
 import view.Admin.AdminHomeView;
 import view.Admin.DisplayUserAccountsView;
-import view.Admin.ShowUserAccountP;
 public class DisplayUserAccountsController implements ActionListener {
 
-    private ShowUserAccountP view;
+    private DisplayUserAccountsView view;
   
-    public DisplayUserAccountsController(ShowUserAccountP view) {
+    public DisplayUserAccountsController(DisplayUserAccountsView view) {
     	 this.view = view;
-       //  this.view.setController(this);
+         this.view.setController(this);
 
          // Load data from the database in the constructor
          loadDataFromDatabase();
     }
 
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == view.getBackButton()) {
-//            // Add logic to go back to the admin home view here
-//            AdminHomeView adminhomeView = new AdminHomeView();
-//            adminhomeView.setVisible(true);
-//           // view.dispose();
-//        }
+        if (e.getSource() == view.getBackButton()) {
+            // Add logic to go back to the admin home view here
+            AdminHomeView adminhomeView = new AdminHomeView();
+            adminhomeView.setVisible(true);
+            view.dispose();
+        }
     }
     
 
