@@ -168,6 +168,7 @@ public class CourseView extends JPanel {
 			                    displayRegisteredClasses(currentRegisteredClass);
 			                    insertStudentClassroom(LoginController.studentId, registeredClass.getClassCode());
 			                    JOptionPane.showMessageDialog(null, "Enrollment successful!");
+			                    textField_MaDangki.setText("");
 			                }
 			            }
 			        } else {
@@ -243,8 +244,8 @@ public class CourseView extends JPanel {
 		                        currentRegisteredClass.remove(currentRegisteredClass.findClassroomByCode(classCode));
 
 		                        displayRegisteredClasses(currentRegisteredClass);
-		                        displayAvailableClasses(model);
-		                        setDataToTextField();
+		                        //displayAvailableClasses(model);
+		                        //setDataToTextField();
 		                        deleteStudentClassroom(LoginController.studentId, classCode);
 		                        JOptionPane.showMessageDialog(null, "Cancellation of class registration successful!");
 		                    } else {

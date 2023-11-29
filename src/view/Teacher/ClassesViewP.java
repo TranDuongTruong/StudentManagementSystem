@@ -86,7 +86,7 @@ public class ClassesViewP extends JPanel {
 		                        {null, null, null, null}
 		                },
 		                new String[] {
-		                        "Mã Lớp", "Tên Lớp", "Số học sinh hiện tại", "Số học sinh tối đa"
+		                		"Class Code", "Class Name", "Current Number of Students", "Maximum Number of Students"
 		                }
 		        ) {
 		            // Ghi đè phương thức isCellEditable để không cho phép chỉnh sửa
