@@ -84,7 +84,7 @@ public class CreateUserAccountsView extends JFrame {
 
         roleComboBox = new JComboBox<String>();
         roleComboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
-        roleComboBox.setModel(new DefaultComboBoxModel(new String[] {"Teacher", "Student", "Admin"}));
+        roleComboBox.setModel(new DefaultComboBoxModel(new String[] {"Admin", "Student", "Teacher"}));
         roleComboBox.setBounds(150, 168, 200, 20);
         contentPane.add(roleComboBox);
         roleComboBox.addActionListener(new ActionListener() {
