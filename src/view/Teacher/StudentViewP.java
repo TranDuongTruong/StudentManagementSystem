@@ -401,7 +401,7 @@ public class StudentViewP extends JPanel {
 					 gender=true;
 				 }
 				 phoneNumber=textField_phone.getText();
-				 creditsCompleted=Integer.parseInt(textField_phone.getText());
+				 creditsCompleted=Integer.parseInt(textField_completed.getText());
 				 creditsOwed=Integer.parseInt(textField_owed.getText());
 				 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
 			 return st; 
@@ -451,7 +451,7 @@ public class StudentViewP extends JPanel {
 			            gender = true;
 			        }
 			        String phoneNumber = textField_phone.getText();
-			        int creditsCompleted = Integer.parseInt(textField_phone.getText());
+			        int creditsCompleted = Integer.parseInt(textField_completed.getText());
 			        int creditsOwed = Integer.parseInt(textField_owed.getText());
 
 			        if(isAddNew) {
