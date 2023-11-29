@@ -265,7 +265,8 @@ public class DatabaseConnection {
 
  		    return classCodeArray;
  		}
-	    List<Student> retrieveStudentsFromClassroom(String classCode) {
+	   public  List<Student> retrieveStudentsFromClassroom(String classCode) {
+		   connectToBB();
 	        List<Student> students = new ArrayList();
 	        int studentID; String name; LocalDate dob; String address; boolean gender;
 			 String phoneNumber; int creditsCompleted; int  creditsOwed;

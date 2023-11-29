@@ -144,7 +144,7 @@ public class ScheduleCtrl {
 		            
 		            data[row][column] = new Object[] { classCode, startTime, endTime, roomNumber };
 		           
-		            List<Object> newData = new ArrayList<>(Arrays.asList(classCode,startDate, endDate, roomNumber));
+		            List<Object> newData = new ArrayList<>(Arrays.asList(classCode, roomNumber));
 		           System.out.println("dAY: "+startDate);
 		            this.view.setValueInTable(row,column,newData,offline);
 		            }

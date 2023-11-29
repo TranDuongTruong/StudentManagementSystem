@@ -114,7 +114,11 @@ public class TeacherAccountMainView extends JFrame {
 	}
 	
 	public void loadStudentView(Classroom classRoom) {
+		
+		
 		student=new StudentViewP(classRoom);
+		
+		
 		main_Panel.remove(content_panel);
     	removeContent();
     	

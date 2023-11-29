@@ -15,6 +15,8 @@ import view.Teacher.StudentViewP;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,6 +70,10 @@ public class ClassesAdminView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	public void notFindClass(String id) {
+    	JOptionPane.showMessageDialog(null, "Không tìm thấy lớp có mã : "+id, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }
 	public ClassesAdminView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 setBounds(162, 0, 835, 660);
@@ -388,7 +394,20 @@ public class ClassesAdminView extends JFrame {
 	public void CancelButtonListener(ActionListener listener) {
 	    btn_Huy.addActionListener(listener);
 	}
-	
+	public boolean showConfirmationDialog(String message) {
+	    int option = JOptionPane.showConfirmDialog(this, message, "Confirmation", JOptionPane.YES_NO_OPTION);
+	    return option == JOptionPane.YES_OPTION;
+	}
+
+	public void showNotification(String message) {
+	    JOptionPane.showMessageDialog(this, message, "Notification", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public void showErrorDialog(String message) {
+	    JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	public void showReminderDialog(String message) {
+	    JOptionPane.showMessageDialog(this, message, "Reminder", JOptionPane.WARNING_MESSAGE);
+	}
 
 
 }
