@@ -453,8 +453,14 @@ public class StudentViewP extends JPanel {
 			        String phoneNumber = textField_phone.getText();
 			        int creditsCompleted = Integer.parseInt(textField_phone.getText());
 			        int creditsOwed = Integer.parseInt(textField_owed.getText());
+
 			        if(isAddNew) {
-			        if (studentID <= 0) {
+			      
+			       
+
+
+			        if (studentID <=0) {
+
 			            JOptionPane.showMessageDialog(null, "Invalid student ID", "Error", JOptionPane.ERROR_MESSAGE);
 			            return false;
 			        } else if (classRoom.checkAStudent(studentID)) {
