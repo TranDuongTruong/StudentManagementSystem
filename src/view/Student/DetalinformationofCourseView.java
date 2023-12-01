@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -38,10 +39,11 @@ public class DetalinformationofCourseView extends JFrame {
 	 String teacherName="";
 	String      decription="This is basic class";
 	 JLabel lblCourseInformation;
+	 private JButton btnEnroll;
 	/**
 	 * Create the frame.
 	 */
-	public DetalinformationofCourseView(String ClassCode, String className, String location) {
+	public DetalinformationofCourseView(String ClassCode, String className, String location,String Enroll,JTextField textField_MaDangki) {
 		getData(ClassCode);
 		System.out.println("CLA:"+ClassCode);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -119,6 +121,15 @@ public class DetalinformationofCourseView extends JFrame {
 		});
 		btnNewButton.setBounds(16, 224, 117, 29);
 		contentPane.add(btnNewButton);
+		
+		btnEnroll = new JButton("Enroll");
+		btnEnroll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_MaDangki.setText(Enroll);;
+			}
+		});
+		btnEnroll.setBounds(143, 224, 117, 29);
+		contentPane.add(btnEnroll);
 		
 		 // Gọi hàm để lấy dữ liệu từ cơ sở dữ liệu
 	

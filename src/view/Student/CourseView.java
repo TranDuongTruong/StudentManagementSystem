@@ -128,7 +128,9 @@ public class CourseView extends JPanel {
 		            int row = table_Timlop.getSelectedRow();
 		            
 		           //System.out.println("aaaaaaaaaaaaaaaaaaaaadkjaksaas"+row);
-		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode(),model.getClassroom(row).getClassName(),model.getClassroom(row).getDiadiem());
+		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode(),
+		            		model.getClassroom(row).getClassName(),model.getClassroom(row).getDiadiem(),
+		            		model.getClassroom(row).getClass_registration_code(),textField_MaDangki);
 		            cou.SetcourseInfo();
 		            cou.requestFocus();
 		            
@@ -168,7 +170,7 @@ public class CourseView extends JPanel {
 			                    // Display the "currentRegisteredClass" list on table_dangky
 			                    displayRegisteredClasses(currentRegisteredClass);
 			                    insertStudentClassroom(LoginController.studentId, registeredClass.getClassCode());
-			                    JOptionPane.showMessageDialog(null, "Enrollment successful!");
+			                    JOptionPane.showMessageDialog(null, "Enroll successful!");
 			                    textField_MaDangki.setText("");
 			                }
 			            }
