@@ -24,7 +24,7 @@ public class ClassesController  {
         db=new DatabaseConnection();
         
         DatabaseConnection a= new DatabaseConnection();
-        LoginController.teacherId=9;
+//        LoginController.teacherId=9;
         classes=a.retrieveClassesFromDatabase(LoginController.teacherId);
         view.searchClassListener(new SearchListener() );
         view.undoClassListener(new UndoListener());
@@ -49,6 +49,7 @@ public class ClassesController  {
         	classroom=classes.findClassroomByCode(classCode);
         	findClassroomList.addClassroom(classroom);
         	view.displayClassList(findClassroomList);
+        	view.classes=findClassroomList;
         }
 
        

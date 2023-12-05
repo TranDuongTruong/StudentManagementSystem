@@ -15,27 +15,31 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.DatabaseConnection;
 import view.Admin.AdminHomeView;
+<<<<<<< HEAD
 
 import view.Admin.ShowUserAccountP;
+=======
+import view.Admin.DisplayUserAccountsView;
+>>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 public class DisplayUserAccountsController implements ActionListener {
 
-    private ShowUserAccountP view;
+    private DisplayUserAccountsView view;
   
-    public DisplayUserAccountsController(ShowUserAccountP view) {
+    public DisplayUserAccountsController(DisplayUserAccountsView view) {
     	 this.view = view;
-       //  this.view.setController(this);
+         this.view.setController(this);
 
          // Load data from the database in the constructor
          loadDataFromDatabase();
     }
 
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == view.getBackButton()) {
-//            // Add logic to go back to the admin home view here
-//            AdminHomeView adminhomeView = new AdminHomeView();
-//            adminhomeView.setVisible(true);
-//           // view.dispose();
-//        }
+        if (e.getSource() == view.getBackButton()) {
+            // Add logic to go back to the admin home view here
+            AdminHomeView adminhomeView = new AdminHomeView();
+            adminhomeView.setVisible(true);
+            view.dispose();
+        }
     }
     
 
@@ -62,8 +66,16 @@ public class DisplayUserAccountsController implements ActionListener {
                     row.add(resultSet.getInt("studentID"));
                 }
 
+                // Kiểm tra nếu teacherID là null, thì thêm giá trị trống (null)
+                if (resultSet.getObject("teacherID") == null) {
+                    row.add(null);
+                } else {
+                    row.add(resultSet.getInt("teacherID"));
+                }
+
                 data.add(row);
             }
+
 
             Vector<String> columnNames = new Vector<String>();
             columnNames.add("ID");
@@ -71,7 +83,8 @@ public class DisplayUserAccountsController implements ActionListener {
             columnNames.add("Email");
             columnNames.add("Password");
             columnNames.add("Name");
-            columnNames.add("Student ID"); // Thêm tên cột "Student ID"
+            columnNames.add("Student ID"); 
+            columnNames.add("Teacher ID"); 
 
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             view.getTable().setModel(model);

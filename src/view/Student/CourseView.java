@@ -52,7 +52,7 @@ public class CourseView extends JPanel {
 	 */
 	
 	public CourseView() {
-		
+//		LoginController.studentId=9;
 		 DatabaseConnection db = new DatabaseConnection();
 	     String [] classCode=db.getRegisteredClassCodes(LoginController.studentId);
 	     
@@ -128,9 +128,12 @@ public class CourseView extends JPanel {
 		            int row = table_Timlop.getSelectedRow();
 		            
 		           //System.out.println("aaaaaaaaaaaaaaaaaaaaadkjaksaas"+row);
-		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode());
+		            DetalinformationofCourseView cou = new DetalinformationofCourseView(model.getClassroom(row).getClassCode(),
+		            		model.getClassroom(row).getClassName(),model.getClassroom(row).getDiadiem(),
+		            		model.getClassroom(row).getClass_registration_code(),textField_MaDangki);
 		            cou.SetcourseInfo();
 		            cou.requestFocus();
+		            
 		            cou.setVisible(true);
 		        }
 		    }
@@ -144,27 +147,40 @@ public class CourseView extends JPanel {
 			btnngK.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
 			        String registrationCode = textField_MaDangki.getText();
-			        Boolean check=true;
-			        // Tìm lớp học tương ứng với mã đăng ký trong biến "model"
+			        Boolean check = true;
+			        // Find the corresponding class in the "model" variable based on the registration code
 			        Classroom registeredClass = model.findClassroomByCodeRegister(registrationCode);
 			        if (registeredClass != null) {
-			        	for(int i=0;i<currentRegisteredClass.getClassroomList().size();i++) 
-			        		if(registrationCode.equals(currentRegisteredClass.getClassroom(i).getClass_registration_code())) {
-			        			check =false;
-			        			JOptionPane.showMessageDialog(null, "Lớp đã đăng ký, đăng ký không thành công");
-			        		}
-			        	if(check==true) {
-				        	currentRegisteredClass.addClassroom(registeredClass);
-				            // Hiển thị danh sách "currentRegisteredClass" trên table_dangky
-				            displayRegisteredClasses(currentRegisteredClass);
-				            insertStudentClassroom(LoginController.studentId,registeredClass.getClassCode());
-				            JOptionPane.showMessageDialog(null, "Đăng ký thành công!");
-			        	}
+			            for (int i = 0; i < currentRegisteredClass.getClassroomList().size(); i++)
+			                if (registrationCode.equals(currentRegisteredClass.getClassroom(i).getClass_registration_code())) {
+			                    check = false;
+			                    JOptionPane.showMessageDialog(null, "Class already enrolled, enrollment failed");
+			                }
+			            if (check == true) {
+			                // Display the confirmation dialog
+			                int response = JOptionPane.showConfirmDialog(
+			                        null,
+			                        "Are you sure you want to enroll in this class?",
+			                        "Confirmation",
+			                        JOptionPane.YES_NO_OPTION);
+
+			                if (response == JOptionPane.YES_OPTION) {
+			                    // User confirmed, proceed with enrollment
+			                    currentRegisteredClass.addClassroom(registeredClass);
+			                    // Display the "currentRegisteredClass" list on table_dangky
+			                    displayRegisteredClasses(currentRegisteredClass);
+			                    insertStudentClassroom(LoginController.studentId, registeredClass.getClassCode());
+			                    JOptionPane.showMessageDialog(null, "Enroll successful!");
+			                    textField_MaDangki.setText("");
+			                }
+			            }
 			        } else {
-			            JOptionPane.showMessageDialog(null, "Mã đăng ký không hợp lệ. Vui lòng kiểm tra lại.");
+			            JOptionPane.showMessageDialog(null, "Invalid registration code. Please check again.");
 			        }
 			    }
 			});
+
+		
 			
 		CourseCtrl courseCtrl = new CourseCtrl(this);
 		
@@ -208,29 +224,44 @@ public class CourseView extends JPanel {
 		btn_delete.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btn_delete.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        // Lấy chỉ số của các hàng đã chọn trong table_dangky
+		        // Get the indices of selected rows in table_dangky
 		        int[] selectedRows = table_dangky.getSelectedRows();
-			        // Xoá các hàng đã chọn trong table_dangky và currentRegisteredClass
-			        for (int i = selectedRows.length - 1; i >= 0; i--) {
-			            int selectedRow = selectedRows[i];
-			            String classCode = (String) table_dangky.getValueAt(selectedRow, 0);
-			            if(classCode!=null) {
-				            // Thêm vào model
-				            model.addClassroom(currentRegisteredClass.findClassroomByCode(classCode));
-				            // Xoá khỏi currentRegisteredClass
-				            currentRegisteredClass.remove(currentRegisteredClass.findClassroomByCode(classCode));
-				            
-				            displayRegisteredClasses(currentRegisteredClass);
-				            displayAvailableClasses(model);
-				            setDataToTextField();
-			                deleteStudentClassroom(LoginController.studentId,classCode);
-			                JOptionPane.showMessageDialog(null, "Huỷ đăng ký môn thành công!");
-			            }
-			            else 
-			            	JOptionPane.showMessageDialog(null, "Vui lòng chọn các lớp muốn huỷ ở bảng trên!");
-			        }
+
+		        if (selectedRows.length > 0) {
+		            // Display the confirmation dialog
+		            int response = JOptionPane.showConfirmDialog(
+		                    null,
+		                    "Are you sure you want to cancel registration for selected classes?",
+		                    "Confirmation",
+		                    JOptionPane.YES_NO_OPTION);
+
+		            if (response == JOptionPane.YES_OPTION) {
+		                // User confirmed, proceed with deletion
+		                for (int i = selectedRows.length - 1; i >= 0; i--) {
+		                    int selectedRow = selectedRows[i];
+		                    String classCode = (String) table_dangky.getValueAt(selectedRow, 0);
+		                    if (classCode != null) {
+		                        // Add to the model
+		                        model.addClassroom(currentRegisteredClass.findClassroomByCode(classCode));
+		                        // Remove from currentRegisteredClass
+		                        currentRegisteredClass.remove(currentRegisteredClass.findClassroomByCode(classCode));
+
+		                        displayRegisteredClasses(currentRegisteredClass);
+		                        //displayAvailableClasses(model);
+		                        //setDataToTextField();
+		                        deleteStudentClassroom(LoginController.studentId, classCode);
+		                        JOptionPane.showMessageDialog(null, "Cancellation of class registration successful!");
+		                    } else {
+		                        JOptionPane.showMessageDialog(null, "Please select the classes you want to cancel in the table!");
+		                    }
+		                }
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Please select at least one class to cancel registration!");
+		        }
 		    }
 		});
+
 		btn_delete.setBounds(279, 292, 258, 39);
 		add(btn_delete);
 		

@@ -70,7 +70,7 @@ public class TeacherAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginController.teacherId=5;
+//					LoginController.teacherId=5;
 					TeacherAccountMainView frame = new TeacherAccountMainView();
 				//	MainViewCtrl_Teacher mainView=new MainViewCtrl_Teacher(frame);
 					frame.setVisible(true); 
@@ -114,7 +114,11 @@ public class TeacherAccountMainView extends JFrame {
 	}
 	
 	public void loadStudentView(Classroom classRoom) {
+		
+		
 		student=new StudentViewP(classRoom);
+		
+		
 		main_Panel.remove(content_panel);
     	removeContent();
     	

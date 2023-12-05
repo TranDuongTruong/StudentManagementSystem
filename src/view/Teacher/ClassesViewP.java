@@ -31,6 +31,7 @@ public class ClassesViewP extends JPanel {
 	public Classroom currentClassroom;
 	private static final long serialVersionUID = 1L;
 	TeacherAccountMainView mainView;
+	public ClassesManager classes;
 	/**
 	 * Create the panel.
 	 */
@@ -86,7 +87,7 @@ public class ClassesViewP extends JPanel {
 		                        {null, null, null, null}
 		                },
 		                new String[] {
-		                        "Mã Lớp", "Tên Lớp", "Số học sinh hiện tại", "Số học sinh tối đa"
+		                		"Class Code", "Class Name", "Current Number of Students", "Maximum Number of Students"
 		                }
 		        ) {
 		            // Ghi đè phương thức isCellEditable để không cho phép chỉnh sửa
@@ -107,11 +108,14 @@ public class ClassesViewP extends JPanel {
 			    	if (e.getClickCount() == 2) {
 	                	System.out.println("aaaaaa");
 	                    int row = table.getSelectedRow();
-	                    DatabaseConnection a = new DatabaseConnection();
-				    	 ClassesManager classes = new ClassesManager();
-				    	 classes=a.retrieveClassesFromDatabase();
-				    	 Classroom classRoom=classes.getClassroomList().get(row);
-				    	 			    	 
+	                   
+				    
+				    	
+				    	Classroom classRoom=classes.getClassroomList().get(row);
+				    	
+				    	
+				    //	System.err.println("aaaaaaaaa"+classRoom.getClassCode());	
+				    	
 				    	 mainView.loadStudentView(classRoom);
 	                }
 			    }
@@ -143,7 +147,8 @@ public class ClassesViewP extends JPanel {
 	}
 	
 	
-	public void displayClassList(ClassesManager classes) {		
+	public void displayClassList(ClassesManager classes) {	
+		this.classes=classes;
 		if(table==null) return;
 	    DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 	    // Xóa tất cả các dòng hiện tại trong model

@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -34,14 +35,16 @@ public class DetalinformationofCourseView extends JFrame {
 	private JLabel lblName_info;
 	private JLabel lblName_teacher;
 	private JLabel lbl_Duration;
-	private JLabel lbl_Descriptionn;
+	private JLabel lbl_Location;
 	 String teacherName="";
-	
-
+	String      decription="This is basic class";
+	 JLabel lblCourseInformation;
+	 private JButton btnEnroll;
 	/**
 	 * Create the frame.
 	 */
-	public DetalinformationofCourseView(String ClassCode) {
+	public DetalinformationofCourseView(String ClassCode, String className, String location,String Enroll,JTextField textField_MaDangki) {
+		getData(ClassCode);
 		System.out.println("CLA:"+ClassCode);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -75,32 +78,32 @@ public class DetalinformationofCourseView extends JFrame {
 		lbl_Description.setBounds(31, 178, 102, 29);
 		contentPane.add(lbl_Description);
 		
-		 lblName_info = new JLabel("fsafsafsa");
+		 lblName_info = new JLabel(className);
 		lblName_info.setHorizontalAlignment(SwingConstants.LEFT);
 		lblName_info.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblName_info.setBounds(145, 55, 102, 29);
+		lblName_info.setBounds(143, 55, 253, 29);
 		contentPane.add(lblName_info);
 		lblName_info = new JLabel();
 		
-		JLabel lblName_teacher = new JLabel((String) null);
+		 lblName_teacher = new JLabel(teacherName) ;
 		lblName_teacher.setHorizontalAlignment(SwingConstants.LEFT);
 		lblName_teacher.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblName_teacher.setBounds(145, 94, 102, 29);
+		lblName_teacher.setBounds(145, 94, 251, 29);
 		contentPane.add(lblName_teacher);
 		
-		JLabel lbl_Duration = new JLabel((String) null);
+		 lbl_Duration = new JLabel(decription);
 		lbl_Duration.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_Duration.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_Duration.setBounds(145, 135, 102, 29);
+		lbl_Duration.setBounds(145, 135, 251, 29);
 		contentPane.add(lbl_Duration);
 		
-		JLabel lbl_Descriptionn = new JLabel((String) null);
-		lbl_Descriptionn.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_Descriptionn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_Descriptionn.setBounds(145, 178, 102, 29);
-		contentPane.add(lbl_Descriptionn);
+		 lbl_Location = new JLabel(location);
+		lbl_Location.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_Location.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbl_Location.setBounds(145, 178, 251, 29);
+		contentPane.add(lbl_Location);
 		
-		JLabel lblCourseInformation = new JLabel("COURSE INFORMATION");
+		 lblCourseInformation = new JLabel("COURSE INFORMATION");
 		lblCourseInformation.setForeground(new Color(255, 38, 11));
 		lblCourseInformation.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblCourseInformation.setBounds(6, 6, 264, 37);
@@ -119,9 +122,18 @@ public class DetalinformationofCourseView extends JFrame {
 		btnNewButton.setBounds(16, 224, 117, 29);
 		contentPane.add(btnNewButton);
 		
-		getData(ClassCode); // Gọi hàm để lấy dữ liệu từ cơ sở dữ liệu
-		//System.out.println(teacherName);
-		SetcourseInfo();  
+		btnEnroll = new JButton("Enroll");
+		btnEnroll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_MaDangki.setText(Enroll);;
+			}
+		});
+		btnEnroll.setBounds(143, 224, 117, 29);
+		contentPane.add(btnEnroll);
+		
+		 // Gọi hàm để lấy dữ liệu từ cơ sở dữ liệu
+	
+		
         setVisible(true);
 	}
 	public void getData(String classCode) {

@@ -29,6 +29,9 @@ public class AdminOperationViewP extends JPanel {
 	private JLabel studentIDLabel;
 	private JTextField studentIDField;
 	private JTextField roleField;
+	private JLabel teacherIDLabel;
+	private JTextField teacherIDField;
+
 
 	/**
 	 * Create the panel.
@@ -91,7 +94,7 @@ public class AdminOperationViewP extends JPanel {
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminOperationController.updateButtonClicked(textField_ID.getText(), emailField, passwordField, 
-						nameField, roleField, errorLabel);
+						nameField, roleField, errorLabel,studentIDLabel, studentIDField, teacherIDLabel, teacherIDField);
 			}
 		});
 		ImageIcon updateIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/submit.png"));
@@ -113,6 +116,15 @@ public class AdminOperationViewP extends JPanel {
 	     studentIDField = new JTextField();
 	     studentIDField.setBounds(150, 249, 409, 20);
 	     contentPane.add(studentIDField);
+	     
+	     teacherIDLabel = new JLabel("Teacher ID:");
+	     teacherIDLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+	     teacherIDLabel.setBounds(61, 249, 83, 20);
+	     contentPane.add(teacherIDLabel);
+
+	     teacherIDField = new JTextField();
+	     teacherIDField.setBounds(150, 249, 200, 20);
+	     contentPane.add(teacherIDField);
 		
 		JLabel lblAdmin = new JLabel("Admin: Operation");
 		lblAdmin.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -132,7 +144,7 @@ public class AdminOperationViewP extends JPanel {
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdminOperationController.deleteButtonClicked(textField_ID.getText(), emailField, passwordField, 
-																		nameField, roleField, errorLabel);
+																		nameField, roleField, errorLabel,studentIDLabel, studentIDField, teacherIDLabel, teacherIDField);
 			}
 		});
 		ImageIcon deleteIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/cancel1.png"));
@@ -143,7 +155,7 @@ public class AdminOperationViewP extends JPanel {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                AdminOperationController.searchButtonClicked(textField_ID.getText(), emailField, passwordField, nameField, roleField, errorLabel,studentIDLabel, studentIDField);
+                AdminOperationController.searchButtonClicked(textField_ID.getText(), emailField, passwordField, nameField, roleField, errorLabel,studentIDLabel, studentIDField, teacherIDLabel, teacherIDField);
             }
 		});
 		ImageIcon searchIcon = new ImageIcon(AdminOperationViewP.class.getResource("/Assert/admin/loupe.png"));
@@ -186,17 +198,37 @@ public class AdminOperationViewP extends JPanel {
 	     nameField.setBackground(Color.WHITE);
 		
 	}
-	private void updateStudentIDFieldVisibility(String selectedRole) {
-	    if ("student".equals(selectedRole)) {
-	        System.out.println("Displaying studentIDField");
-	        studentIDLabel.setVisible(true);
-	        studentIDField.setVisible(true);
-	        studentIDField.setEditable(false);
-	    } else {
-	        System.out.println("Hiding studentIDField");
-	        studentIDLabel.setVisible(false);
-	        studentIDField.setVisible(false);
-	        studentIDField.setEditable(false);
-	    }
-	}
+
+private void updateStudentIDFieldVisibility(String selectedRole) {
+    if ("student".equals(selectedRole)) {
+        System.out.println("Displaying studentIDField");
+        studentIDLabel.setVisible(true);
+        studentIDField.setVisible(true);
+        studentIDField.setEditable(false);
+
+        System.out.println("Hiding teacherIDField");
+        teacherIDLabel.setVisible(false);
+        teacherIDField.setVisible(false);
+        teacherIDField.setEditable(false);
+    } else if ("teacher".equals(selectedRole)) {
+        System.out.println("Displaying teacherIDField");
+        teacherIDLabel.setVisible(true);
+        teacherIDField.setVisible(true);
+        teacherIDField.setEditable(false);
+
+        System.out.println("Hiding studentIDField");
+        studentIDLabel.setVisible(false);
+        studentIDField.setVisible(false);
+        studentIDField.setEditable(false);
+    } else {
+        System.out.println("Hiding both studentIDField and teacherIDField");
+        studentIDLabel.setVisible(false);
+        studentIDField.setVisible(false);
+        studentIDField.setEditable(false);
+
+        teacherIDLabel.setVisible(false);
+        teacherIDField.setVisible(false);
+        teacherIDField.setEditable(false);
+    }
+}
 }

@@ -265,7 +265,8 @@ public class DatabaseConnection {
 
  		    return classCodeArray;
  		}
-	    List<Student> retrieveStudentsFromClassroom(String classCode) {
+	   public  List<Student> retrieveStudentsFromClassroom(String classCode) {
+		   connectToBB();
 	        List<Student> students = new ArrayList();
 	        int studentID; String name; LocalDate dob; String address; boolean gender;
 			 String phoneNumber; int creditsCompleted; int  creditsOwed;
@@ -449,6 +450,7 @@ public class DatabaseConnection {
 	            stmt.setInt(8, student.getStudentID());
 
 	            int rowsAffected = stmt.executeUpdate();
+	            System.out.println(rowsAffected+"\tffff");
 	            if (rowsAffected > 0) {
 	                System.out.println("Student updated successfully in the database.");
 	            } else {

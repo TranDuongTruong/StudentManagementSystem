@@ -65,19 +65,20 @@ public class StudentController implements ActionListener{
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         	boolean isFind=false;
-        	int studentID = studentView.getSearchInp();
-        	if(studentID!=0) {
-        	List<Student> currentSTList=new ArrayList<Student>();
-        	
-        	for (Student student : classRoom.getStudentList()) {
-                if (student.getStudentID()==(studentID)) {
-                	isFind=true;
-                	currentSTList.add(student);
-                	break;
-                }
-            }
-        	if(isFind)studentView.displayStudentList(currentSTList);
-        		else studentView.notFindStudent(studentID);
+        	String searchInput = studentView.getSearchInp();
+
+        	if (searchInput != null && !searchInput.trim().isEmpty()) {
+        	    List<Student> currentSTList = new ArrayList<>();
+
+        	    for (Student student : classRoom.getStudentList()) {
+        	        if (String.valueOf(student.getStudentID()).contains(searchInput)) {
+        	            isFind = true;
+        	            currentSTList.add(student);
+        	        }
+        	    } 
+        	    
+        	    if(isFind) studentView.displayStudentList(currentSTList);
+        		else studentView.notFindStudent(searchInput);
         	
         	}
         	
@@ -115,9 +116,9 @@ public class StudentController implements ActionListener{
 	        }
 	    }
 	 private class DeleteStudentListener implements ActionListener {
-		    public void actionPerformed(ActionEvent e) {
+		 public void actionPerformed(ActionEvent e) {
 		        int selectedIndex = studentView.getIndexofSelectedRow();
-		        
+
 		        if (selectedIndex != -1) {
 		            int option = JOptionPane.showConfirmDialog(studentView,
 		                    "Are you sure you want to delete this student?",
@@ -143,28 +144,27 @@ public class StudentController implements ActionListener{
 	 private class UpdateStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
 	        	
-	        	//System.out.println(studentView.getIndexofSelectedRow());
+	        	studentView.textField_ID.setEditable(false); 
 	        	studentView.setInfoOfNewStudent();
-	        	//System.out.println(classRoom.findAStudent(studentView.getIndexofSelectedRow()).getName());
-	        //	classRoom.removeStudent(studentView.getIndexofSelectedRow());
-	        	//displayListOfStudent();
+	        
 	        	
 	        }
 	      
 	    }
 	 private class SaveStudentListener implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
-	        	System.out.println("12345666666666666");
+	        	
 	        	if(!studentView.isUpdating)return;
 	        	
 	        	Student st=studentView.selectedStu;
-	        	
+	        	if(!studentView.test(false))return;
 	        	classRoom.findAStudent(st.getStudentID()).SetStudent(studentView.getInfoOfExitsStudent());
 	        	
 	        	System.out.println(st.getCreditsCompleted());
-	        	
+	        	studentView.textField_ID.setEditable(true); 
 	        	displayListOfStudent();
 	        	studentView.xoaForm();
+	        	JOptionPane.showMessageDialog(null, "Update successful", "Success", JOptionPane.INFORMATION_MESSAGE);
 	        	db.updateStudentInDatabase(st);
 	        }
 	      
@@ -173,7 +173,7 @@ public class StudentController implements ActionListener{
 	 private class CancelStudentListener implements ActionListener {
 		// public MainView mmainview;
 	        public void actionPerformed(ActionEvent e) {
-	        	studentView.xoaForm();
+	        	studentView.xoaForm();studentView.textField_ID.setEditable(true); 
 	        	
 	        }
 	      

@@ -8,6 +8,8 @@ import view.Teacher.TeacherAccountMainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,11 +36,16 @@ public class LoginController {
     	 public void actionPerformed(ActionEvent e) {
     	        String email = loginView.getEmail();
     	        String password = loginView.getPassword();
+    	        
 
     	        if (isValidEmail(email) && isValidPassword(password)) {
     	            String role = getRoleForEmail(email); // Lấy vai trò từ cơ sở dữ liệu
+    	            // Retrieve the salt for the user from the database
+                    String salt = getSaltForEmail(email);
 
-    	            if (isValidLogin(email, password)) {
+                    // Hash the provided password with the retrieved salt
+                    String hashedPassword = hashPassword(password, salt);
+    	            if (isValidLogin(email, hashedPassword)) {
     	                if ("admin".equals(role)) {
     	                    // Redirect to CreateUserAccountsView for admin
     	                    AdminHomeView adminView = new AdminHomeView();
@@ -209,5 +216,49 @@ public class LoginController {
         }
 
         return -1; // Trả về -1 nếu không tìm thấy teacherID
+    }
+    private String getSaltForEmail(String email) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.connectToBB();
+            String query = "SELECT salt FROM accounts WHERE email = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("salt");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            // ... existing code ...
+        }
+
+        return null; // Return null if salt is not found
+    }
+    private String hashPassword(String password, String salt) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            // Kết hợp mật khẩu và salt trước khi băm
+            String passwordWithSalt = password + salt;
+
+            byte[] hashedBytes = md.digest(passwordWithSalt.getBytes());
+
+            // Chuyển đổi byte array thành chuỗi hex
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

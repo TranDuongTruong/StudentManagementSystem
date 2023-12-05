@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controller.DatabaseConnection;
 import controller.Teacher.StudentController;
 import model.Classroom;
 import model.Student;
@@ -64,7 +65,12 @@ public class StudentViewP extends JPanel {
 	 * Create the panel.
 	 */
 	public StudentViewP(final Classroom classRoom) {
+		
 		this.classRoom=classRoom;
+		 DatabaseConnection a= new DatabaseConnection();
+		 a.connectToBB();
+		 this.classRoom.setStudentList(a.retrieveStudentsFromClassroom(classRoom.getClassCode()));
+		
 		 setLayout(null);
 	        setBounds(162, 0, 835, 640);
 	        ActionListener action=new StudentController(this);
@@ -144,8 +150,11 @@ public class StudentViewP extends JPanel {
 	                   
 				    	 
 				    	 DetalInformationofStudentView stu=new DetalInformationofStudentView(classRoom.getStudentList().get(row));				    				    	
-				    	 stu.requestFocus();
-				    	 stu.setVisible(true);			    	
+				    
+				    	stu.requestFocus();
+				        stu.setVisible(true);
+				        stu.setEnabled(true);
+				    	    	
 				          			          
 	                    	                   
 	                }
@@ -324,16 +333,28 @@ public class StudentViewP extends JPanel {
 	        StudentController stu=new StudentController(this,classRoom);
 	}
 
-	 public int getSearchInp() {
+	 public String getSearchInp() {
 	        String text = searchInp.getText();
+	        
 	        if (text == null || text.trim().isEmpty()) {
 	            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-	            
-	            return 0;
+	            return "";
 	        }
-	        return Integer.parseInt(text);
+
+	        // Kiểm tra xem text có chứa từ hoặc ký tự đặc biệt hay không
+	        if (text.matches(".*\\W+.*")) {
+	            JOptionPane.showMessageDialog(null, "Mã sinh viên không được chứa từ hoặc ký tự đặc biệt!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	            return "";
+	        }
+	        if (!text.matches("\\d+")) {
+	            JOptionPane.showMessageDialog(null, "Mã sinh viên phải là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	            return "";
+	        }
+	        // Tiếp tục xử lý logic của bạn nếu text hợp lệ
+	        // ...
+	        return (text);
 	    }
-	    public void notFindStudent(int id) {
+	    public void notFindStudent(String id) {
 	    	JOptionPane.showMessageDialog(null, "Không tìm thấy sinh viên có MSV: "+id, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 	    }
 		 public void searchStudentListener(ActionListener listener) {
@@ -366,7 +387,7 @@ public class StudentViewP extends JPanel {
 			}
 		 
 		 public Student getInfoOfNewStudent() {
-			 if(!test()) 
+			 if(!test(true)) 
 				 return null;
 			 Student st;
 			   int studentID; String name; LocalDate dob; String address; boolean gender=false;
@@ -386,7 +407,7 @@ public class StudentViewP extends JPanel {
 					 gender=true;
 				 }
 				 phoneNumber=textField_phone.getText();
-				 creditsCompleted=Integer.parseInt(textField_phone.getText());
+				 creditsCompleted=Integer.parseInt(textField_completed.getText());
 				 creditsOwed=Integer.parseInt(textField_owed.getText());
 				 st=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
 			 return st; 
@@ -420,7 +441,7 @@ public class StudentViewP extends JPanel {
 			    // Kiểm tra xem năm có phải là năm nhuận không
 			    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 			}
-		 public boolean test() {
+		 public boolean test(boolean isAddNew) {
 			    try {
 			        int studentID = Integer.parseInt(textField_ID.getText());
 			        String name = textField_name.getText();
@@ -436,16 +457,23 @@ public class StudentViewP extends JPanel {
 			            gender = true;
 			        }
 			        String phoneNumber = textField_phone.getText();
-			        int creditsCompleted = Integer.parseInt(textField_phone.getText());
+			        int creditsCompleted = Integer.parseInt(textField_completed.getText());
 			        int creditsOwed = Integer.parseInt(textField_owed.getText());
 
-			        if (studentID <= 0) {
+			        if(isAddNew) {
+			      
+			       
+
+
+			        if (studentID <=0) {
+
 			            JOptionPane.showMessageDialog(null, "Invalid student ID", "Error", JOptionPane.ERROR_MESSAGE);
 			            return false;
 			        } else if (classRoom.checkAStudent(studentID)) {
 			            JOptionPane.showMessageDialog(null, "Student ID already exists", "Error", JOptionPane.ERROR_MESSAGE);
 			            return false;
 			        } // Kiểm tra xem tên có ít nhất 2 từ hay không
+			        }
 			        String[] nameWords = name.split("\\s+");
 			         if (nameWords.length < 2) {
 			            JOptionPane.showMessageDialog(null, "Name must have at least 2 words", "Error", JOptionPane.ERROR_MESSAGE);
@@ -496,7 +524,8 @@ public class StudentViewP extends JPanel {
 
 		 public int getIndexofSelectedRow() {
 			
-			 int index=table.getSelectedRow(); selectedStu=classRoom.getStudentList().get(index);
+			 int index=table.getSelectedRow(); 
+			 selectedStu=classRoom.getStudentList().get(index);
 			 return index;
 		 }
 		 public void addStudentListener(ActionListener listener) {

@@ -14,6 +14,8 @@ import view.Teacher.PerformanceView_Admin;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -22,6 +24,7 @@ import java.awt.event.ActionEvent;
 public class AdminHomeView extends JFrame {
 
 	private JPanel contentPane;
+<<<<<<< HEAD
 	JPanel MainContent;
 	JButton btnCreateUser;
 	JButton btnOperation;
@@ -131,6 +134,9 @@ public void removeContent() {
 		  hasPerformance=false;
 		}
 }
+=======
+
+>>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 	/**
 	 * Launch the application.
 	 */
@@ -152,7 +158,7 @@ public void removeContent() {
 	 */
 	public AdminHomeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1021, 677);
+		setBounds(100, 100, 899, 514);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -160,56 +166,75 @@ public void removeContent() {
 		
 		JLabel lblHome = new JLabel("Home");
 		lblHome.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblHome.setBounds(10, 0, 77, 26);
+		lblHome.setBounds(0, 0, 322, 30);
 		contentPane.add(lblHome);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 36, 720, 13);
+		separator.setBounds(0, 25, 769, 13);
 		contentPane.add(separator);
+		
+		JLabel logoLabel = new JLabel("logoLable");
 		 // Logo Image
         ImageIcon logoIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/logo.png"));
+        logoLabel.setIcon(logoIcon);
+        logoLabel.setBounds(223, 41, 291, 155);
+		contentPane.add(logoLabel);
+		
+		JLabel lblNewLabel = new JLabel("");
 		ImageIcon addAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/addAdmin.png"));
+		lblNewLabel.setIcon(addAdminIcon);
+		lblNewLabel.setBounds(20, 219, 178, 128);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
 		ImageIcon configurationIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/configuration1.png"));
+		lblNewLabel_1.setIcon(configurationIcon);
+		lblNewLabel_1.setBounds(193, 219, 178, 128);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
 		ImageIcon showAdminIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/showAdmin.png"));
+		lblNewLabel_2.setIcon(showAdminIcon);
+		lblNewLabel_2.setBounds(363, 219, 128, 128);
+		contentPane.add(lblNewLabel_2);
 		
-		 btnCreateUser = new JButton("Create User");
-//		btnCreateUser.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				CreateUserAccountsView createUserAccountsView = new CreateUserAccountsView();
-//				createUserAccountsView.setVisible(true);
-//                dispose();
-//			}
-//		});
-		btnCreateUser.setBounds(73, 0, 119, 30);
-		contentPane.add(btnCreateUser);
+		JButton btnNewButton = new JButton("Create User");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateUserAccountsView createUserAccountsView = new CreateUserAccountsView();
+				createUserAccountsView.setVisible(true);
+                dispose();
+			}
+		});
+		btnNewButton.setBounds(20, 392, 119, 23);
+		contentPane.add(btnNewButton);
 		
-		 btnOperation = new JButton("Operation");
-		btnOperation.setBounds(187, 0, 119, 30);
-//		btnOperation.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				AdminOperationView adminOperationView = new AdminOperationView();
-//				adminOperationView.setVisible(true);
-//                dispose();
-//			}
-//
-//		});
+		JButton btnNewButton_1 = new JButton("Operation");
+		btnNewButton_1.setBounds(193, 392, 119, 23);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminOperationView adminOperationView = new AdminOperationView();
+				adminOperationView.setVisible(true);
+                dispose();
+			}
+
+		});
+		contentPane.add(btnNewButton_1);
 		
-		contentPane.add(btnOperation);
-		
-		 btnShowUser = new JButton("Show User");
-//		btnShowUser.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				   DisplayUserAccountsView displayUserAccountsView = new DisplayUserAccountsView();
-//			       DisplayUserAccountsController controller = new DisplayUserAccountsController(displayUserAccountsView);
-//			       controller.displayUserView();
-//			       dispose(); 
-//			}
-//
-//
-//
-//		});
-		btnShowUser.setBounds(309, 0, 119, 30);
-		contentPane.add(btnShowUser);
+		JButton btnNewButton_2 = new JButton("Show User");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				   DisplayUserAccountsView displayUserAccountsView = new DisplayUserAccountsView();
+			       DisplayUserAccountsController controller = new DisplayUserAccountsController(displayUserAccountsView);
+			       controller.displayUserView();
+			       dispose(); 
+			}
+
+
+
+		});
+		btnNewButton_2.setBounds(363, 392, 119, 23);
+		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Logout");
 		ImageIcon logoutIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/logout.png"));
@@ -222,10 +247,10 @@ public void removeContent() {
 
 			}
 		});
-		btnNewButton_3.setBounds(888, 0, 119, 30);
+		btnNewButton_3.setBounds(766, 23, 119, 31);
 		contentPane.add(btnNewButton_3);
-		ImageIcon accdemicIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/showAdmin.png"));
 		
+<<<<<<< HEAD
 		 btnPerformance = new JButton("Academic Performance");
 		btnPerformance.setBounds(428, 0, 119, 30);
 		/*
@@ -236,28 +261,46 @@ public void removeContent() {
 		 * } });
 		 */
 		contentPane.add(btnPerformance);
+=======
+		JLabel accdemic = new JLabel("");
+		accdemic.setBounds(514, 219, 143, 140);
+
+		ImageIcon accdemicIcon = new ImageIcon(AdminHomeView.class.getResource("/Assert/admin/accademicPerformance.png"));
+		Image image = accdemicIcon.getImage().getScaledInstance(accdemic.getWidth(), accdemic.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(image);
+		accdemic.setIcon(scaledIcon);
+
+		contentPane.add(accdemic);
 		
-		 btnClasses = new JButton("Classes");
-//		btnClasses.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				ClassesAdminView frame = new ClassesAdminView();
-//				frame.setVisible(true);
-//				setVisible(false);
-//			}
-//		});
-		btnClasses.setBounds(546, 0, 119, 30);
+		JButton btnAccade = new JButton("Academic Performance");
+		btnAccade.setBounds(514, 392, 178, 23);
+		btnAccade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PerformanceView_Admin frame = new PerformanceView_Admin();
+                frame.setVisible(true);
+                dispose();
+
+			}
+		});
+		contentPane.add(btnAccade);
+>>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
+		
+		JButton btnClasses = new JButton("Classes");
+		btnClasses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClassesAdminView frame = new ClassesAdminView();
+				frame.setVisible(true);
+				setVisible(false);
+			}
+		});
+		btnClasses.setBounds(714, 392, 119, 22);
 		contentPane.add(btnClasses);
 		
-		 MainContent = new JPanel();
-		MainContent.setBounds(10, 40, 997, 590);
-		contentPane.add(MainContent);
-		MainContent.setLayout(null);
+		JLabel accdemic_1 = new JLabel("");
+		accdemic_1.setBounds(702, 219, 143, 140);
+		accdemic_1.setIcon(scaledIcon);
+		contentPane.add(accdemic_1);
 		
-		JLabel logoLabel = new JLabel("logoLable");
-		logoLabel.setBounds(350, 63, 305, 282);
-		MainContent.add(logoLabel);
-		logoLabel.setIcon(logoIcon);
-		setButtonListener();
 		
 	}
 }
