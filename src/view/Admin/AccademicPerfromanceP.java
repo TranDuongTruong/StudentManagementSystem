@@ -20,6 +20,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import controller.DatabaseConnection;
 import controller.Teacher.PerformanceController_Admin;
 import model.CreditsPerformance;
+import java.awt.Color;
 
 public class AccademicPerfromanceP extends JPanel {
 	private JPanel contentPane;  JFreeChart chart; ChartPanel chartPanel;
@@ -38,17 +39,27 @@ public class AccademicPerfromanceP extends JPanel {
         add(contentPane);
         contentPane.setLayout(null);
 
-        // Thêm biểu đồ tròn
+        
+        // Thêm biểu đồ tròn credits perfoemance 
         DefaultPieDataset dataset = createDataset();
          chart = createChart(dataset);
          chartPanel = new ChartPanel(chart);
         chartPanel.setBounds(10, 64, 479, 259);
         contentPane.add(chartPanel);
         
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBounds(20, 371, 469, 259);
+        contentPane.add(panel);
+        
         ImageIcon backIcon = new ImageIcon(ShowUserAccountP.class.getResource("/Assert/admin/back.png"));
         //System.out.println("ddddđ"); 
         PerformanceController_Admin perCtrl=new PerformanceController_Admin(this);
         //System.out.println("ddddđ");
+        
+        
+        
+        
         setVisible(true);
        
 }

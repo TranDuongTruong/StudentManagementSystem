@@ -46,6 +46,7 @@ public class StudentAccountMainView extends JFrame {
     JButton btn_Schedule;
     JButton btn_Syllabli;
     JButton btn_chatBox;
+   
     final JPanel content;
     static Student student;
     
@@ -238,11 +239,13 @@ public class StudentAccountMainView extends JFrame {
 	    Component verticalStrut_2_1_5 = Box.createVerticalStrut(10);
 	    verticalBox_1.add(verticalStrut_2_1_5);
 	    verticalBox_1.add(btn_Syllabli);
-	    Component verticalStrut_2_1_7 = Box.createVerticalStrut(10);
-	    verticalBox_1.add(verticalStrut_2_1_7);
+	    
+	    Component verticalStrut_2_1_6 = Box.createVerticalStrut(10);
+	    verticalBox_1.add(verticalStrut_2_1_6);
 	    verticalBox_1.add(btn_chatBox);
-		Component verticalStrut_2_1_6 = Box.createVerticalStrut(300);
-		verticalBox_1.add(verticalStrut_2_1_6);
+	    
+		Component verticalStrut_2_1_7 = Box.createVerticalStrut(300);
+		verticalBox_1.add(verticalStrut_2_1_7);
 		
 		JButton btn_Logout = new JButton("<- Logout"); // Updated button label
 		btn_Logout.setMaximumSize(new Dimension(100, 20));
