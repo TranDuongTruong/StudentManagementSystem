@@ -56,9 +56,14 @@ public class AttendanceViewP extends JPanel {
 	private JButton btnHuyTim;
 	public JComboBox comboBox_queQuan;
 	static Classroom classRoom;
+	 LocalDate currentDate ;
+	    DateTimeFormatter formatter ;
+	    String dateString;
 	 public boolean isUpdating=false;
-	public AttendanceViewP(final Classroom classRoom) {
-		
+	public AttendanceViewP(final Classroom classRoom,TeacherAccountMainView mainView ) {
+		  currentDate = LocalDate.now();
+		     formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+		     dateString = currentDate.format(formatter);
 		this.classRoom=classRoom;
 		 DatabaseConnection a= new DatabaseConnection();
 		 a.connectToBB();
@@ -206,15 +211,15 @@ public class AttendanceViewP extends JPanel {
 	        contentPane_1.add(btnHuyTim);
 	        
 	        JTextPane txtpnAttendance = new JTextPane();
-	        txtpnAttendance.setText("Attendance");
-	        txtpnAttendance.setBounds(15, 10, 77, 19);
+	        txtpnAttendance.setText("Attendance on "+ dateString);
+	        txtpnAttendance.setBounds(10, 10, 161, 35);
 	        contentPane_1.add(txtpnAttendance);
 	        
 	        JButton submitBtn = new JButton("Submit");
 	        submitBtn.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		
-	        		submitAttendance(classRoom);
+	        		submitAttendance(classRoom, mainView);
 	        		
 	        	}
 	        });
@@ -287,11 +292,9 @@ public class AttendanceViewP extends JPanel {
 	        }
 	    }
 	}
-	public void submitAttendance(Classroom classroom) {  
+	public void submitAttendance(Classroom classroom, TeacherAccountMainView mainView) {  
 		fetchAttendanceTables();
-	    LocalDate currentDate = LocalDate.now();
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
-	    String dateString = currentDate.format(formatter)+"AAdf";
+	   
 
 	    DatabaseConnection db = new DatabaseConnection();
 	    Connection con = db.connectToBB();
@@ -321,26 +324,31 @@ public class AttendanceViewP extends JPanel {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
+	    fetchAttendanceTables();
 	    List<Student> students1 = classroom.getStudentList();
 	    String attendanceTable1 = attendanceTables.get(classCode);
 	    try {
-	        // Prepare the SQL query to insert attendance data
-	        String insertQuery = "INSERT INTO " + attendanceTable1 + " (studentID, studentName ) VALUES (?, ?)";
+	        // Check if the attendance table name is valid
+	        if (attendanceTable1 != null && !attendanceTable1.isEmpty()) {
+	            // Prepare the SQL query to insert attendance data
+	            String insertQuery = "INSERT INTO " + attendanceTable1 + " (studentID, studentName) VALUES (?, ?)";
 
-	        // Use PreparedStatement to execute the query
-	        PreparedStatement statement2 = con.prepareStatement(insertQuery);
+	            // Use PreparedStatement to execute the query
+	            PreparedStatement statement2 = con.prepareStatement(insertQuery);
 
-	        // Iterate over the student list and insert attendance information for each student
-	        for (Student student : students1) {
-	            int studentID = student.getStudentID();
-	            String studentName = student.getName();	         
-	            statement2.setInt(1, studentID);
-	            statement2.setString(2, studentName);
-	          	            // Execute the insert statement
-	            statement2.executeUpdate();
+	            // Iterate over the student list and insert attendance information for each student
+	            for (Student student : students1) {
+	                int studentID = student.getStudentID();
+	                String studentName = student.getName();	         
+	                statement2.setInt(1, studentID);
+	                statement2.setString(2, studentName);	          	            
+	                statement2.executeUpdate();
+	            }
+
+	            System.out.println("Inserted attendance information for class " + classCode);
+	        } else {
+	            System.out.println("Invalid attendance table name");
 	        }
-
-	        System.out.println("Inserted attendance information for class " + classCode);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -372,24 +380,30 @@ public class AttendanceViewP extends JPanel {
 	    List<Student> students = classroom.getStudentList();
 	    try {
 	        // Prepare the SQL query to update attendance data
-	        String updateQuery = "UPDATE " + attendanceTable + " SET " + dateString + " = ?";
+	        String updateQuery = "UPDATE " + attendanceTable + " SET " + dateString + " = ? WHERE studentID = ?";
 
 	        // Use PreparedStatement to execute the query
 	        PreparedStatement statement2 = con.prepareStatement(updateQuery);
 
 	        // Iterate over the student list and update attendance information for each student
 	        for (Student student : students) {
-	            
+	            int studentID = student.getStudentID();
 	            boolean attendanceStatus = student.isAttendance();
-	            System.out.println(attendanceStatus+"\taaaaaaaaaaaa");
+
 	            statement2.setBoolean(1, attendanceStatus);
-	           
+	            statement2.setInt(2, studentID);
 
 	            // Execute the update statement
 	            statement2.executeUpdate();
 	        }
 
 	        System.out.println("Updated attendance information for class " + classCode);
+	        
+	       
+	        JOptionPane.showMessageDialog(null, "Successful class attendance!", "Attendance", JOptionPane.INFORMATION_MESSAGE);
+	        mainView.completeAttendance();
+	    
+	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }

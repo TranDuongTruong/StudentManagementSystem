@@ -154,7 +154,7 @@ public class ClassesViewP extends JPanel {
 				    	 mainView.loadAttendanceView(classRoom);
 				}
 			});
-			attendanceBtn.setBounds(96, 581, 85, 21);
+			attendanceBtn.setBounds(96, 581, 155, 37);
 			classesPane.add(attendanceBtn);
 			
 			ClassesController control= new ClassesController(this);

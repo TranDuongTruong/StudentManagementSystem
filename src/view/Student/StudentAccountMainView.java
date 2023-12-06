@@ -45,7 +45,7 @@ public class StudentAccountMainView extends JFrame {
     JButton btn_Information;
     JButton btn_Schedule;
     JButton btn_Syllabli;
-
+    JButton btn_chatBox;
     final JPanel content;
     static Student student;
     
@@ -191,6 +191,11 @@ public class StudentAccountMainView extends JFrame {
 	     btn_Syllabli=new JButton("Syllabli");
 	     
 	     btn_Syllabli.setMaximumSize(new Dimension(lBtn, wBtn));
+	     
+	     
+	     btn_chatBox=new JButton("ChatGPT");
+	     
+	     btn_chatBox.setMaximumSize(new Dimension(lBtn, wBtn));
 	    // Set the initial visibility and size of the additional buttons
 	    setAdditionalButtonsVisible(false);
 	    setAdditionalButtonsSize(80, 20);
@@ -233,7 +238,9 @@ public class StudentAccountMainView extends JFrame {
 	    Component verticalStrut_2_1_5 = Box.createVerticalStrut(10);
 	    verticalBox_1.add(verticalStrut_2_1_5);
 	    verticalBox_1.add(btn_Syllabli);
-	    
+	    Component verticalStrut_2_1_7 = Box.createVerticalStrut(10);
+	    verticalBox_1.add(verticalStrut_2_1_7);
+	    verticalBox_1.add(btn_chatBox);
 		Component verticalStrut_2_1_6 = Box.createVerticalStrut(300);
 		verticalBox_1.add(verticalStrut_2_1_6);
 		
@@ -275,6 +282,7 @@ public class StudentAccountMainView extends JFrame {
 	final CourseView courView=new CourseView();
 	final TranscriptView transView=new TranscriptView();
 	final SyllabiView syllabiView=new SyllabiView();
+	final chatBoxViewP chatView=new chatBoxViewP();
 	boolean hasScheduleView = false;
 	boolean hasInformationView = false;
 	 boolean hasExaminationView = false;
@@ -282,6 +290,7 @@ public class StudentAccountMainView extends JFrame {
 	 boolean hasCourseView = false;
 	 boolean hasTranscriptView = false;
 	 boolean hasSyllabi=false;
+	 boolean hasChatBox=false;
 	public void setButtonListener() {
 
 		btn_Schedule.addActionListener(new ActionListener() {
@@ -354,6 +363,17 @@ public class StudentAccountMainView extends JFrame {
 		    	contentPane.repaint();hasSyllabi =true;
 			}
 		});
+	     btn_chatBox.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					contentPane.remove(content);removeContent();
+			    	contentPane.add(chatView);
+			    	contentPane.invalidate();
+			    	contentPane.repaint();hasChatBox =true;
+				}
+			});
 	     
 	}
 	public void removeContent() {

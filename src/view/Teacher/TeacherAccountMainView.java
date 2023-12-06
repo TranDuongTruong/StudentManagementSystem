@@ -118,7 +118,14 @@ public class TeacherAccountMainView extends JFrame {
 		    }
 		});
 	}
-	
+	public void completeAttendance() {
+		main_Panel.remove(content_panel);
+		btn_classes.setBackground(new Color(255, 255, 255));
+		removeContent();
+    	main_Panel.add(classes);
+    	main_Panel.invalidate();
+    	main_Panel.repaint();hasClassesView=true;
+	}
 	public void loadStudentView(Classroom classRoom) {
 		
 		
@@ -136,7 +143,7 @@ public class TeacherAccountMainView extends JFrame {
 	public void loadAttendanceView(Classroom classRoom) {
 		
 		
-		attendance=new AttendanceViewP(classRoom);
+		attendance=new AttendanceViewP(classRoom,this);
 		
 		
 		main_Panel.remove(content_panel);
