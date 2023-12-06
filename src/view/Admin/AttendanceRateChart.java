@@ -37,6 +37,7 @@ public class AttendanceRateChart extends JFrame implements ActionListener {
     LocalDate originalDate ;
     DateTimeFormatter formatter ;
     String dateString;
+    private JButton btnBack;
     public AttendanceRateChart() {
     	
     	
@@ -78,8 +79,24 @@ public class AttendanceRateChart extends JFrame implements ActionListener {
         createChart();
 
         // Thêm các panel vào JFrame
-        add(buttonPanel, BorderLayout.NORTH);
-        add(chartPanel, BorderLayout.CENTER);
+        getContentPane().add(buttonPanel, BorderLayout.NORTH);
+        
+        btnBack = new JButton("Back");
+        btnBack.setBounds(784, 0, 37, 31);
+		
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+					AdminHomeView adminhomeView = new AdminHomeView();
+	            	adminhomeView.setVisible(true);
+	                dispose();
+	                setVisible(false);
+					
+				
+			}
+		});
+        buttonPanel.add(btnBack);
+        getContentPane().add(chartPanel, BorderLayout.CENTER);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();

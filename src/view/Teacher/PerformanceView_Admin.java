@@ -25,8 +25,9 @@ import controller.DatabaseConnection;
 import controller.Teacher.PerformanceController_Admin;
 import model.CreditsPerformance;
 import view.Admin.AdminHomeView;
+import view.Admin.AttendanceRateChart;
+import view.Admin.DisplayUserAccountsView;
 
-import view.Admin.ShowUserAccountP;
 
 import org.jfree.chart.plot.PiePlot;
 
@@ -36,7 +37,7 @@ public class PerformanceView_Admin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;  JFreeChart chart; ChartPanel chartPanel;
-
+	private JButton btnAttendanceRate;
 	/**
 	 * Launch the application.
 	 */
@@ -70,11 +71,23 @@ public class PerformanceView_Admin extends JFrame {
 	         chartPanel = new ChartPanel(chart);
 	        chartPanel.setBounds(10, 10, 479, 259);
 	        contentPane.add(chartPanel);
-	        
+	        btnAttendanceRate = new JButton("Attendance Rate");
+	         btnAttendanceRate.setBounds(10, 306, 119, 48);
+	         contentPane.add(btnAttendanceRate);
+	         
+	         btnAttendanceRate.addActionListener(new ActionListener() {
+	         	public void actionPerformed(ActionEvent e) {
+	         		
+	         		AttendanceRateChart a=new AttendanceRateChart();
+	         		a.setVisible(true);
+	         		dispose();
+	         		
+	         	}
+	         });
 	        JButton btnBack = new JButton("Back");
 	        btnBack.setBounds(740, 511, 103, 30);
 	        
-	        ImageIcon backIcon = new ImageIcon(ShowUserAccountP.class.getResource("/Assert/admin/back.png"));
+	        ImageIcon backIcon = new ImageIcon(DisplayUserAccountsView.class.getResource("/Assert/admin/back.png"));
 	        btnBack.setIcon(backIcon);
 	        btnBack.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -133,4 +146,5 @@ public class PerformanceView_Admin extends JFrame {
 		        
 		    });
 		}
+	 
 }
