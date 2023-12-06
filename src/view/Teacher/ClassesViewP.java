@@ -154,8 +154,19 @@ public class ClassesViewP extends JPanel {
 				    	 mainView.loadAttendanceView(classRoom);
 				}
 			});
+			
 			attendanceBtn.setBounds(96, 581, 155, 37);
 			classesPane.add(attendanceBtn);
+			
+			JButton btnManageScore = new JButton("Manage Score");
+			btnManageScore.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Classroom classRoom=classes.getClassroomList().get(getSelectedRowIndex());
+					mainView.loadManageScoreView(classRoom);
+				}
+			});
+			btnManageScore.setBounds(272, 581, 155, 37);
+			classesPane.add(btnManageScore);
 			
 			ClassesController control= new ClassesController(this);
 	}

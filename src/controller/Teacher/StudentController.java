@@ -20,13 +20,19 @@ import model.Classroom;
 import model.Student;
 import view.Teacher.AttendanceViewP;
 import view.Teacher.StudentViewP;
+import view.Teacher.manageScroresViewP;
 
 public class StudentController implements ActionListener{
 	public StudentViewP studentView;
 	public AttendanceViewP studentViewAtt;
+	public manageScroresViewP manageScoreView;
 	List<Student> studentList;DatabaseConnection db;
 	public Classroom classRoom;
 	 
+	public StudentController(manageScroresViewP manageScoreView) {
+		super();
+		this.manageScoreView = manageScoreView;
+	}
 	public Classroom getClassRoom() {
 		return classRoom;
 	}
@@ -54,6 +60,15 @@ public class StudentController implements ActionListener{
 		displayListOfStudent();
 	}
 	
+	public StudentController(manageScroresViewP manageScoreView, Classroom classRoom) {
+		super();
+		this.manageScoreView = manageScoreView;
+		this.classRoom = classRoom;
+
+		this.classRoom=classRoom;
+		db=new DatabaseConnection();
+		displayListOfStudentMn();
+	}
 	public StudentController(AttendanceViewP view,Classroom classRoom) {
 		super();
 		this.studentViewAtt = view;
@@ -144,6 +159,9 @@ public class StudentController implements ActionListener{
 	    }
 	 public void displayListOfStudentAtt() {
 	        studentViewAtt.displayStudentList(classRoom.getStudentList());
+	    }
+	 public void displayListOfStudentMn() {
+		 manageScoreView.displayStudentList(classRoom.getStudentList());
 	    }
 	 public void displayListOfStudent(String classCode) {
 	    	

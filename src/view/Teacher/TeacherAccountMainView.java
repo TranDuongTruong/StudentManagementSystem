@@ -58,7 +58,7 @@ public class TeacherAccountMainView extends JFrame {
 	private JPanel main_Panel;
 	final ClassesViewP classes=new ClassesViewP(this);
 	final DashboardView dashboard=new DashboardView();
-	final manageScroresViewP manageScoreView=new manageScroresViewP();
+	 manageScroresViewP manageScoreView;
 	
 	StudentViewP student;
 	AttendanceViewP attendance;
@@ -124,18 +124,7 @@ public class TeacherAccountMainView extends JFrame {
 		    	main_Panel.repaint();hasClassesView=true;
 		    }
 		});
-		btn_manageScore.addActionListener(new ActionListener() {
-			
-		    public void actionPerformed(ActionEvent e) {	
-
-		    	main_Panel.remove(content_panel);
-		    	removeContent();
-		    	btn_classes.setBackground(new Color(255, 255, 255));
-		    	main_Panel.add(manageScoreView);
-		    	main_Panel.invalidate();
-		    	main_Panel.repaint();hasManageScore=true;
-		    }
-		});
+		
 	}
 	public void completeAttendance() {
 		main_Panel.remove(content_panel);
@@ -157,6 +146,20 @@ public class TeacherAccountMainView extends JFrame {
     	main_Panel.add(student);
     	main_Panel.invalidate();
     	main_Panel.repaint();hasStudentView=true;
+		
+	}
+	public void loadManageScoreView(Classroom classRoom) {
+		
+		
+		manageScoreView=new manageScroresViewP(classRoom);
+		
+		
+		main_Panel.remove(content_panel);
+    	removeContent();
+    	
+    	main_Panel.add(manageScoreView);
+    	main_Panel.invalidate();
+    	main_Panel.repaint();hasManageScore=true;
 		
 	}
 	public void loadAttendanceView(Classroom classRoom) {
