@@ -22,6 +22,10 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class ClassesViewP extends JPanel {
 	public JTextField textField_FindMaLop;
@@ -41,6 +45,7 @@ public class ClassesViewP extends JPanel {
 	        setBounds(162, 0, 835, 640);
 	        
 	         classesPane = new JPanel();
+	         classesPane.setBorder(new LineBorder(new Color(255, 0, 0), 2));
 	        classesPane.setBackground(new Color(255, 255, 255));
 	        classesPane.setBounds(0, 0, 835, 640);
 	        add(classesPane);
@@ -98,6 +103,7 @@ public class ClassesViewP extends JPanel {
 		        
 		        // Tạo JTable với DefaultTableModel tùy chỉnh
 		        table = new JTable(model);
+		        table.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 0, 0), new Color(255, 0, 0), new Color(255, 0, 0), new Color(255, 0, 0)));
 		        
 		        // Thiết lập font cho bảng
 		        table.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -123,6 +129,7 @@ public class ClassesViewP extends JPanel {
 			//acessToListOfStudents();
 			
 			JScrollPane scrollPane = new JScrollPane(table);
+			scrollPane.setViewportBorder(new LineBorder(new Color(255, 0, 0)));
 			scrollPane.setBounds(96, 150, 635, 426);
 			classesPane.add(scrollPane);
 			
@@ -162,7 +169,7 @@ public class ClassesViewP extends JPanel {
 			btnManageScore.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Classroom classRoom=classes.getClassroomList().get(getSelectedRowIndex());
-					mainView.loadManageScoreView();
+					mainView.loadManageScoreView(classRoom);
 				}
 			});
 			btnManageScore.setBounds(272, 581, 155, 37);

@@ -44,12 +44,22 @@ public class ClassesController  {
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         	String classCode=view.getClassCode();
+        	
         	ClassesManager findClassroomList=new ClassesManager();
-        	Classroom classroom;
-        	classroom=classes.findClassroomByCode(classCode);
-        	findClassroomList.addClassroom(classroom);
-        	view.displayClassList(findClassroomList);
-        	view.classes=findClassroomList;
+        	
+        	if(classCode!=null&&!classCode.trim().isEmpty()) {       		        		
+        		for (Classroom classroom: classes.getClassroomList()) {
+        	        if (String.valueOf(classroom.getClassCode()).contains(classCode)) {
+        	        	findClassroomList.addClassroom(classroom);
+        	        }
+        	    } 
+        	    
+        		
+        		view.displayClassList(findClassroomList);
+            	view.classes=findClassroomList;
+        	}
+        		        	        
+        	
         }
 
        

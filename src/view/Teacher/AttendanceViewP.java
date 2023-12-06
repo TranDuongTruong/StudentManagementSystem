@@ -44,6 +44,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 public class AttendanceViewP extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -74,6 +76,7 @@ public class AttendanceViewP extends JPanel {
 	        setBounds(162, 0, 835, 640);
 	        ActionListener action=new StudentController(this);
 	        contentPane_1 = new JPanel();
+	        contentPane_1.setBorder(new LineBorder(new Color(255, 0, 0)));
 	         contentPane_1.setBackground(new Color(255, 255, 255));
 	        contentPane_1.setBounds(0, 0, 835, 640);
 	        add(contentPane_1);
@@ -114,6 +117,7 @@ public class AttendanceViewP extends JPanel {
 	        contentPane_1.add(lblListOfStudents);
 	        
 	        JScrollPane scrollPane = new JScrollPane((Component) null);
+	        scrollPane.setViewportBorder(new LineBorder(new Color(255, 0, 0)));
 	        scrollPane.setBounds(10, 130, 798, 464);
 	        contentPane_1.add(scrollPane);
 	        
@@ -125,6 +129,7 @@ public class AttendanceViewP extends JPanel {
 	                
 	            }
 	        };
+	        table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(255, 0, 0)));
 
 	        DefaultTableModel model = new DefaultTableModel(
 	                new Object[][] {

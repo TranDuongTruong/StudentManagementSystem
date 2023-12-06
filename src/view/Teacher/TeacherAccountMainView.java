@@ -53,7 +53,7 @@ public class TeacherAccountMainView extends JFrame {
 	JPanel content_panel;
 	 JButton btn_blog;
 	 JButton btn_Student;
-	 GradientButton btn_classes ;
+	 JButton btn_classes ;
 	  JButton btn_DashBoard;
 	private static final long serialVersionUID = 1L;
 	private JPanel main_Panel;
@@ -119,7 +119,7 @@ public class TeacherAccountMainView extends JFrame {
 
 		    	main_Panel.remove(content_panel);
 		    	removeContent();
-		    	btn_classes.setBackground(new Color(255, 255, 255));
+		    	//btn_classes.setBackground(new Color(255, 255, 255));
 		    	main_Panel.add(classes);
 		    	main_Panel.invalidate();
 		    	main_Panel.repaint();hasClassesView=true;
@@ -149,10 +149,10 @@ public class TeacherAccountMainView extends JFrame {
     	main_Panel.repaint();hasStudentView=true;
 		
 	}
-	public void loadManageScoreView() {
+	public void loadManageScoreView(Classroom classRoom) {
 		
 		
-		manageScoreView=new manageScroresViewP();
+		manageScoreView=new manageScroresViewP(classRoom);
 		
 		
 		main_Panel.remove(content_panel);
@@ -224,18 +224,21 @@ public class TeacherAccountMainView extends JFrame {
 			        	}
 			        });
 			        btn_DashBoard.setBackground(new Color(255, 255, 255));
-			         btn_classes = new GradientButton(Color.black, Color.red );
-			         btn_classes.setText("Classes");
+			         btn_classes = new JButton("Classes" );
+			         btn_classes.setForeground(new Color(255, 255, 255));
+			      
 			         
-			        btn_classes.setBackground(Color.white);
+			        btn_classes.setBackground(new Color(255, 0, 0));
 			         btn_Student = new JButton("Schedule");
+			         btn_Student.setForeground(new Color(255, 255, 255));
 			        btn_Student.addActionListener(new ActionListener() {
 			        	public void actionPerformed(ActionEvent e) {
 			        	}
 			        });
-			        btn_Student.setBackground(new Color(192, 192, 192));
+			        btn_Student.setBackground(new Color(255, 0, 0));
 			        btn_blog = new JButton("Blog");
-			        btn_blog.setBackground(new Color(192, 192, 192));
+			        btn_blog.setForeground(new Color(255, 255, 255));
+			        btn_blog.setBackground(new Color(255, 0, 0));
 
 			        // Đặt độ rộng cho các button
 			        int buttonWidth = verticalBox.getWidth();
@@ -261,7 +264,8 @@ public class TeacherAccountMainView extends JFrame {
 			        verticalBox.add(Box.createVerticalStrut(30));
 			        
 			        JButton btn_Classes_1 = new JButton("<- Logout");
-			        btn_Classes_1.setBackground(Color.WHITE);
+			        btn_Classes_1.setForeground(new Color(255, 255, 255));
+			        btn_Classes_1.setBackground(new Color(255, 0, 0));
 			        btn_Classes_1.addActionListener(new ActionListener() {
 			        	public void actionPerformed(ActionEvent e) {
 			        		LoginController loginController = new LoginController(new LoginView());
@@ -273,7 +277,8 @@ public class TeacherAccountMainView extends JFrame {
 			        panel.add(btn_Classes_1);
 			        
 			         content_panel = new JPanel();
-			        content_panel.setBounds(103, 0, 904, 640);
+			         content_panel.setBorder(new LineBorder(new Color(255, 0, 0)));
+			        content_panel.setBounds(115, 0, 892, 640);
 
 			        
 			        main_Panel.add(content_panel);

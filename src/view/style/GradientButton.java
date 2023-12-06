@@ -19,7 +19,7 @@ public class GradientButton extends JButton {
     	
         super();        
         this.color1=color1;
-    	this.color2=color2;
+    	this.color2=color2; this.setText("Classes"); 
     }
 
     @Override

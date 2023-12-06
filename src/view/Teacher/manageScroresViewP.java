@@ -44,11 +44,12 @@ import model.Student;
 public class manageScroresViewP extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
+	Classroom classroom;
 	/**
 	 * Create the panel.
 	 */
-	public manageScroresViewP() {		
+	public manageScroresViewP(Classroom classroom) {	
+		this.classroom=classroom;
 			 setLayout(null);
 	        setBounds(162, 0, 835, 640);
 	        
