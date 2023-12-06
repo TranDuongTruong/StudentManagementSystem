@@ -46,11 +46,13 @@ public class manageScroresViewP extends JPanel {
 	  private JTable table;
 	  private static final long serialVersionUID = 1L;
 	   Classroom classroom;
+	   String classCode;
 	/**
 	 * Create the panel.
 	 */
-	public manageScroresViewP(Classroom classroom) {	
+	public manageScroresViewP(Classroom classroom, String classCode) {	
 		this.classroom=classroom;
+		this.classCode = classCode;
 		setLayout(null);
         setBounds(162, 0, 835, 640);
 
@@ -102,8 +104,78 @@ public class manageScroresViewP extends JPanel {
         ));
 
         scrollPane.setViewportView(table);
+        
+        // Fetch data from the database based on the classCode
+        fetchDataFromClassroom(classCode);
 	              
 	}
+	 private void fetchDataFromClassroom(String classCode) {
+	        try {
+	            // Establish database connection (update DatabaseConnection class if needed)
+	            Connection connection = DatabaseConnection.connectToBB();
+
+	            // Prepare SQL query
+	            String query = "SELECT * FROM studentclassroom WHERE classCode = ?";
+	            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+	                pstmt.setString(1, classCode);
+
+	                // Execute query and populate the JTable
+	                ResultSet resultSet = pstmt.executeQuery();
+	                populateTable(resultSet);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // Handle exceptions as needed
+	        }
+	    }
+
+	    private void populateTable(ResultSet resultSet) throws SQLException {
+	        DefaultTableModel model = new DefaultTableModel();
+	        model.setColumnIdentifiers(new Object[]{"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"});
+
+	        while (resultSet.next()) {
+	            model.addRow(new Object[]{
+	                    resultSet.getInt("studentID"),
+	                    getStudentNameFromDatabase(resultSet.getInt("studentID")),
+	                    resultSet.getFloat("attendanceScore"),
+	                    resultSet.getFloat("regularScore"),
+	                    resultSet.getFloat("midtermScore"),
+	                    resultSet.getFloat("finalScore"),
+	                    resultSet.getFloat("totalScore")
+	            });
+	        }
+
+	        table.setModel(model);
+	    }
+
+	    public static String getStudentNameFromDatabase(int studentID) {
+	        String studentName = "";
+
+	        try {
+	            // Establish database connection
+	            Connection connection = DatabaseConnection.connectToBB();
+
+	            // Prepare SQL query
+	            String query = "SELECT name FROM student WHERE studentID = ?";
+	            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+	                pstmt.setInt(1, studentID);
+
+	                // Execute query
+	                ResultSet resultSet = pstmt.executeQuery();
+
+	                // Check if a result is returned
+	                if (resultSet.next()) {
+	                    studentName = resultSet.getString("name");
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // Handle exceptions as needed
+	        }
+
+	        return studentName;
+	    }
+	
 }
 	
 	

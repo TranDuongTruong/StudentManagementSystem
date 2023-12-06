@@ -149,10 +149,10 @@ public class TeacherAccountMainView extends JFrame {
     	main_Panel.repaint();hasStudentView=true;
 		
 	}
-	public void loadManageScoreView(Classroom classRoom) {
+	public void loadManageScoreView(Classroom classRoom, String classCode) {
 		
 		
-		manageScoreView=new manageScroresViewP(classRoom);
+		manageScoreView=new manageScroresViewP(classRoom, classCode);
 		
 		
 		main_Panel.remove(content_panel);

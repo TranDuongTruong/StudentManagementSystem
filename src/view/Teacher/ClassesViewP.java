@@ -166,12 +166,30 @@ public class ClassesViewP extends JPanel {
 			classesPane.add(attendanceBtn);
 			
 			JButton btnManageScore = new JButton("Manage Score");
+
+			//Start: Vo Van Minh
 			btnManageScore.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Classroom classRoom=classes.getClassroomList().get(getSelectedRowIndex());
-					mainView.loadManageScoreView(classRoom);
-				}
+			    public void actionPerformed(ActionEvent e) {
+			        int selectedRowIndex = getSelectedRowIndex();
+
+			        if (selectedRowIndex != -1) { // Check if any row is selected
+			            String classCode = (String) table.getValueAt(selectedRowIndex, 0);
+			            // Now you have the classCode, you can use it as needed
+			            Classroom classRoom = classes.getClassroomList().get(selectedRowIndex);
+			            mainView.loadManageScoreView(classRoom, classCode);
+			        } else {
+			            // Inform the user to select a row before clicking the button
+			            // You can show a JOptionPane or update a JLabel to display a message
+			            // For example:
+			            // JOptionPane.showMessageDialog(ClassesViewP.this, "Please select a row.", "Information", JOptionPane.INFORMATION_MESSAGE);
+			            // Or update a JLabel
+			            // infoLabel.setText("Please select a row.");
+			        }
+			    }
 			});
+			//End: Vo Van Minh
+
+
 			btnManageScore.setBounds(272, 581, 155, 37);
 			classesPane.add(btnManageScore);
 			
