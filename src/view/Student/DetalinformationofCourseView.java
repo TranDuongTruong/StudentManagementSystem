@@ -126,6 +126,7 @@ public class DetalinformationofCourseView extends JFrame {
 		btnEnroll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_MaDangki.setText(Enroll);;
+				setVisible(false);
 			}
 		});
 		btnEnroll.setBounds(143, 224, 117, 29);
