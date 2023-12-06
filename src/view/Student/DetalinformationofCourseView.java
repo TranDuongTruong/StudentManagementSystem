@@ -34,10 +34,10 @@ public class DetalinformationofCourseView extends JFrame {
 	private JLabel lbl_Description;
 	private JLabel lblName_info;
 	private JLabel lblName_teacher;
-	private JLabel lbl_Duration;
+	private JLabel lbl_decriptionnn;
 	private JLabel lbl_Location;
 	 String teacherName="";
-	String      decription="This is basic class";
+	String  description="";
 	 JLabel lblCourseInformation;
 	 private JButton btnEnroll;
 	/**
@@ -91,11 +91,11 @@ public class DetalinformationofCourseView extends JFrame {
 		lblName_teacher.setBounds(145, 94, 251, 29);
 		contentPane.add(lblName_teacher);
 		
-		 lbl_Duration = new JLabel(decription);
-		lbl_Duration.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_Duration.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_Duration.setBounds(145, 135, 251, 29);
-		contentPane.add(lbl_Duration);
+		 lbl_decriptionnn = new JLabel(description);
+		lbl_decriptionnn.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_decriptionnn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbl_decriptionnn.setBounds(145, 135, 251, 29);
+		contentPane.add(lbl_decriptionnn);
 		
 		 lbl_Location = new JLabel(location);
 		lbl_Location.setHorizontalAlignment(SwingConstants.LEFT);
@@ -143,11 +143,12 @@ public class DetalinformationofCourseView extends JFrame {
 
 	    if (con != null) {
 	        try {
-	            String sql = "SELECT tc.teacherID, t.name, t.dob, t.address, t.gender, t.phoneNumber " +
-	                         "FROM teacherClassroom tc " +
-	                         "JOIN teacher t ON tc.teacherID = t.teacherID " +
-	                         "JOIN classroom c ON tc.classCode = c.classCode " +
-	                         "WHERE tc.classCode = ?";
+	        	String sql = "SELECT tc.teacherID, t.name, t.dob, t.address, t.gender, t.phoneNumber, c.description " +
+	                    "FROM teacherClassroom tc " +
+	                    "JOIN teacher t ON tc.teacherID = t.teacherID " +
+	                    "JOIN classroom c ON tc.classCode = c.classCode " +
+	                    "WHERE tc.classCode = ?";
+
 
 	            PreparedStatement preparedStatement = con.prepareStatement(sql);
 	            preparedStatement.setString(1, classCode);
@@ -157,7 +158,8 @@ public class DetalinformationofCourseView extends JFrame {
 	            while (resultSet.next()) {
 	                
 	                 teacherName = resultSet.getString("name");
-	              
+	                 
+	                 description = resultSet.getString("description");
 	               
 
 	                // Do something with the retrieved information

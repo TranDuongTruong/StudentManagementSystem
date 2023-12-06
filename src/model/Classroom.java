@@ -12,12 +12,11 @@ public class Classroom {
 	    private int numOfCurentStudents;
 	    private int maximumNumOfStudents;
 	    private List<Student> studentList;
-	    
 	    private String schedule;
         private String location;
         private int creditNumbers;
         private String Class_registration_code;
-        
+        private String decription;
 	    
         
 	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents,
