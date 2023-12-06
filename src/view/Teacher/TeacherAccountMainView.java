@@ -59,7 +59,7 @@ public class TeacherAccountMainView extends JFrame {
 	private JPanel main_Panel;
 	final ClassesViewP classes=new ClassesViewP(this);
 	final DashboardView dashboard=new DashboardView();
-	 manageScroresViewP manageScoreView;
+	 ManageScroresViewP manageScoreView;
 	
 	StudentViewP student;
 	AttendanceViewP attendance;
@@ -76,7 +76,7 @@ public class TeacherAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//					LoginController.teacherId=5;
+					LoginController.teacherId=9;
 					TeacherAccountMainView frame = new TeacherAccountMainView();
 				//	MainViewCtrl_Teacher mainView=new MainViewCtrl_Teacher(frame);
 					frame.setVisible(true); 
@@ -152,7 +152,7 @@ public class TeacherAccountMainView extends JFrame {
 	public void loadManageScoreView(Classroom classRoom, String classCode) {
 		
 		
-		manageScoreView=new manageScroresViewP(classRoom, classCode);
+		manageScoreView=new ManageScroresViewP(classRoom, classCode);
 		
 		
 		main_Panel.remove(content_panel);

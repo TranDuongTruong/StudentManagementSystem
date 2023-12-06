@@ -20,7 +20,7 @@ import model.Classroom;
 import model.Student;
 import view.Teacher.AttendanceViewP;
 import view.Teacher.StudentViewP;
-import view.Teacher.manageScroresViewP;
+import view.Teacher.ManageScroresViewP;
 
 public class StudentController implements ActionListener{
 	public StudentViewP studentView;

@@ -41,7 +41,7 @@ import controller.Teacher.StudentController;
 import model.Classroom;
 import model.Student;
 
-public class manageScroresViewP extends JPanel {
+public class ManageScroresViewP extends JPanel {
 	  private JTextField textField;
 	  private JTable table;
 	  private static final long serialVersionUID = 1L;
@@ -50,7 +50,7 @@ public class manageScroresViewP extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public manageScroresViewP(Classroom classroom, String classCode) {	
+	public ManageScroresViewP(Classroom classroom, String classCode) {	
 		this.classroom=classroom;
 		this.classCode = classCode;
 		setLayout(null);
@@ -129,24 +129,31 @@ public class manageScroresViewP extends JPanel {
 	        }
 	    }
 
-	    private void populateTable(ResultSet resultSet) throws SQLException {
-	        DefaultTableModel model = new DefaultTableModel();
-	        model.setColumnIdentifiers(new Object[]{"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"});
+	 private void populateTable(ResultSet resultSet) throws SQLException {
+		    DefaultTableModel model = new DefaultTableModel() {
+		        @Override
+		        public boolean isCellEditable(int row, int column) {
+		            // Make all cells non-editable except for the "Attendance Score," "Regular Score," "Midterm Score," and "Final Score" columns
+		            return column >= 2 && column <= 5;
+		        }
+		    };
+		    model.setColumnIdentifiers(new Object[]{"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"});
 
-	        while (resultSet.next()) {
-	            model.addRow(new Object[]{
-	                    resultSet.getInt("studentID"),
-	                    getStudentNameFromDatabase(resultSet.getInt("studentID")),
-	                    resultSet.getFloat("attendanceScore"),
-	                    resultSet.getFloat("regularScore"),
-	                    resultSet.getFloat("midtermScore"),
-	                    resultSet.getFloat("finalScore"),
-	                    resultSet.getFloat("totalScore")
-	            });
-	        }
+		    while (resultSet.next()) {
+		        model.addRow(new Object[]{
+		                resultSet.getInt("studentID"),
+		                getStudentNameFromDatabase(resultSet.getInt("studentID")),
+		                resultSet.getFloat("attendanceScore"),
+		                resultSet.getFloat("regularScore"),
+		                resultSet.getFloat("midtermScore"),
+		                resultSet.getFloat("finalScore"),
+		                resultSet.getString("totalScore")
+		        });
+		    }
 
-	        table.setModel(model);
-	    }
+		    table.setModel(model);
+		}
+
 
 	    public static String getStudentNameFromDatabase(int studentID) {
 	        String studentName = "";
