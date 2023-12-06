@@ -33,6 +33,7 @@ import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
 
 public class StudentAccountMainView extends JFrame {
 
@@ -116,7 +117,7 @@ public class StudentAccountMainView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 677);
 		contentPane = new JPanel();
-		 contentPane.setBackground(new Color(255, 0, 0));
+		 contentPane.setBackground(new Color(255, 255, 255));
 	        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -125,7 +126,7 @@ public class StudentAccountMainView extends JFrame {
 		contentPane.setLayout(null);
 	
 		
-		GradientPanel panel = new GradientPanel(Color.red,Color.yellow);
+		GradientPanel panel = new GradientPanel(Color.red,Color.white);
 		panel.setBackground(new Color(255, 128, 128));
 		panel.setBounds(0, 0, 152, 640);
 		contentPane.add(panel);
@@ -262,6 +263,7 @@ public class StudentAccountMainView extends JFrame {
 		verticalBox_1.add(btn_Logout);
 		
 		 content = new JPanel();
+		 content.setBorder(new LineBorder(new Color(255, 0, 0)));
 		content.setBounds(162, 0, 835, 630);
 		contentPane.add(content);
 		content.setLayout(null);
@@ -422,6 +424,7 @@ public class StudentAccountMainView extends JFrame {
 	    btn_Curriculum.setVisible(visible);
 	    btn_Examination.setVisible(visible);
 	    btn_Syllabli.setVisible(visible);
+	    btn_chatBox.setVisible(visible);
 	}
 
 	// Helper method to set the size of the additional buttons
@@ -432,6 +435,7 @@ public class StudentAccountMainView extends JFrame {
 	    btn_Curriculum.setPreferredSize(size);
 	    btn_Examination.setPreferredSize(size);
 	    btn_Syllabli.setPreferredSize(size);
+	    btn_chatBox .setPreferredSize(size);
 	}
 	
 	private String retrieveStudentName(int studentId) {

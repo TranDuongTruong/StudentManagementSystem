@@ -28,6 +28,8 @@ import controller.Admin.LoginController;
 import model.ClassesManager;
 import model.Classroom;
 import view.Admin.LoginView;
+import view.style.GradientButton;
+import view.style.GradientPanel;
 
 import java.awt.Color;
 import javax.swing.JMenu;
@@ -51,9 +53,8 @@ public class TeacherAccountMainView extends JFrame {
 	JPanel content_panel;
 	 JButton btn_blog;
 	 JButton btn_Student;
-	  JButton btn_classes ;
+	 GradientButton btn_classes ;
 	  JButton btn_DashBoard;
-	  JButton btn_manageScore;
 	private static final long serialVersionUID = 1L;
 	private JPanel main_Panel;
 	final ClassesViewP classes=new ClassesViewP(this);
@@ -148,10 +149,10 @@ public class TeacherAccountMainView extends JFrame {
     	main_Panel.repaint();hasStudentView=true;
 		
 	}
-	public void loadManageScoreView(Classroom classRoom) {
+	public void loadManageScoreView() {
 		
 		
-		manageScoreView=new manageScroresViewP(classRoom);
+		manageScoreView=new manageScroresViewP();
 		
 		
 		main_Panel.remove(content_panel);
@@ -204,9 +205,9 @@ public class TeacherAccountMainView extends JFrame {
 	        ImageIcon scaledImageIcon = new ImageIcon(
 	         image.getScaledInstance(60, 60, Image.SCALE_SMOOTH));
 			        System.out.println(imageWidth+" "+ imageHeight);
-			        Panel panel = new Panel();
+			        GradientPanel panel = new GradientPanel(Color.red,Color.white);
 			        panel.setBackground(new Color(245, 89, 37));
-			        panel.setBounds(0, 0, 104, 640);
+			        panel.setBounds(0, 0, 109, 640);
 			        main_Panel.add(panel);
 			        JLabel label = new JLabel();
 			        panel.add(label);
@@ -223,10 +224,10 @@ public class TeacherAccountMainView extends JFrame {
 			        	}
 			        });
 			        btn_DashBoard.setBackground(new Color(255, 255, 255));
-			         btn_classes = new JButton("Classes");
-			        btn_classes.setBackground(new Color(192, 192, 192));
-			        btn_manageScore = new JButton("Manage Score");
-			        btn_manageScore.setBackground(new Color(192, 192, 192));
+			         btn_classes = new GradientButton(Color.black, Color.red );
+			         btn_classes.setText("Classes");
+			         
+			        btn_classes.setBackground(Color.white);
 			         btn_Student = new JButton("Schedule");
 			        btn_Student.addActionListener(new ActionListener() {
 			        	public void actionPerformed(ActionEvent e) {
@@ -242,7 +243,6 @@ public class TeacherAccountMainView extends JFrame {
 			        
 			         btn_DashBoard.setMaximumSize(buttonDimension);
 			        btn_classes.setMaximumSize(buttonDimension);
-			        btn_manageScore.setMaximumSize(buttonDimension);
 			        btn_Student.setMaximumSize(buttonDimension);
 			        btn_blog.setMaximumSize(buttonDimension);
 
@@ -250,8 +250,6 @@ public class TeacherAccountMainView extends JFrame {
 			        verticalBox.add(btn_DashBoard);
 			        verticalBox.add(Box.createVerticalStrut(10)); // Khoảng cách giữa các button
 			        verticalBox.add(btn_classes);
-			        verticalBox.add(Box.createVerticalStrut(10));
-			        verticalBox.add(btn_manageScore);
 			        verticalBox.add(Box.createVerticalStrut(10));
 			        
 			        verticalBox.add(btn_Student);

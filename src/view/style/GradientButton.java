@@ -4,16 +4,18 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class GradientPanel extends JPanel {
+public class GradientButton extends JButton {
 
     private static final long serialVersionUID = 1L;
     Color color2;Color color1;
     /**Color color1
      * Create the panel.
      */
-    public GradientPanel(Color color1, Color color2) {
+    public GradientButton(Color color1, Color color2) {
     	
         super();        
         this.color1=color1;

@@ -62,6 +62,7 @@ public class AttendanceViewP extends JPanel {
 	 public boolean isUpdating=false;
 	public AttendanceViewP(final Classroom classRoom,TeacherAccountMainView mainView ) {
 		  currentDate = LocalDate.now();
+		  currentDate=currentDate.minusDays(1);
 		     formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 		     dateString = currentDate.format(formatter);
 		this.classRoom=classRoom;

@@ -162,7 +162,7 @@ public class ClassesViewP extends JPanel {
 			btnManageScore.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Classroom classRoom=classes.getClassroomList().get(getSelectedRowIndex());
-					mainView.loadManageScoreView(classRoom);
+					mainView.loadManageScoreView();
 				}
 			});
 			btnManageScore.setBounds(272, 581, 155, 37);

@@ -44,12 +44,12 @@ public class AccademicPerfromanceP extends JPanel {
         DefaultPieDataset dataset = createDataset();
          chart = createChart(dataset);
          chartPanel = new ChartPanel(chart);
-        chartPanel.setBounds(10, 64, 479, 259);
+        chartPanel.setBounds(10, 41, 430, 259);
         contentPane.add(chartPanel);
         
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(20, 371, 469, 259);
+        panel.setBounds(20, 339, 420, 259);
         contentPane.add(panel);
         
         ImageIcon backIcon = new ImageIcon(ShowUserAccountP.class.getResource("/Assert/admin/back.png"));
