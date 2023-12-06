@@ -11,6 +11,7 @@ import controller.Admin.LoginController;
 import controller.Student.MainViewCtrl;
 import model.Student;
 import view.Admin.LoginView;
+import view.style.GradientPanel;
 
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -123,7 +124,7 @@ public class StudentAccountMainView extends JFrame {
 		contentPane.setLayout(null);
 	
 		
-		JPanel panel = new JPanel();
+		GradientPanel panel = new GradientPanel(Color.red,Color.yellow);
 		panel.setBackground(new Color(255, 128, 128));
 		panel.setBounds(0, 0, 152, 640);
 		contentPane.add(panel);

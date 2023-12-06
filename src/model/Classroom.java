@@ -17,6 +17,7 @@ public class Classroom {
         private String location;
         private int creditNumbers;
         private String Class_registration_code;
+        
 	    
         
 	    public Classroom(String classCode, String className, int numOfCurentStudents, int maximumNumOfStudents,

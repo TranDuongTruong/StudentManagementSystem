@@ -30,7 +30,7 @@ public class ClassesViewP extends JPanel {
 	JButton btnHuyTim;public ClassesManager model=new ClassesManager();JPanel classesPane;
 	public Classroom currentClassroom;
 	private static final long serialVersionUID = 1L;
-	TeacherAccountMainView mainView;
+	TeacherAccountMainView mainView;JButton attendanceBtn ;
 	public ClassesManager classes;
 	/**
 	 * Create the panel.
@@ -123,7 +123,7 @@ public class ClassesViewP extends JPanel {
 			//acessToListOfStudents();
 			
 			JScrollPane scrollPane = new JScrollPane(table);
-			scrollPane.setBounds(73, 153, 635, 426);
+			scrollPane.setBounds(96, 150, 635, 426);
 			classesPane.add(scrollPane);
 			
 			JSeparator separator = new JSeparator();
@@ -142,6 +142,20 @@ public class ClassesViewP extends JPanel {
 			btnHuyTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			btnHuyTim.setBounds(572, 30, 110, 48);
 			classesPane.add(btnHuyTim);
+			
+			 attendanceBtn = new JButton("Attendance");
+			attendanceBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Classroom classRoom=classes.getClassroomList().get(getSelectedRowIndex());
+			    	
+			    	
+				    //	System.err.println("aaaaaaaaa"+classRoom.getClassCode());	
+				    	
+				    	 mainView.loadAttendanceView(classRoom);
+				}
+			});
+			attendanceBtn.setBounds(96, 581, 85, 21);
+			classesPane.add(attendanceBtn);
 			
 			ClassesController control= new ClassesController(this);
 	}
@@ -189,14 +203,13 @@ public class ClassesViewP extends JPanel {
 		if(btnHuyTim==null)return;
 		btnHuyTim.addActionListener(listener);
     }
-	
+	public void attendanceListener(ActionListener listener) {
+		if(attendanceBtn==null)return;
+		attendanceBtn.addActionListener(listener);
+    }
 	public int getIndexofClassToDelete() {
 			 int index=table.getSelectedRow();;
 			 return index;
 	}
-	
-
-
-
 }
 

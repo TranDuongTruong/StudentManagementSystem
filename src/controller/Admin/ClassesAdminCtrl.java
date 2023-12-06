@@ -9,13 +9,8 @@ import controller.DatabaseConnection;
 
 import model.ClassesManager;
 import model.Classroom;
-<<<<<<< HEAD
-
-import view.Admin.ClassesAdminViewP;
-=======
 import model.Student;
 import view.Admin.ClassesAdminView;
->>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 import view.Teacher.ClassesViewP;
 
 public class ClassesAdminCtrl {

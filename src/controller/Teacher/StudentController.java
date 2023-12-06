@@ -18,12 +18,12 @@ import com.mysql.cj.result.LocalDateTimeValueFactory;
 import controller.DatabaseConnection;
 import model.Classroom;
 import model.Student;
-
-
+import view.Teacher.AttendanceViewP;
 import view.Teacher.StudentViewP;
 
 public class StudentController implements ActionListener{
 	public StudentViewP studentView;
+	public AttendanceViewP studentViewAtt;
 	List<Student> studentList;DatabaseConnection db;
 	public Classroom classRoom;
 	 
@@ -53,14 +53,30 @@ public class StudentController implements ActionListener{
 		view.cancelStudentListener(new CancelStudentListener());
 		displayListOfStudent();
 	}
-
+	
+	public StudentController(AttendanceViewP view,Classroom classRoom) {
+		super();
+		this.studentViewAtt = view;
+		this.classRoom=classRoom;
+		db=new DatabaseConnection();
+		view.searchStudentListener(new SearchListenerAtt());
+		view.huyTimListener(new HuyTimListenerAtt());
+		 displayListOfStudentAtt();
+	}
+	
+	
 	public StudentController(StudentViewP view) {
 		super();
 		this.studentView = view;
 	
 	
 	}
-
+	public StudentController(AttendanceViewP view) {
+		super();
+		this.studentViewAtt = view;
+	
+	
+	}
 	  // ActionListener for the Search button
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -86,15 +102,48 @@ public class StudentController implements ActionListener{
 
        
     }
+    private class SearchListenerAtt implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	boolean isFind=false;
+        	String searchInput = studentViewAtt.getSearchInp();
+
+        	if (searchInput != null && !searchInput.trim().isEmpty()) {
+        	    List<Student> currentSTList = new ArrayList<>();
+
+        	    for (Student student : classRoom.getStudentList()) {
+        	        if (String.valueOf(student.getStudentID()).contains(searchInput)) {
+        	            isFind = true;
+        	            currentSTList.add(student);
+        	        }
+        	    } 
+        	    
+        	    if(isFind) studentViewAtt.displayStudentList(currentSTList);
+        		else studentViewAtt.notFindStudent(searchInput);
+        	
+        	}
+        	
+        }
+
+       
+    }
     private class HuyTimListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         	displayListOfStudent();        		        	            	
         }
 
        
+    }private class HuyTimListenerAtt implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	displayListOfStudentAtt();        		        	            	
+        }
+
+       
     }
 	 public void displayListOfStudent() {
 	        studentView.displayStudentList(classRoom.getStudentList());
+	    }
+	 public void displayListOfStudentAtt() {
+	        studentViewAtt.displayStudentList(classRoom.getStudentList());
 	    }
 	 public void displayListOfStudent(String classCode) {
 	    	

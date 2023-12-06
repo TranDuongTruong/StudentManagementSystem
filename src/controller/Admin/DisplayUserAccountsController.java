@@ -15,12 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.DatabaseConnection;
 import view.Admin.AdminHomeView;
-<<<<<<< HEAD
-
-import view.Admin.ShowUserAccountP;
-=======
 import view.Admin.DisplayUserAccountsView;
->>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 public class DisplayUserAccountsController implements ActionListener {
 
     private DisplayUserAccountsView view;

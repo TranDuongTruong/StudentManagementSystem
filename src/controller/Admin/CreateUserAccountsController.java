@@ -15,12 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import controller.DatabaseConnection;
-<<<<<<< HEAD
-
-import view.Admin.CreateUserAccoutViewP;
-=======
 import view.Admin.CreateUserAccountsView;
->>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 import view.Admin.LoginView;
 import java.security.SecureRandom;
 import java.security.MessageDigest;

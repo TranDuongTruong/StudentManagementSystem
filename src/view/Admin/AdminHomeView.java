@@ -24,119 +24,7 @@ import java.awt.event.ActionEvent;
 public class AdminHomeView extends JFrame {
 
 	private JPanel contentPane;
-<<<<<<< HEAD
-	JPanel MainContent;
-	JButton btnCreateUser;
-	JButton btnOperation;
-	JButton btnShowUser ;
-	JButton btnPerformance;
-	JButton btnClasses;
-	
-	final AdminOperationViewP operation=new AdminOperationViewP();
-	
-	final CreateUserAccoutViewP createUser=new CreateUserAccoutViewP();
-	final ShowUserAccountP showUser=new ShowUserAccountP();
-	final ClassesAdminViewP classes=new ClassesAdminViewP();
-	final AccademicPerfromanceP performace=new AccademicPerfromanceP();
-	boolean hasMainContent = false;
-	boolean hasCreateUser = false;
-	 boolean hasOperation = false;
-	 boolean hasShowUser = false;
-	 boolean hasPerformance = false;
-	 boolean hasClasses = false;
-	
-	 public void setButtonListener() {
 
-		 btnOperation.addActionListener(new ActionListener() {
-				
-			    public void actionPerformed(ActionEvent e) {	
-
-			    	contentPane.remove(MainContent);removeContent();
-			    	
-			    	contentPane.add(operation);
-			    	contentPane.invalidate();
-			    	contentPane.repaint();
-			    	hasOperation=true;
-			    }
-			});
-		 
-		 btnCreateUser.addActionListener(new ActionListener() {
-				
-			    public void actionPerformed(ActionEvent e) {	
-
-			    	contentPane.remove(MainContent);removeContent();
-			    	
-			    	contentPane.add(createUser);
-			    	contentPane.invalidate();
-			    	contentPane.repaint();
-			    	hasCreateUser=true;
-			    }
-			});
-		 btnShowUser.addActionListener(new ActionListener() {
-				
-			    public void actionPerformed(ActionEvent e) {	
-
-			    	contentPane.remove(MainContent);removeContent();
-			    	DisplayUserAccountsController controller = new DisplayUserAccountsController(showUser);
-				       controller.displayUserView();
-			    	contentPane.add(showUser);
-			    	contentPane.invalidate();
-			    	contentPane.repaint();
-			    	hasShowUser=true;
-			    }
-			});
-		 btnClasses.addActionListener(new ActionListener() {
-				
-			    public void actionPerformed(ActionEvent e) {	
-
-			    	contentPane.remove(MainContent);removeContent();			    	
-			    	contentPane.add(classes);
-			    	contentPane.invalidate();
-			    	contentPane.repaint();
-			    	hasClasses=true;
-			    }
-			});
-		 btnPerformance.addActionListener(new ActionListener() {
-				
-			    public void actionPerformed(ActionEvent e) {	
-
-			    	contentPane.remove(MainContent);removeContent();			    	
-			    	contentPane.add(performace);
-			    	contentPane.invalidate();
-			    	contentPane.repaint();
-			    	hasPerformance=true;
-			    }
-			});
-		 
-	 }
-
-
-public void removeContent() {
-	if (hasOperation) {
-		  contentPane.remove(operation);
-		  hasOperation=false;
-		}
-	if (hasCreateUser) {
-		  contentPane.remove(createUser);
-		  hasCreateUser=false;
-		}
-	
-	if (hasShowUser) {
-		  contentPane.remove(showUser);
-		  hasShowUser=false;
-		}
-	if (hasClasses) {
-		  contentPane.remove(classes);
-		  hasClasses=false;
-		}
-	if (hasPerformance) {
-		  contentPane.remove(performace);
-		  hasPerformance=false;
-		}
-}
-=======
-
->>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 	/**
 	 * Launch the application.
 	 */
@@ -250,18 +138,6 @@ public void removeContent() {
 		btnNewButton_3.setBounds(766, 23, 119, 31);
 		contentPane.add(btnNewButton_3);
 		
-<<<<<<< HEAD
-		 btnPerformance = new JButton("Academic Performance");
-		btnPerformance.setBounds(428, 0, 119, 30);
-		/*
-		 * btnPerformance.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { PerformanceView_Admin frame = new
-		 * PerformanceView_Admin(); frame.setVisible(true); dispose();
-		 * 
-		 * } });
-		 */
-		contentPane.add(btnPerformance);
-=======
 		JLabel accdemic = new JLabel("");
 		accdemic.setBounds(514, 219, 143, 140);
 
@@ -283,7 +159,6 @@ public void removeContent() {
 			}
 		});
 		contentPane.add(btnAccade);
->>>>>>> 83b9dcdeccf9026f4c82dc69010ae11fa0c9c57b
 		
 		JButton btnClasses = new JButton("Classes");
 		btnClasses.addActionListener(new ActionListener() {

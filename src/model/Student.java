@@ -11,10 +11,49 @@ public class Student {
 	    private String phoneNumber;
 	    private int creditsCompleted;
 	    private int creditsOwed;
+	    private boolean attendance=false;
+	    
+	    
 	    
 	    private List<Classroom> classroomList;
 	    
- 	    public Student(int studentID, String name, LocalDate dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
+	    
+	    
+	    
+	    
+ 	    public Student(int studentID, String name, LocalDate dob, String address, boolean gender, String phoneNumber,
+				int creditsCompleted, int creditsOwed, boolean attendance, List<Classroom> classroomList) {
+			super();
+			this.studentID = studentID;
+			this.name = name;
+			this.dob = dob;
+			this.address = address;
+			this.gender = gender;
+			this.phoneNumber = phoneNumber;
+			this.creditsCompleted = creditsCompleted;
+			this.creditsOwed = creditsOwed;
+			this.attendance = attendance;
+			this.classroomList = classroomList;
+		}
+ 	    	
+
+
+
+		public boolean isAttendance() {
+			return attendance;
+		}
+
+
+
+
+		public void setAttendance(boolean attendance) {
+			this.attendance = attendance;
+		}
+
+
+
+
+		public Student(int studentID, String name, LocalDate dob, String address, Boolean gender, String phoneNumber, int creditsCompleted, int creditsOwed) {
 	        this.studentID = studentID; 
 	        this.name = name;
 	        this.dob = dob;

@@ -59,6 +59,8 @@ public class TeacherAccountMainView extends JFrame {
 	final DashboardView dashboard=new DashboardView();
 	
 	StudentViewP student;
+	AttendanceViewP attendance;
+	boolean hasAttendance=false;
 	boolean hasClassesView = false;
 	boolean hasDashboardView=true;
 	boolean hasStudentView = false;
@@ -95,6 +97,10 @@ public class TeacherAccountMainView extends JFrame {
 		    main_Panel.remove(student);
 		    hasStudentView = false;
 		  }
+		  if (hasAttendance) {
+			    main_Panel.remove(attendance);
+			    hasAttendance = false;
+			  }
 	}
 
 	public void setButtonListener() {
@@ -125,6 +131,20 @@ public class TeacherAccountMainView extends JFrame {
     	main_Panel.add(student);
     	main_Panel.invalidate();
     	main_Panel.repaint();hasStudentView=true;
+		
+	}
+	public void loadAttendanceView(Classroom classRoom) {
+		
+		
+		attendance=new AttendanceViewP(classRoom);
+		
+		
+		main_Panel.remove(content_panel);
+    	removeContent();
+    	
+    	main_Panel.add(attendance);
+    	main_Panel.invalidate();
+    	main_Panel.repaint();hasAttendance=true;
 		
 	}
 	public TeacherAccountMainView() {
