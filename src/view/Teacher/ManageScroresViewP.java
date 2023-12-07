@@ -23,6 +23,9 @@ public class ManageScroresViewP extends JPanel {
     private JButton btnSave;
     private Classroom classroom;
     private String classCode;
+    private JTextField textFieldTotalScore;
+    private JTextField textFieldStudentName;
+    private JTextField textFieldStudentID;
 
     /**
      * Create the panel.
@@ -61,8 +64,52 @@ public class ManageScroresViewP extends JPanel {
 
         scrollPane.setViewportView(table);
 
+       
+
+        // Trong phương thức khởi tạo của lớp ManageScroresViewP
+        JLabel lblAttendanceScore = new JLabel("Attendance Score:");
+        lblAttendanceScore.setBounds(269, 490, 150, 20);
+        add(lblAttendanceScore);
+
+        JLabel lblRegularScore = new JLabel("Regular Score:");
+        lblRegularScore.setBounds(389, 490, 150, 20);
+        add(lblRegularScore);
+
+        JLabel lblMidtermScore = new JLabel("Midterm Score:");
+        lblMidtermScore.setBounds(509, 490, 150, 20);
+        add(lblMidtermScore);
+
+        JLabel lblFinalScore = new JLabel("Final Score:");
+        lblFinalScore.setBounds(629, 490, 150, 20);
+        add(lblFinalScore);
+
+        textFieldAttendanceScore = new JTextField();
+        textFieldAttendanceScore.setBounds(269, 515, 100, 25);
+        add(textFieldAttendanceScore);
+
+        textFieldRegularScore = new JTextField();
+        textFieldRegularScore.setBounds(389, 515, 100, 25);
+        add(textFieldRegularScore);
+
+        textFieldMidtermScore = new JTextField();
+        textFieldMidtermScore.setBounds(509, 515, 100, 25);
+        add(textFieldMidtermScore);
+
+        textFieldFinalScore = new JTextField();
+        textFieldFinalScore.setBounds(629, 515, 100, 25);
+        add(textFieldFinalScore);
+
+        JLabel lblTotalScore = new JLabel("Total Score:");
+        lblTotalScore.setBounds(748, 490, 150, 20);
+        add(lblTotalScore);
+
+        textFieldTotalScore = new JTextField();
+        textFieldTotalScore.setBounds(748, 515, 100, 25);
+        textFieldTotalScore.setEditable(false); // Không cho phép chỉnh sửa
+        add(textFieldTotalScore);
+        
         JButton btnNewButton = new JButton("Update");
-        btnNewButton.setBounds(107, 488, 146, 42);
+        btnNewButton.setBounds(111, 568, 146, 42);
         add(btnNewButton);
         btnNewButton.addActionListener(new ActionListener() {
             @Override
@@ -76,47 +123,41 @@ public class ManageScroresViewP extends JPanel {
                     textFieldRegularScore.setText(model.getValueAt(selectedRow, 3).toString());
                     textFieldMidtermScore.setText(model.getValueAt(selectedRow, 4).toString());
                     textFieldFinalScore.setText(model.getValueAt(selectedRow, 5).toString());
+                    textFieldStudentID.setText(model.getValueAt(selectedRow, 0).toString());
+                    textFieldStudentName.setText(model.getValueAt(selectedRow, 1).toString());
+                    textFieldTotalScore.setText(model.getValueAt(selectedRow, 6).toString());
                 } else {
                     JOptionPane.showMessageDialog(ManageScroresViewP.this, "Please select a row to update.");
                 }
             }
         });
-        // Trong phương thức khởi tạo của lớp ManageScroresViewP
-        JLabel lblAttendanceScore = new JLabel("Attendance Score:");
-        lblAttendanceScore.setBounds(28, 425, 150, 20);
-        add(lblAttendanceScore);
-
-        JLabel lblRegularScore = new JLabel("Regular Score:");
-        lblRegularScore.setBounds(148, 425, 150, 20);
-        add(lblRegularScore);
-
-        JLabel lblMidtermScore = new JLabel("Midterm Score:");
-        lblMidtermScore.setBounds(268, 425, 150, 20);
-        add(lblMidtermScore);
-
-        JLabel lblFinalScore = new JLabel("Final Score:");
-        lblFinalScore.setBounds(388, 425, 150, 20);
-        add(lblFinalScore);
-
-        textFieldAttendanceScore = new JTextField();
-        textFieldAttendanceScore.setBounds(28, 450, 100, 25);
-        add(textFieldAttendanceScore);
-
-        textFieldRegularScore = new JTextField();
-        textFieldRegularScore.setBounds(148, 450, 100, 25);
-        add(textFieldRegularScore);
-
-        textFieldMidtermScore = new JTextField();
-        textFieldMidtermScore.setBounds(268, 450, 100, 25);
-        add(textFieldMidtermScore);
-
-        textFieldFinalScore = new JTextField();
-        textFieldFinalScore.setBounds(388, 450, 100, 25);
-        add(textFieldFinalScore);
 
         btnSave = new JButton("Save");
-        btnSave.setBounds(268, 488, 146, 42);
+        btnSave.setBounds(272, 568, 146, 42);
         add(btnSave);
+        
+        JLabel lblStudentsScore = new JLabel("Student's score");
+        lblStudentsScore.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        lblStudentsScore.setBounds(28, 437, 251, 42);
+        add(lblStudentsScore);
+        
+        JLabel lblStudentID = new JLabel("Student ID:");
+        lblStudentID.setBounds(28, 490, 150, 20);
+        add(lblStudentID);
+        
+        JLabel lblStudentName = new JLabel("Name:");
+        lblStudentName.setBounds(148, 490, 150, 20);
+        add(lblStudentName);
+        
+        textFieldStudentName = new JTextField();
+        textFieldStudentName.setEditable(false);
+        textFieldStudentName.setBounds(148, 515, 100, 25);
+        add(textFieldStudentName);
+        
+        textFieldStudentID = new JTextField();
+        textFieldStudentID.setEditable(false);
+        textFieldStudentID.setBounds(28, 515, 100, 25);
+        add(textFieldStudentID);
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -218,7 +259,14 @@ public class ManageScroresViewP extends JPanel {
 
             // Gọi hàm cập nhật điểm trong cơ sở dữ liệu
             boolean success = updateScoresInDatabase(studentID, classCode, newAttendanceScore, newRegularScore, newMidtermScore, newFinalScore);
-
+            // Xóa dữ liệu từ các JTextField
+            textFieldAttendanceScore.setText("");
+            textFieldRegularScore.setText("");
+            textFieldMidtermScore.setText("");
+            textFieldFinalScore.setText("");
+            textFieldStudentID.setText("");
+            textFieldStudentName.setText("");
+            textFieldTotalScore.setText("");
             if (success) {
                 // Hiển thị thông báo cập nhật thành công hoặc thực hiện các hành động cần thiết
                 JOptionPane.showMessageDialog(this, "Scores updated successfully");
