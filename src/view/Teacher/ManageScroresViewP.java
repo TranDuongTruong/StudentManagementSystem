@@ -1,58 +1,36 @@
 package view.Teacher;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import controller.DatabaseConnection;
-import controller.Teacher.StudentController;
 import model.Classroom;
-import model.Student;
 
 public class ManageScroresViewP extends JPanel {
-	  private JTable table;
-	  private static final long serialVersionUID = 1L;
-	   Classroom classroom;
-	   String classCode;
-	/**
-	 * Create the panel.
-	 */
-	public ManageScroresViewP(Classroom classroom, String classCode) {	
-		this.classroom=classroom;
-		this.classCode = classCode;
-		setLayout(null);
+    private JTable table;
+    private static final long serialVersionUID = 1L;
+    private JTextField textFieldAttendanceScore;
+    private JTextField textFieldRegularScore;
+    private JTextField textFieldMidtermScore;
+    private JTextField textFieldFinalScore;
+    private JButton btnSave;
+    private Classroom classroom;
+    private String classCode;
+
+    /**
+     * Create the panel.
+     */
+    public ManageScroresViewP(Classroom classroom, String classCode) {
+        this.classroom = classroom;
+        this.classCode = classCode;
+        setLayout(null);
         setBounds(162, 0, 835, 640);
 
         JLabel lblListOfScores = new JLabel("List of scores");
@@ -66,102 +44,220 @@ public class ManageScroresViewP extends JPanel {
 
         table = new JTable();
         table.setModel(new DefaultTableModel(
-        	new Object[][] {
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        		{null, null, null, null, null, null, null},
-        	},
-        	new String[] {
-        		"Student ID", "Name", "Attendance Score", "Regular Score", "Miderm Score", "Final Score", "Total Score"
-        	}
+                new Object[][]{
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                },
+                new String[]{
+                        "Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"
+                }
         ));
 
         scrollPane.setViewportView(table);
-        
+
+        JButton btnNewButton = new JButton("Update");
+        btnNewButton.setBounds(107, 488, 146, 42);
+        add(btnNewButton);
+        btnNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+
+                if (selectedRow != -1) {
+                    // Get data from the selected row and populate text fields
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    textFieldAttendanceScore.setText(model.getValueAt(selectedRow, 2).toString());
+                    textFieldRegularScore.setText(model.getValueAt(selectedRow, 3).toString());
+                    textFieldMidtermScore.setText(model.getValueAt(selectedRow, 4).toString());
+                    textFieldFinalScore.setText(model.getValueAt(selectedRow, 5).toString());
+                } else {
+                    JOptionPane.showMessageDialog(ManageScroresViewP.this, "Please select a row to update.");
+                }
+            }
+        });
+        // Trong phương thức khởi tạo của lớp ManageScroresViewP
+        JLabel lblAttendanceScore = new JLabel("Attendance Score:");
+        lblAttendanceScore.setBounds(28, 425, 150, 20);
+        add(lblAttendanceScore);
+
+        JLabel lblRegularScore = new JLabel("Regular Score:");
+        lblRegularScore.setBounds(148, 425, 150, 20);
+        add(lblRegularScore);
+
+        JLabel lblMidtermScore = new JLabel("Midterm Score:");
+        lblMidtermScore.setBounds(268, 425, 150, 20);
+        add(lblMidtermScore);
+
+        JLabel lblFinalScore = new JLabel("Final Score:");
+        lblFinalScore.setBounds(388, 425, 150, 20);
+        add(lblFinalScore);
+
+        textFieldAttendanceScore = new JTextField();
+        textFieldAttendanceScore.setBounds(28, 450, 100, 25);
+        add(textFieldAttendanceScore);
+
+        textFieldRegularScore = new JTextField();
+        textFieldRegularScore.setBounds(148, 450, 100, 25);
+        add(textFieldRegularScore);
+
+        textFieldMidtermScore = new JTextField();
+        textFieldMidtermScore.setBounds(268, 450, 100, 25);
+        add(textFieldMidtermScore);
+
+        textFieldFinalScore = new JTextField();
+        textFieldFinalScore.setBounds(388, 450, 100, 25);
+        add(textFieldFinalScore);
+
+        btnSave = new JButton("Save");
+        btnSave.setBounds(268, 488, 146, 42);
+        add(btnSave);
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleUpdateScores();
+                fetchDataFromClassroom(classCode);
+            }
+        });
+
+
         // Fetch data from the database based on the classCode
         fetchDataFromClassroom(classCode);
-	              
-	}
-	 private void fetchDataFromClassroom(String classCode) {
-	        try {
-	            // Establish database connection (update DatabaseConnection class if needed)
-	            Connection connection = DatabaseConnection.connectToBB();
 
-	            // Prepare SQL query
-	            String query = "SELECT * FROM studentclassroom WHERE classCode = ?";
-	            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-	                pstmt.setString(1, classCode);
+    }
 
-	                // Execute query and populate the JTable
-	                ResultSet resultSet = pstmt.executeQuery();
-	                populateTable(resultSet);
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            // Handle exceptions as needed
-	        }
-	    }
+    private void fetchDataFromClassroom(String classCode) {
+        try {
+            // Establish database connection (update DatabaseConnection class if needed)
+            Connection connection = DatabaseConnection.connectToBB();
 
-	 private void populateTable(ResultSet resultSet) throws SQLException {
-		    DefaultTableModel model = new DefaultTableModel() {
-		        @Override
-		        public boolean isCellEditable(int row, int column) {
-		            // Make all cells non-editable except for the "Attendance Score," "Regular Score," "Midterm Score," and "Final Score" columns
-		            return column >= 2 && column <= 5;
-		        }
-		    };
-		    model.setColumnIdentifiers(new Object[]{"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"});
+            // Prepare SQL query
+            String query = "SELECT * FROM scores WHERE classCode = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setString(1, classCode);
 
-		    while (resultSet.next()) {
-		        model.addRow(new Object[]{
-		                resultSet.getInt("studentID"),
-		                getStudentNameFromDatabase(resultSet.getInt("studentID")),
-		                resultSet.getFloat("attendanceScore"),
-		                resultSet.getFloat("regularScore"),
-		                resultSet.getFloat("midtermScore"),
-		                resultSet.getFloat("finalScore"),
-		                resultSet.getString("totalScore")
-		        });
-		    }
+                // Execute query and populate the JTable
+                ResultSet resultSet = pstmt.executeQuery();
+                populateTable(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions as needed
+        }
+    }
 
-		    table.setModel(model);
-		}
+    private void populateTable(ResultSet resultSet) throws SQLException {
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Make all cells non-editable except for the "Attendance Score," "Regular Score," "Midterm Score," and "Final Score" columns
+                return false;
+            }
+        };
+        model.setColumnIdentifiers(new Object[]{"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"});
 
+        while (resultSet.next()) {
+            model.addRow(new Object[]{
+                    resultSet.getInt("studentID"),
+                    getStudentNameFromDatabase(resultSet.getInt("studentID")),
+                    resultSet.getFloat("attendanceScore"),
+                    resultSet.getFloat("regularScore"),
+                    resultSet.getFloat("midtermScore"),
+                    resultSet.getFloat("finalScore"),
+                    resultSet.getString("totalScore")
+            });
+        }
 
-	    public static String getStudentNameFromDatabase(int studentID) {
-	        String studentName = "";
+        table.setModel(model);
+    }
 
-	        try {
-	            // Establish database connection
-	            Connection connection = DatabaseConnection.connectToBB();
+    public static String getStudentNameFromDatabase(int studentID) {
+        String studentName = "";
 
-	            // Prepare SQL query
-	            String query = "SELECT name FROM student WHERE studentID = ?";
-	            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-	                pstmt.setInt(1, studentID);
+        try {
+            // Establish database connection
+            Connection connection = DatabaseConnection.connectToBB();
 
-	                // Execute query
-	                ResultSet resultSet = pstmt.executeQuery();
+            // Prepare SQL query
+            String query = "SELECT name FROM student WHERE studentID = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+                pstmt.setInt(1, studentID);
 
-	                // Check if a result is returned
-	                if (resultSet.next()) {
-	                    studentName = resultSet.getString("name");
-	                }
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            // Handle exceptions as needed
-	        }
+                // Execute query
+                ResultSet resultSet = pstmt.executeQuery();
 
-	        return studentName;
-	    }
-	
+                // Check if a result is returned
+                if (resultSet.next()) {
+                    studentName = resultSet.getString("name");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions as needed
+        }
+
+        return studentName;
+    }
+
+    private void handleUpdateScores() {
+        // Lấy thông tin từ text fields
+        int selectedRow = table.getSelectedRow();
+
+        if (selectedRow != -1) {
+            int studentID = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
+            String classCode = this.classCode;
+            float newAttendanceScore = Float.parseFloat(textFieldAttendanceScore.getText());
+            float newRegularScore = Float.parseFloat(textFieldRegularScore.getText());
+            float newMidtermScore = Float.parseFloat(textFieldMidtermScore.getText());
+            float newFinalScore = Float.parseFloat(textFieldFinalScore.getText());
+
+            // Gọi hàm cập nhật điểm trong cơ sở dữ liệu
+            boolean success = updateScoresInDatabase(studentID, classCode, newAttendanceScore, newRegularScore, newMidtermScore, newFinalScore);
+
+            if (success) {
+                // Hiển thị thông báo cập nhật thành công hoặc thực hiện các hành động cần thiết
+                JOptionPane.showMessageDialog(this, "Scores updated successfully");
+            } else {
+                // Hiển thị thông báo lỗi hoặc thực hiện các hành động cần thiết
+                JOptionPane.showMessageDialog(this, "Error updating scores");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a row to update.");
+        }
+    }
+
+    // Hàm cập nhật điểm trong cơ sở dữ liệu
+    private boolean updateScoresInDatabase(int studentID, String classCode, float newAttendanceScore, float newRegularScore, float newMidtermScore, float newFinalScore) {
+        try {
+            // Establish database connection (update DatabaseConnection class if needed)
+            Connection connection = DatabaseConnection.connectToBB();
+
+            // Chuẩn bị câu truy vấn SQL UPDATE
+            String updateQuery = "UPDATE scores SET attendanceScore = ?, regularScore = ?, midtermScore = ?, finalScore = ? " +
+                    "WHERE studentID = ? AND classCode = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                // Đặt các giá trị tham số
+                preparedStatement.setFloat(1, newAttendanceScore);
+                preparedStatement.setFloat(2, newRegularScore);
+                preparedStatement.setFloat(3, newMidtermScore);
+                preparedStatement.setFloat(4, newFinalScore);
+                preparedStatement.setInt(5, studentID);
+                preparedStatement.setString(6, classCode);
+
+                // Thực thi câu truy vấn
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                // Kiểm tra xem có hàng nào bị ảnh hưởng không
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
-	
-	
-	
