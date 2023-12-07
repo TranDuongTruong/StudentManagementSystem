@@ -28,7 +28,7 @@ public class LoginController {
 
         // Attach action listeners to the view's components
         loginView.addLoginListener(new LoginListener());
-        loginView.addCancelListener(new CancelListener());
+//        loginView.addCancelListener(new CancelListener());
     }
 
     // ActionListener for the Login button
