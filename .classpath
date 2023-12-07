@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="src/Assert/Library/poi-ooxml-4.0.1.jar"/>
 	<classpathentry kind="lib" path="src/Assert/Library/poi-ooxml-schemas-4.0.1.jar"/>
 	<classpathentry kind="lib" path="src/Assert/Library/xmlbeans-3.0.2.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/KGradientPanel.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
