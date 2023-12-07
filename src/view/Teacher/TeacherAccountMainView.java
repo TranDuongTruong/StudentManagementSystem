@@ -52,7 +52,7 @@ import java.awt.SystemColor;
 public class TeacherAccountMainView extends JFrame {
 	JPanel content_panel;
 	 JButton btn_blog;
-	 JButton btn_Student;
+	 JButton btn_Schedule;
 	 JButton btn_classes ;
 	  JButton btn_DashBoard;
 	private static final long serialVersionUID = 1L;
@@ -60,7 +60,7 @@ public class TeacherAccountMainView extends JFrame {
 	final ClassesViewP classes=new ClassesViewP(this);
 	final DashboardView dashboard=new DashboardView();
 	 ManageScroresViewP manageScoreView;
-	
+	ScheduleTeacherView scheduleView =new ScheduleTeacherView();
 	StudentViewP student;
 	AttendanceViewP attendance;
 	boolean hasAttendance=false;
@@ -69,6 +69,7 @@ public class TeacherAccountMainView extends JFrame {
 	boolean hasStudentView = false;
 	 boolean hasBlogView = false;
 	 boolean hasManageScore=false;
+	 boolean hasScheduleView=false;
 	/**
 	 * Launch the application.
 	 */
@@ -106,8 +107,13 @@ public class TeacherAccountMainView extends JFrame {
 			    hasAttendance = false;
 			  }
 		  if (hasManageScore) {
-			    main_Panel.remove(attendance);
+			    main_Panel.remove(manageScoreView);
 			    hasManageScore = false;
+			  }
+		 
+		  if (hasScheduleView) {
+			    main_Panel.remove(scheduleView);
+			    hasScheduleView = false;
 			  }
 	}
 
@@ -123,6 +129,18 @@ public class TeacherAccountMainView extends JFrame {
 		    	main_Panel.add(classes);
 		    	main_Panel.invalidate();
 		    	main_Panel.repaint();hasClassesView=true;
+		    }
+		});
+		btn_Schedule.addActionListener(new ActionListener() {
+			
+		    public void actionPerformed(ActionEvent e) {	
+
+		    	main_Panel.remove(content_panel);
+		    	removeContent();
+		    	//btn_classes.setBackground(new Color(255, 255, 255));
+		    	main_Panel.add(scheduleView);
+		    	main_Panel.invalidate();
+		    	main_Panel.repaint();hasScheduleView=true;
 		    }
 		});
 		
@@ -229,13 +247,15 @@ public class TeacherAccountMainView extends JFrame {
 			      
 			         
 			        btn_classes.setBackground(new Color(255, 0, 0));
-			         btn_Student = new JButton("Schedule");
-			         btn_Student.setForeground(new Color(255, 255, 255));
-			        btn_Student.addActionListener(new ActionListener() {
+			         btn_Schedule = new JButton("Schedule");
+			         btn_Schedule.setForeground(new Color(255, 255, 255));
+			        btn_Schedule.addActionListener(new ActionListener() {
 			        	public void actionPerformed(ActionEvent e) {
+			        	
+			        	
 			        	}
 			        });
-			        btn_Student.setBackground(new Color(255, 0, 0));
+			        btn_Schedule.setBackground(new Color(255, 0, 0));
 			        btn_blog = new JButton("Blog");
 			        btn_blog.setForeground(new Color(255, 255, 255));
 			        btn_blog.setBackground(new Color(255, 0, 0));
@@ -246,7 +266,7 @@ public class TeacherAccountMainView extends JFrame {
 			        
 			         btn_DashBoard.setMaximumSize(buttonDimension);
 			        btn_classes.setMaximumSize(buttonDimension);
-			        btn_Student.setMaximumSize(buttonDimension);
+			        btn_Schedule.setMaximumSize(buttonDimension);
 			        btn_blog.setMaximumSize(buttonDimension);
 
 			        // Thêm các button vào VerticalBox
@@ -255,7 +275,7 @@ public class TeacherAccountMainView extends JFrame {
 			        verticalBox.add(btn_classes);
 			        verticalBox.add(Box.createVerticalStrut(10));
 			        
-			        verticalBox.add(btn_Student);
+			        verticalBox.add(btn_Schedule);
 			        verticalBox.add(Box.createVerticalStrut(10));
 			        verticalBox.add(btn_blog);
 			        btn_DashBoard.setBorder(null);
