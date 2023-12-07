@@ -108,10 +108,33 @@ public class ManageScroresViewP extends JPanel {
         textFieldTotalScore.setEditable(false); // Không cho phép chỉnh sửa
         add(textFieldTotalScore);
         
-        JButton btnNewButton = new JButton("Update");
-        btnNewButton.setBounds(111, 568, 146, 42);
-        add(btnNewButton);
-        btnNewButton.addActionListener(new ActionListener() {
+        JLabel lblStudentsScore = new JLabel("Student's score");
+        lblStudentsScore.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        lblStudentsScore.setBounds(28, 437, 251, 42);
+        add(lblStudentsScore);
+        
+        JLabel lblStudentID = new JLabel("Student ID:");
+        lblStudentID.setBounds(28, 490, 150, 20);
+        add(lblStudentID);
+        
+        JLabel lblStudentName = new JLabel("Name:");
+        lblStudentName.setBounds(148, 490, 150, 20);
+        add(lblStudentName);
+        
+        textFieldStudentName = new JTextField();
+        textFieldStudentName.setEditable(false);
+        textFieldStudentName.setBounds(148, 515, 100, 25);
+        add(textFieldStudentName);
+        
+        textFieldStudentID = new JTextField();
+        textFieldStudentID.setEditable(false);
+        textFieldStudentID.setBounds(28, 515, 100, 25);
+        add(textFieldStudentID);
+        
+        JButton btnUpdateButton = new JButton("Update");
+        btnUpdateButton.setBounds(111, 568, 146, 42);
+        add(btnUpdateButton);
+        btnUpdateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
@@ -136,28 +159,7 @@ public class ManageScroresViewP extends JPanel {
         btnSave.setBounds(272, 568, 146, 42);
         add(btnSave);
         
-        JLabel lblStudentsScore = new JLabel("Student's score");
-        lblStudentsScore.setFont(new Font("Tahoma", Font.PLAIN, 19));
-        lblStudentsScore.setBounds(28, 437, 251, 42);
-        add(lblStudentsScore);
         
-        JLabel lblStudentID = new JLabel("Student ID:");
-        lblStudentID.setBounds(28, 490, 150, 20);
-        add(lblStudentID);
-        
-        JLabel lblStudentName = new JLabel("Name:");
-        lblStudentName.setBounds(148, 490, 150, 20);
-        add(lblStudentName);
-        
-        textFieldStudentName = new JTextField();
-        textFieldStudentName.setEditable(false);
-        textFieldStudentName.setBounds(148, 515, 100, 25);
-        add(textFieldStudentName);
-        
-        textFieldStudentID = new JTextField();
-        textFieldStudentID.setEditable(false);
-        textFieldStudentID.setBounds(28, 515, 100, 25);
-        add(textFieldStudentID);
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
