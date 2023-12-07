@@ -61,6 +61,7 @@ public class TeacherAccountMainView extends JFrame {
 	final DashboardView dashboard=new DashboardView();
 	 ManageScroresViewP manageScoreView;
 	ScheduleTeacherView scheduleView =new ScheduleTeacherView();
+	DashboardTeacherView dashboardTeacherView=new DashboardTeacherView();
 	StudentViewP student;
 	AttendanceViewP attendance;
 	boolean hasAttendance=false;
@@ -70,6 +71,7 @@ public class TeacherAccountMainView extends JFrame {
 	 boolean hasBlogView = false;
 	 boolean hasManageScore=false;
 	 boolean hasScheduleView=false;
+	 boolean hasDashboardTeacherView=false;
 	/**
 	 * Launch the application.
 	 */
@@ -115,6 +117,11 @@ public class TeacherAccountMainView extends JFrame {
 			    main_Panel.remove(scheduleView);
 			    hasScheduleView = false;
 			  }
+		  
+		  if (hasDashboardTeacherView) {
+			    main_Panel.remove(dashboardTeacherView);
+			    hasDashboardTeacherView = false;
+			  }
 	}
 
 	public void setButtonListener() {
@@ -143,6 +150,19 @@ public class TeacherAccountMainView extends JFrame {
 		    	main_Panel.repaint();hasScheduleView=true;
 		    }
 		});
+		btn_DashBoard.addActionListener(new ActionListener() {
+			
+		    public void actionPerformed(ActionEvent e) {	
+
+		    	main_Panel.remove(content_panel);
+		    	removeContent();
+		    	//btn_classes.setBackground(new Color(255, 255, 255));
+		    	main_Panel.add(dashboardTeacherView);
+		    	main_Panel.invalidate();
+		    	main_Panel.repaint();hasDashboardTeacherView=true;
+		    }
+		});
+		
 		
 	}
 	public void completeAttendance() {
