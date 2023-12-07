@@ -9,5 +9,12 @@
 	<classpathentry kind="lib" path="src/Assert/Library/mysql-connector-j-8.0.33.jar"/>
 	<classpathentry kind="lib" path="src/Assert/Library/jfreechart-1.5.0.jar"/>
 	<classpathentry kind="lib" path="src/Assert/Library/gson-2.10.1.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/commons-collections4-4.2.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/commons-compress-1.18.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/poi-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/poi-ooxml-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/poi-ooxml-schemas-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/Assert/Library/xmlbeans-3.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

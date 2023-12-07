@@ -5,10 +5,17 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import controller.DatabaseConnection;
 import model.Classroom;
@@ -26,6 +33,8 @@ public class ManageScroresViewP extends JPanel {
     private JTextField textFieldTotalScore;
     private JTextField textFieldStudentName;
     private JTextField textFieldStudentID;
+    private JButton btnExportToExcel; 
+
 
     /**
      * Create the panel.
@@ -168,7 +177,18 @@ public class ManageScroresViewP extends JPanel {
             }
         });
 
-
+     // Add a button for exporting to Excel
+        btnExportToExcel = new JButton("Export to Excel");
+        btnExportToExcel.setBounds(428, 568, 146, 42);
+        add(btnExportToExcel);
+        
+        // Add ActionListener for the export button
+        btnExportToExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exportToExcel();
+            }
+        });
         // Fetch data from the database based on the classCode
         fetchDataFromClassroom(classCode);
 
@@ -308,6 +328,43 @@ public class ManageScroresViewP extends JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    private void exportToExcel() {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("Scores");
+
+            // Create header row
+            XSSFRow headerRow = spreadsheet.createRow(0);
+            String[] headers = {"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"};
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+            }
+
+            // Get data from the table
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                XSSFRow row = spreadsheet.createRow(i + 1);
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    Cell cell = row.createCell(j);
+                    cell.setCellValue(model.getValueAt(i, j).toString());
+                }
+            }
+
+            // Write to Excel file
+            String desktopPath = System.getProperty("user.home") + "\\Desktop";
+            String filePath = desktopPath + "\\Scores.xlsx";
+            FileOutputStream out = new FileOutputStream(new File(filePath));
+            workbook.write(out);
+            out.close();
+
+            JOptionPane.showMessageDialog(this, "Data exported to Excel successfully.");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error exporting data to Excel.");
         }
     }
 }
