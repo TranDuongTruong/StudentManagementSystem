@@ -337,7 +337,7 @@ public class ManageScroresViewP extends JPanel {
 
             // Create header row
             XSSFRow headerRow = spreadsheet.createRow(0);
-            String[] headers = {"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"};
+            String[] headers = {"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score"};
             for (int i = 0; i < headers.length; i++) {
                 Cell cell = headerRow.createCell(i);
                 cell.setCellValue(headers[i]);
@@ -347,7 +347,8 @@ public class ManageScroresViewP extends JPanel {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             for (int i = 0; i < model.getRowCount(); i++) {
                 XSSFRow row = spreadsheet.createRow(i + 1);
-                for (int j = 0; j < model.getColumnCount(); j++) {
+                for (int j = 0; j < model.getColumnCount() - 1; j++) {
+                    // Exclude the last column ("Total Score")
                     Cell cell = row.createCell(j);
                     cell.setCellValue(model.getValueAt(i, j).toString());
                 }
@@ -367,4 +368,5 @@ public class ManageScroresViewP extends JPanel {
             JOptionPane.showMessageDialog(this, "Error exporting data to Excel.");
         }
     }
+
 }
