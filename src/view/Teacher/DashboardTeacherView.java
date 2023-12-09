@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.JTextComponent;
 
 import controller.DatabaseConnection;
+import controller.Admin.LoginController;
 
 public class DashboardTeacherView extends JPanel {
 
@@ -50,6 +51,7 @@ public class DashboardTeacherView extends JPanel {
 	public DashboardTeacherView() {
 	
 	        setBounds(162, 0, 835, 640);
+	        setLayout(null);
 	        
 //	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //			setBounds(100, 100, 450, 300);
@@ -60,7 +62,7 @@ public class DashboardTeacherView extends JPanel {
 //			contentPane.setLayout(null);
 //	        setLayout(null);
 	        txtInformation = new JTextField();
-	        txtInformation.setBounds(22, 6, 253, 41);
+	        txtInformation.setBounds(58, 5, 228, 32);
 	        txtInformation.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 	        txtInformation.setForeground(new Color(255, 5, 19));
 	        txtInformation.setText("TEACHER INFORMATION");
@@ -68,71 +70,71 @@ public class DashboardTeacherView extends JPanel {
 	        txtInformation.setColumns(10);
 	        
 	        JSeparator separator = new JSeparator();
-	        separator.setBounds(6, 47, 694, 24);
+	        separator.setBounds(291, 20, 0, 2);
 	        add(separator);
 	        
 	         lblTeacherName = new JLabel("Teacher name:");
-	        lblTeacherName.setBounds(68, 60, 102, 29);
+	        lblTeacherName.setBounds(41, 103, 110, 17);
 	        lblTeacherName.setHorizontalAlignment(SwingConstants.RIGHT);
 	        lblTeacherName.setFont(new Font("Tahoma", Font.BOLD, 14));
 	        add(lblTeacherName);
 	        
 	         lblTeacherId = new JLabel("Teacher ID:");
-	        lblTeacherId.setBounds(68, 85, 102, 29);
+	        lblTeacherId.setBounds(41, 140, 87, 17);
 	        lblTeacherId.setHorizontalAlignment(SwingConstants.RIGHT);
 	        lblTeacherId.setFont(new Font("Tahoma", Font.BOLD, 14));
 	        add(lblTeacherId);
 	        
 	         lblGender = new JLabel(" Gender:");
-	        lblGender.setBounds(68, 110, 102, 29);
-	        //lblGender.setHorizontalAlignment(SwingConstants.RIGHT);
+	        lblGender.setBounds(41, 178, 62, 17);
+	       // ((JTextField) lblGender).setHorizontalAlignment(SwingConstants.RIGHT);
 	        lblGender.setFont(new Font("Tahoma", Font.BOLD, 14));
 	        add(lblGender);
 	        
 	         lblDayofBirth = new JLabel("Day of birth:");
-	        lblDayofBirth.setBounds(68, 135, 102, 29);
+	        lblDayofBirth.setBounds(38, 219, 90, 17);
 	        lblDayofBirth.setHorizontalAlignment(SwingConstants.RIGHT);
 	        lblDayofBirth.setFont(new Font("Tahoma", Font.BOLD, 14));
 	        add(lblDayofBirth);
 	        
 	         lblEmail = new JLabel("Email:");
-	        lblEmail.setBounds(68, 160, 102, 29);
+	        lblEmail.setBounds(58, 246, 45, 17);
 	        lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 	        lblEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
 	        add(lblEmail);
 	        
 	         lblEmail_info = new JLabel((String) null);
-	        lblEmail_info.setBounds(182, 160, 102, 29);
+	        lblEmail_info.setBounds(262, 95, 166, 32);
 	        lblEmail_info.setHorizontalAlignment(SwingConstants.LEFT);
 	        lblEmail_info.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	        add(lblEmail_info);
 	        
 	         lblTeacherID_info = new JLabel();
-	        lblTeacherID_info.setBounds(182, 85, 102, 29);
+	        lblTeacherID_info.setBounds(720, 21, 0, 0);
 	        lblTeacherID_info.setHorizontalAlignment(SwingConstants.LEFT);
 	        lblTeacherID_info.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	        add(lblTeacherID_info);
 	        
 	         lblGender_info = new JLabel((String) null);
-	        lblGender_info.setBounds(182, 110, 102, 29);
+	        lblGender_info.setBounds(725, 21, 0, 0);
 	        //lblGender_info.setHorizontalAlignment(SwingConstants.LEFT);
 	        lblGender_info.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	        add(lblGender_info);
 	        
 	         lblDayofBirth_info = new JLabel((String) null);
-	        lblDayofBirth_info.setBounds(182, 135, 102, 29);
+	        lblDayofBirth_info.setBounds(262, 190, 156, 26);
 	        lblDayofBirth_info.setHorizontalAlignment(SwingConstants.LEFT);
 	        lblDayofBirth_info.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	        add(lblDayofBirth_info);
 	        
 	        lblName_info = new JLabel(teacherName);
-            lblName_info.setBounds(182, 59, 253, 29);
+            lblName_info.setBounds(219, 80, 166, 26);
            lblName_info.setHorizontalAlignment(SwingConstants.LEFT);
            lblName_info.setFont(new Font("Tahoma", Font.PLAIN, 14));
            add(lblName_info);
            
 	         lblAvatar = new JLabel("New label");
-	         lblAvatar.setBounds(483, 83, 142, 197);
+	         lblAvatar.setBounds(559, 103, 191, 197);
 	      
 			ImageIcon imageIcon = new ImageIcon();
 			 URL imageUrl=TeacherAccountMainView.class.getClassLoader().getResource("Assert/student/Examination/avvatar.png");
@@ -150,7 +152,9 @@ public class DashboardTeacherView extends JPanel {
 		              add(lblAvatar);
 		              
 		              setVisible(true);
-		              //getData(teacherID);
+		              getData(String.valueOf(LoginController.teacherId));
+		              SetcourseInfo();
+		           
 
 	}
 	public void getData(String teacherID) {

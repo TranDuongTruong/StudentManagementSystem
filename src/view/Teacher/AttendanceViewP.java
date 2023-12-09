@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,10 +47,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.ImageIcon;
 public class AttendanceViewP extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	JPanel contentPane_1;
+	static JTextPane txtpnAttendance;
 	public Student selectedStu;
 	public JTextField searchInp;
 	public JTable table;
@@ -58,13 +61,17 @@ public class AttendanceViewP extends JPanel {
 	private JButton btnHuyTim;
 	public JComboBox comboBox_queQuan;
 	static Classroom classRoom;
-	 LocalDate currentDate ;
-	    DateTimeFormatter formatter ;
-	    String dateString;
+	 List<Boolean> attendance;
+	 List<Student> studentList;
+	 static LocalDate currentDate ;
+	 static  DateTimeFormatter formatter ;
+	 static    String dateString;
+	 static   LocalDate startDate = null;
+	 static   LocalDate endDate = null;
 	 public boolean isUpdating=false;
 	public AttendanceViewP(final Classroom classRoom,TeacherAccountMainView mainView ) {
 		  currentDate = LocalDate.now();
-		  currentDate=currentDate.minusDays(1);
+		  //currentDate=currentDate.minusDays(1);
 		     formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 		     dateString = currentDate.format(formatter);
 		this.classRoom=classRoom;
@@ -124,7 +131,7 @@ public class AttendanceViewP extends JPanel {
 	        table = new JTable() {
 	            @Override
 	            public boolean isCellEditable(int row, int column) {
-	                if(column==8)return true;
+	                if(column==3)return true;
 	            	return false; // Không cho phép chỉnh sửa
 	                
 	            }
@@ -143,7 +150,7 @@ public class AttendanceViewP extends JPanel {
 	                    {null, null, null, null, null, null, null, null},
 	                },
 	                new String[] {
-	                    "Student ID", "Name", "Day of Birth", "Address", "Gender", "Phone number", "Credits Completed", "Credits Owed", "Select"
+	                    "Student ID", "Name", "Day of Birth", "Attendance"
 	                }
 	            );
 
@@ -216,7 +223,7 @@ public class AttendanceViewP extends JPanel {
 	        btnHuyTim.setBounds(580, 40, 117, 41);
 	        contentPane_1.add(btnHuyTim);
 	        
-	        JTextPane txtpnAttendance = new JTextPane();
+	         txtpnAttendance = new JTextPane();
 	        txtpnAttendance.setText("Attendance on "+ dateString);
 	        txtpnAttendance.setBounds(10, 10, 161, 35);
 	        contentPane_1.add(txtpnAttendance);
@@ -231,10 +238,41 @@ public class AttendanceViewP extends JPanel {
 	        });
 	        submitBtn.setBounds(723, 604, 85, 21);
 	        contentPane_1.add(submitBtn);
+	        
+	        JButton btnNewButton = new JButton("");
+	        btnNewButton.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		 currentDate=currentDate.plusDays(1);
+	      		     formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+	      		     dateString = currentDate.format(formatter);
+	        		 attendance=fetchAttendanceDataForColumn("attendance_"+classRoom.getClassCode(),dateString,true);	 			    
+	 			    displayAttendanceCollum(); txtpnAttendance.setText("Attendance on "+ dateString);
+	        	}
+	        });
+	        btnNewButton.setIcon(new ImageIcon(AttendanceViewP.class.getResource("/Assert/Icon/nextIcon.png")));
+	        btnNewButton.setBounds(761, 99, 47, 21);
+	        
+	        contentPane_1.add(btnNewButton);
+	        
+	        JButton btnNewButton_1 = new JButton("");
+	        btnNewButton_1.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		
+	        	
+	      		  currentDate=currentDate.minusDays(1);
+	      		     formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+	      		     dateString = currentDate.format(formatter);
+	        		 attendance=fetchAttendanceDataForColumn("attendance_"+classRoom.getClassCode(),dateString,false);	 			    
+	 			    displayAttendanceCollum(); txtpnAttendance.setText("Attendance on "+ dateString);
+	        	}
+	        });
+	        btnNewButton_1.setIcon(new ImageIcon(AttendanceViewP.class.getResource("/Assert/Icon/periviousIcon.png")));
+	        btnNewButton_1.setBounds(701, 99, 47, 21);
+	        contentPane_1.add(btnNewButton_1);
 	        attendanceTables = new HashMap<>();
 	        
 	   
-	        
+	        getDateRange( classRoom.getClassCode());
 	        StudentController stu=new StudentController(this,classRoom);
 	}
 	private Map<String, String> attendanceTables;
@@ -421,9 +459,101 @@ public class AttendanceViewP extends JPanel {
 	        e.printStackTrace();
 	    }
 	}
+	 public  void getDateRange(String classCode) {
+	        
+	        
+	        DatabaseConnection db = new DatabaseConnection();
+	        Connection con = db.connectToBB();
+	        
+	        try {
+	            PreparedStatement stmt = con.prepareStatement("SELECT startDate, endDate FROM schedule WHERE classCode = ?");
+	            stmt.setString(1, classCode);
+	            ResultSet rs = stmt.executeQuery();
+	            
+	            if (rs.next()) {
+	                startDate = rs.getDate("startDate").toLocalDate();
+	                endDate = rs.getDate("endDate").toLocalDate();
+	            }
+	            
+	            rs.close();
+	            stmt.close();
+	            con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	       
+	    }
+	 public static List<Boolean> fetchAttendanceDataForColumn(String tableName, String columnName, boolean isNext) {
+		    List<Boolean> columnData = new ArrayList<>();
+
+		    if (tableName == null || tableName.isEmpty() || columnName == null || columnName.isEmpty()) {
+		        // Hiển thị hộp thoại lỗi và trả về danh sách rỗng
+		        JOptionPane.showMessageDialog(null, "Invalid table or column name!", "Error", JOptionPane.ERROR_MESSAGE);
+		        return columnData;
+		    }
+
+		    DatabaseConnection db = new DatabaseConnection();
+		    Connection con = db.connectToBB();
+
+		    try {
+		        // Kiểm tra xem bảng và cột đã chỉ định có tồn tại không
+		        ResultSet resultSet = con.getMetaData().getColumns(null, null, tableName, columnName);
+
+		        LocalDate currentDate = startDate;
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+
+		        while (!resultSet.next()) {
+		            if (isNext) {
+		                if (currentDate.isBefore(endDate)) {
+		                    String dateString = currentDate.format(formatter);
+		                    resultSet = con.getMetaData().getColumns(null, null, tableName, dateString);
+		                    currentDate = currentDate.plusDays(1);
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Table or column does not exist!", "Error", JOptionPane.ERROR_MESSAGE);
+		                    break;
+		                }
+		            } else {
+		                if (currentDate.isAfter(startDate)) {
+		                    currentDate = currentDate.minusDays(1);
+		                    String dateString = currentDate.format(formatter);
+		                    resultSet = con.getMetaData().getColumns(null, null, tableName, dateString);
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Table or column does not exist!", "Error", JOptionPane.ERROR_MESSAGE);
+		                    break;
+		                }
+		            }
+		            txtpnAttendance.setText("Attendance on " + currentDate.format(formatter));
+		        }
+
+		        // Chuẩn bị câu truy vấn SQL để lấy tất cả các phần tử từ cột đã chỉ định
+		        String selectQuery = "SELECT `" + columnName + "` FROM " + tableName;
+
+		        // Thực hiện truy vấn
+		        PreparedStatement statement = con.prepareStatement(selectQuery);
+		        ResultSet result = statement.executeQuery();
+
+		        // Lấy dữ liệu từ tập kết quả và điền vào danh sách
+		        while (result.next()) {
+		            boolean columnValue = result.getBoolean(columnName);
+		            columnData.add(columnValue);
+		        }
+
+		        System.out.println("Fetched data from column " + columnName + " in table " + tableName);
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        // Đóng kết nối cơ sở dữ liệu
+		        try {
+		            con.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return columnData;
+		}
 	
-	
-	 public String getSearchInp() {
+		public String getSearchInp() {
 	        String text = searchInp.getText();
 	        
 	        if (text == null || text.trim().isEmpty()) {
@@ -444,39 +574,53 @@ public class AttendanceViewP extends JPanel {
 	        // ...
 	        return (text);
 	    }
-	    public void notFindStudent(String id) {
+		public void notFindStudent(String id) {
 	    	JOptionPane.showMessageDialog(null, "Không tìm thấy sinh viên có MSV: "+id, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 	    }
-		 public void searchStudentListener(ActionListener listener) {
+		public void searchStudentListener(ActionListener listener) {
 			 btnTim.addActionListener(listener);
 	     }
 		 public void huyTimListener(ActionListener listener) {
 			 btnHuyTim.addActionListener(listener);
 	     }
-		 public void displayStudentList(List<Student> studentList) {		 
+		 public void displayStudentList(List<Student> studentList) {
+			 this.studentList=studentList;
 			    DefaultTableModel model = (DefaultTableModel) table.getModel();
 			    // Xóa tất cả các dòng hiện tại trong model
 			    model.setRowCount(0);
-			    System.out.println("\tfffffffffff"+studentList.size());
+			   
 			    for (Student student : studentList) {
 			        Object[] rowData = new Object[8];
 			        rowData[0] = student.getStudentID();
 			        rowData[1] = student.getName();
 			        rowData[2] = student.getDob();
-			        rowData[3] = student.getAddress();
-			        rowData[4] = student.isGender() ? "Male" : "Female";
-			        rowData[5] = student.getPhoneNumber();
-			        rowData[6] = student.getCreditsCompleted();
-			        rowData[7] = student.getCreditsOwed();
-			        System.out.println("\tfffffffffff"+rowData[1]);
 			        model.addRow(rowData);
 			    }
 			    
 			    // Cập nhật model của JTable
 			    table.setModel(model);
+			    
+			   
 			}
-		 
-		 
+		
+		public void displayAttendanceCollum() {
+			 DefaultTableModel model = (DefaultTableModel) table.getModel();
+			    // Xóa tất cả các dòng hiện tại trong model
+			    model.setRowCount(0);
+			   int i=0;
+			    for (Student student : studentList) {
+			        Object[] rowData = new Object[8];
+			        rowData[0] = student.getStudentID();
+			        rowData[1] = student.getName();
+			        rowData[2] = student.getDob();
+			        rowData[3]=attendance.get(i);
+			        i++;
+			        model.addRow(rowData);
+			    }
+			    
+			    // Cập nhật model của JTable
+			    table.setModel(model);
+		}
 
 		 public int getIndexofSelectedRow() {
 			

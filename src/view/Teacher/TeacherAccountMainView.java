@@ -61,7 +61,7 @@ public class TeacherAccountMainView extends JFrame {
 	final DashboardView dashboard=new DashboardView();
 	 ManageScroresViewP manageScoreView;
 	ScheduleTeacherView scheduleView =new ScheduleTeacherView();
-	DashboardTeacherView dashboardTeacherView=new DashboardTeacherView();
+	DashboardTeacherView dashboardTeacherView;
 	StudentViewP student;
 	AttendanceViewP attendance;
 	boolean hasAttendance=false;
@@ -323,7 +323,7 @@ public class TeacherAccountMainView extends JFrame {
 			        
 			        main_Panel.add(content_panel);
 			        content_panel.setLayout(null);
-
+			        dashboardTeacherView=new DashboardTeacherView();
 			      // MainViewCtrl_Teacher mainView=new MainViewCtrl_Teacher(this);
 			        setVisible(true);setButtonListener();
 		
