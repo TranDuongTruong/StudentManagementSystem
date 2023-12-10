@@ -484,6 +484,48 @@ public class AttendanceViewP extends JPanel {
 	       
 	    }
 	 public static List<Boolean> fetchAttendanceDataForColumn(String tableName, String columnName, boolean isNext) {
+		// System.out.println("Ban dau:"+columnName+"\t"+currentDate+"\t"+LocalDate.now());
+		 
+		 DatabaseConnection db = new DatabaseConnection();
+		    Connection con = db.connectToBB();
+		 	if(currentDate.isBefore(startDate)) {
+		 		currentDate=startDate;
+            	JOptionPane.showMessageDialog(null, "No record exists", "WARNING", JOptionPane.WARNING_MESSAGE);
+            	
+
+		 	} else if(currentDate.isAfter(endDate)) {
+		 		currentDate=endDate;		 		
+            	JOptionPane.showMessageDialog(null, "No record exists", "WARNING", JOptionPane.WARNING_MESSAGE);
+            	
+            	
+		 	}else
+		 	 if(currentDate.isEqual(LocalDate.now())) {
+		 		 System.err.println("create curent");
+		 		try {
+			        DatabaseMetaData metaData = con.getMetaData();	dateString = currentDate.format(formatter);
+			        ResultSet rs = metaData.getColumns(null, null, tableName, dateString);
+
+			        if (!rs.next()) {
+			            // If the dateString column doesn't exist, add the column to the attendance table
+			            String addColumnQuery = "ALTER TABLE " + tableName + " ADD COLUMN " + dateString + " TINYINT(1)";
+			            String updateQuery = "UPDATE " + tableName + " SET " + dateString + " = 0";
+			            Statement statement = con.createStatement();
+			            statement.executeUpdate(addColumnQuery);
+			            Statement updateStatement = con.createStatement();
+			            updateStatement.execute(updateQuery);
+			            System.out.println("Added the column " + dateString + " to the attendance table");
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+		 		 
+		 	 }
+		 	
+		 	
+		 	
+		 	
+		 	dateString = currentDate.format(formatter);
+		 	  columnName=dateString;
 		    List<Boolean> columnData = new ArrayList<>();
 
 		    if (tableName == null || tableName.isEmpty() || columnName == null || columnName.isEmpty()) {
@@ -492,39 +534,50 @@ public class AttendanceViewP extends JPanel {
 		        return columnData;
 		    }
 
-		    DatabaseConnection db = new DatabaseConnection();
-		    Connection con = db.connectToBB();
-
+		  con = db.connectToBB();
+		  if(currentDate!=LocalDate.now())
 		    try {
 		        // Kiểm tra xem bảng và cột đã chỉ định có tồn tại không
 		        ResultSet resultSet = con.getMetaData().getColumns(null, null, tableName, columnName);
 
-		        LocalDate currentDate = startDate;
+		      // LocalDate currentDate = startDate;
 		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 
 		        while (!resultSet.next()) {
 		            if (isNext) {
-		                if (currentDate.isBefore(endDate)) {
-		                    String dateString = currentDate.format(formatter);
-		                    resultSet = con.getMetaData().getColumns(null, null, tableName, dateString);
-		                    currentDate = currentDate.plusDays(1);
+		                if (currentDate.isAfter(endDate)) {
+		                   
+		               // 	System.err.println("adsa123123jdhaliduwq129881293"+currentDate);
+		                	currentDate=endDate;		                			                	                  
 		                } else {
-		                    JOptionPane.showMessageDialog(null, "Table or column does not exist!", "Error", JOptionPane.ERROR_MESSAGE);
-		                    break;
+		                //	System.err.println("adsa3"+currentDate);
+		                	  currentDate = currentDate.plusDays(1);		                			                			                   
 		                }
+		                		                
 		            } else {
-		                if (currentDate.isAfter(startDate)) {
-		                    currentDate = currentDate.minusDays(1);
-		                    String dateString = currentDate.format(formatter);
-		                    resultSet = con.getMetaData().getColumns(null, null, tableName, dateString);
+		                if (currentDate.isBefore(startDate)) {
+		                	
+		                //	System.err.println("adsajdhaliduwq129881293"+currentDate);
+		                	currentDate=startDate;		                			                   		                   		                    		                    
+		                   
 		                } else {
-		                    JOptionPane.showMessageDialog(null, "Table or column does not exist!", "Error", JOptionPane.ERROR_MESSAGE);
-		                    break;
+		                //	System.err.println("ads33a3"+currentDate);
+		                	currentDate = currentDate.minusDays(1);
 		                }
+		                
+		                
 		            }
-		            txtpnAttendance.setText("Attendance on " + currentDate.format(formatter));
-		        }
-
+		            
+		             dateString = currentDate.format(formatter);
+		            // System.out.println(dateString+"\t\n");
+		            resultSet = con.getMetaData().getColumns(null, null, tableName, dateString);
+		        } 	       
+		       
+		                  
+                //System.err.println("a3"+dateString+"\t"+columnName);
+                 txtpnAttendance.setText("Attendance on " + dateString);
+                columnName=dateString;
+                
 		        // Chuẩn bị câu truy vấn SQL để lấy tất cả các phần tử từ cột đã chỉ định
 		        String selectQuery = "SELECT `" + columnName + "` FROM " + tableName;
 
