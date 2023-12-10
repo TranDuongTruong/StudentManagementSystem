@@ -266,40 +266,82 @@ public class ManageScroresViewP extends JPanel {
 
         return studentName;
     }
+    private void clearTextField() {
+    	 // Xóa dữ liệu từ các JTextField
+        textFieldAttendanceScore.setText("");
+        textFieldRegularScore.setText("");
+        textFieldMidtermScore.setText("");
+        textFieldFinalScore.setText("");
+        textFieldStudentID.setText("");
+        textFieldStudentName.setText("");
+        textFieldTotalScore.setText("");
 
+    }
     private void handleUpdateScores() {
         // Lấy thông tin từ text fields
         int selectedRow = table.getSelectedRow();
 
         if (selectedRow != -1) {
-            int studentID = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
-            String classCode = this.classCode;
-            float newAttendanceScore = Float.parseFloat(textFieldAttendanceScore.getText());
-            float newRegularScore = Float.parseFloat(textFieldRegularScore.getText());
-            float newMidtermScore = Float.parseFloat(textFieldMidtermScore.getText());
-            float newFinalScore = Float.parseFloat(textFieldFinalScore.getText());
+            try {
+                // Kiểm tra xem dữ liệu nhập vào các ô textField có phải là số từ 0 đến 10 không
+                float attendanceScore = validateAndParseFloat(textFieldAttendanceScore.getText());
+                float regularScore = validateAndParseFloat(textFieldRegularScore.getText());
+                float midtermScore = validateAndParseFloat(textFieldMidtermScore.getText());
+                float finalScore = validateAndParseFloat(textFieldFinalScore.getText());
 
-            // Gọi hàm cập nhật điểm trong cơ sở dữ liệu
-            boolean success = updateScoresInDatabase(studentID, classCode, newAttendanceScore, newRegularScore, newMidtermScore, newFinalScore);
-            // Xóa dữ liệu từ các JTextField
-            textFieldAttendanceScore.setText("");
-            textFieldRegularScore.setText("");
-            textFieldMidtermScore.setText("");
-            textFieldFinalScore.setText("");
-            textFieldStudentID.setText("");
-            textFieldStudentName.setText("");
-            textFieldTotalScore.setText("");
-            if (success) {
-                // Hiển thị thông báo cập nhật thành công hoặc thực hiện các hành động cần thiết
-                JOptionPane.showMessageDialog(this, "Scores updated successfully");
-            } else {
-                // Hiển thị thông báo lỗi hoặc thực hiện các hành động cần thiết
-                JOptionPane.showMessageDialog(this, "Error updating scores");
+                if (!isValidScore(attendanceScore) || !isValidScore(regularScore) ||
+                    !isValidScore(midtermScore) || !isValidScore(finalScore)) {
+                    JOptionPane.showMessageDialog(this, "Invalid score! Please enter a number between 0 and 10.");
+                    
+                    // Xóa dữ liệu từ các JTextField nếu số không hợp lệ
+                    clearTextField();
+                    
+                    return;
+                }
+
+                int studentID = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
+                String classCode = this.classCode;
+
+                // Gọi hàm cập nhật điểm trong cơ sở dữ liệu
+                boolean success = updateScoresInDatabase(studentID, classCode, attendanceScore, regularScore, midtermScore, finalScore);
+                
+                // Xóa dữ liệu từ các JTextField
+                clearTextField();
+
+                if (success) {
+                    // Hiển thị thông báo cập nhật thành công hoặc thực hiện các hành động cần thiết
+                    JOptionPane.showMessageDialog(this, "Scores updated successfully");
+                } else {
+                    // Hiển thị thông báo lỗi hoặc thực hiện các hành động cần thiết
+                    JOptionPane.showMessageDialog(this, "Error updating scores");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid input! Please enter numeric values for scores.");
+                
+                // Xóa dữ liệu từ các JTextField nếu số không hợp lệ
+                clearTextField();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please select a row to update.");
         }
     }
+
+
+    // Hàm kiểm tra và chuyển đổi chuỗi thành số, trả về -1 nếu chuỗi không hợp lệ
+    private float validateAndParseFloat(String text) {
+        try {
+            return Float.parseFloat(text);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+
+    // Hàm kiểm tra xem điểm có nằm trong khoảng từ 0 đến 10 không
+    private boolean isValidScore(float score) {
+        return score >= 0 && score <= 10;
+    }
+
 
     // Hàm cập nhật điểm trong cơ sở dữ liệu
     private boolean updateScoresInDatabase(int studentID, String classCode, float newAttendanceScore, float newRegularScore, float newMidtermScore, float newFinalScore) {
