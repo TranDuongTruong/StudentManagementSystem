@@ -31,7 +31,7 @@ public class chatBoxViewP extends JPanel {
         this.setBounds(162, 0, 835, 640);
 
         userInputField = new JTextField();
-        userInputField.setBounds(106, 39, 584, 20);
+        userInputField.setBounds(60, 39, 630, 20);
         add(userInputField);
         userInputField.setColumns(10);
 

@@ -59,7 +59,7 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//				LoginController.studentId=9;
+				LoginController.studentId=3;
 					retrieveStudent();
 					StudentAccountMainView frame = new StudentAccountMainView();
 					
@@ -412,6 +412,10 @@ public class StudentAccountMainView extends JFrame {
 		  }
 		  if(hasSyllabi) {
 			  contentPane.remove(syllabiView);
+			  hasSyllabi=false;
+		  }
+		  if(hasChatBox) {
+			  contentPane.remove(chatView);
 			  hasSyllabi=false;
 		  }
 		}
