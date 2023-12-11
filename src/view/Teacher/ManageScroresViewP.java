@@ -1,6 +1,9 @@
 package view.Teacher;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,6 +47,8 @@ public class ManageScroresViewP extends JPanel {
         this.classCode = classCode;
         setLayout(null);
         setBounds(162, 0, 835, 640);
+        setBorder(new LineBorder(new Color(255, 0, 0), 2));
+        setBackground(new Color(255, 255, 255));
 
         JLabel lblListOfScores = new JLabel("List of scores");
         lblListOfScores.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -52,6 +57,7 @@ public class ManageScroresViewP extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(28, 212, 738, 214);
+		scrollPane.setViewportBorder(new LineBorder(new Color(255, 0, 0)));
         add(scrollPane);
 
         table = new JTable();
@@ -70,6 +76,8 @@ public class ManageScroresViewP extends JPanel {
                         "Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score", "Total Score"
                 }
         ));
+        table.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, new Color(255, 0, 0), new Color(255, 0, 0), new Color(255, 0, 0), new Color(255, 0, 0)));
+
 
         scrollPane.setViewportView(table);
 
@@ -77,43 +85,43 @@ public class ManageScroresViewP extends JPanel {
 
         // Trong phương thức khởi tạo của lớp ManageScroresViewP
         JLabel lblAttendanceScore = new JLabel("Attendance Score:");
-        lblAttendanceScore.setBounds(269, 490, 150, 20);
+        lblAttendanceScore.setBounds(268, 490, 150, 20);
         add(lblAttendanceScore);
 
         JLabel lblRegularScore = new JLabel("Regular Score:");
-        lblRegularScore.setBounds(389, 490, 150, 20);
+        lblRegularScore.setBounds(388, 490, 150, 20);
         add(lblRegularScore);
 
         JLabel lblMidtermScore = new JLabel("Midterm Score:");
-        lblMidtermScore.setBounds(509, 490, 150, 20);
+        lblMidtermScore.setBounds(508, 490, 150, 20);
         add(lblMidtermScore);
 
         JLabel lblFinalScore = new JLabel("Final Score:");
-        lblFinalScore.setBounds(629, 490, 150, 20);
+        lblFinalScore.setBounds(628, 490, 150, 20);
         add(lblFinalScore);
 
         textFieldAttendanceScore = new JTextField();
-        textFieldAttendanceScore.setBounds(269, 515, 100, 25);
+        textFieldAttendanceScore.setBounds(268, 515, 100, 25);
         add(textFieldAttendanceScore);
 
         textFieldRegularScore = new JTextField();
-        textFieldRegularScore.setBounds(389, 515, 100, 25);
+        textFieldRegularScore.setBounds(388, 515, 100, 25);
         add(textFieldRegularScore);
 
         textFieldMidtermScore = new JTextField();
-        textFieldMidtermScore.setBounds(509, 515, 100, 25);
+        textFieldMidtermScore.setBounds(508, 515, 100, 25);
         add(textFieldMidtermScore);
 
         textFieldFinalScore = new JTextField();
-        textFieldFinalScore.setBounds(629, 515, 100, 25);
+        textFieldFinalScore.setBounds(628, 515, 100, 25);
         add(textFieldFinalScore);
 
         JLabel lblTotalScore = new JLabel("Total Score:");
-        lblTotalScore.setBounds(748, 490, 150, 20);
+        lblTotalScore.setBounds(747, 490, 150, 20);
         add(lblTotalScore);
 
         textFieldTotalScore = new JTextField();
-        textFieldTotalScore.setBounds(748, 515, 100, 25);
+        textFieldTotalScore.setBounds(747, 515, 84, 25);
         textFieldTotalScore.setEditable(false); // Không cho phép chỉnh sửa
         add(textFieldTotalScore);
         
@@ -123,21 +131,21 @@ public class ManageScroresViewP extends JPanel {
         add(lblStudentsScore);
         
         JLabel lblStudentID = new JLabel("Student ID:");
-        lblStudentID.setBounds(28, 490, 150, 20);
+        lblStudentID.setBounds(27, 490, 150, 20);
         add(lblStudentID);
         
         JLabel lblStudentName = new JLabel("Name:");
-        lblStudentName.setBounds(148, 490, 150, 20);
+        lblStudentName.setBounds(147, 490, 150, 20);
         add(lblStudentName);
         
         textFieldStudentName = new JTextField();
         textFieldStudentName.setEditable(false);
-        textFieldStudentName.setBounds(148, 515, 100, 25);
+        textFieldStudentName.setBounds(147, 515, 100, 25);
         add(textFieldStudentName);
         
         textFieldStudentID = new JTextField();
         textFieldStudentID.setEditable(false);
-        textFieldStudentID.setBounds(28, 515, 100, 25);
+        textFieldStudentID.setBounds(27, 515, 100, 25);
         add(textFieldStudentID);
         
         JButton btnUpdateButton = new JButton("Update");
