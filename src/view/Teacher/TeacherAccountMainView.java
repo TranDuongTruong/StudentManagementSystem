@@ -79,7 +79,7 @@ public class TeacherAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginController.teacherId=9;
+//					LoginController.teacherId=9;
 					TeacherAccountMainView frame = new TeacherAccountMainView();
 				//	MainViewCtrl_Teacher mainView=new MainViewCtrl_Teacher(frame);
 					frame.setVisible(true); 
