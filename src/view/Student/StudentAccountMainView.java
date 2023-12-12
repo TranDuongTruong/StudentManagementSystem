@@ -285,9 +285,10 @@ public class StudentAccountMainView extends JFrame {
 	final ExaminationView examView=new  ExaminationView();
 	final CuriculumView curView=new CuriculumView();
 	final CourseView courView=new CourseView();
-	final TranscriptView transView=new TranscriptView();
+	final TranscriptView transView=new TranscriptView(this);
 	final SyllabiView syllabiView=new SyllabiView();
 	final chatBoxViewP chatView=new chatBoxViewP();
+	 TranscriptDetailView transcriptDetailView;
 	boolean hasScheduleView = false;
 	boolean hasInformationView = false;
 	 boolean hasExaminationView = false;
@@ -296,6 +297,7 @@ public class StudentAccountMainView extends JFrame {
 	 boolean hasTranscriptView = false;
 	 boolean hasSyllabi=false;
 	 boolean hasChatBox=false;
+	 boolean hasTranscriptDetail=false;
 	public void setButtonListener() {
 
 		btn_Schedule.addActionListener(new ActionListener() {
@@ -418,9 +420,20 @@ public class StudentAccountMainView extends JFrame {
 			  contentPane.remove(chatView);
 			  hasSyllabi=false;
 		  }
+		  if(hasTranscriptDetail) {
+			  contentPane.remove(transcriptDetailView);
+			  hasTranscriptDetail=false;
+		  }
 		}
 
-	
+	public void setDetailTranscript(String classCode) {
+		transcriptDetailView=new TranscriptDetailView(classCode);
+		contentPane.remove(content);removeContent();
+    	
+    	contentPane.add(transcriptDetailView);
+    	contentPane.invalidate();
+    	contentPane.repaint();hasTranscriptDetail=true;
+	}
 	// Helper method to set the visibility of the additional buttons
 	private void setAdditionalButtonsVisible(boolean visible) {
 	    btn_CourseRegistration.setVisible(visible);

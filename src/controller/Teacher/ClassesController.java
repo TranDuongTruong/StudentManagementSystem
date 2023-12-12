@@ -10,13 +10,14 @@ import controller.DatabaseConnection;
 import controller.Admin.LoginController;
 import model.Classroom;
 import model.Student;
-
+import view.Student.TranscriptView;
 import view.Teacher.ClassesViewP;
 import model.ClassesManager;
 
 public class ClassesController  {
     ClassesManager classes;
     public ClassesViewP view;
+
     DatabaseConnection db;
     public ClassesController(ClassesViewP view){
     	classes=new ClassesManager();
@@ -31,6 +32,7 @@ public class ClassesController  {
        
         displayClasses();
     }
+
     
      void displayClasses() {
         
@@ -38,7 +40,7 @@ public class ClassesController  {
         view.displayClassList(classes);
         
     }
-  
+
    
     
     private class SearchListener implements ActionListener {
@@ -64,6 +66,7 @@ public class ClassesController  {
 
        
     }
+
     private class UndoListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {       	
         	displayClasses();
@@ -71,6 +74,6 @@ public class ClassesController  {
 
        
     }
-   
+  
 	
 }
