@@ -414,6 +414,10 @@ public class StudentAccountMainView extends JFrame {
 			  contentPane.remove(syllabiView);
 			  hasSyllabi=false;
 		  }
+		  if(hasChatBox) {
+			  contentPane.remove(chatView);
+			  hasSyllabi=false;
+		  }
 		}
 
 	
