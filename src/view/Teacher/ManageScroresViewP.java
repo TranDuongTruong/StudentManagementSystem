@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -473,40 +474,69 @@ public class ManageScroresViewP extends JPanel {
     }
     private void exportToExcel() {
         try {
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet("Scores");
+            // Create a file chooser
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Choose a location to save the Excel file");
+            
+            // Set the default file extension filter to Excel files
+            FileNameExtensionFilter excelFilter = new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx");
+            fileChooser.setFileFilter(excelFilter);
+            
+            // Set a default file name with the desired extension
+            String defaultFileName = "Scores.xlsx";
+            fileChooser.setSelectedFile(new File(defaultFileName));
 
-            // Create header row
-            XSSFRow headerRow = spreadsheet.createRow(0);
-            String[] headers = {"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score"};
-            for (int i = 0; i < headers.length; i++) {
-                Cell cell = headerRow.createCell(i);
-                cell.setCellValue(headers[i]);
-            }
+            // Show the file chooser dialog
+            int userSelection = fileChooser.showSaveDialog(this);
 
-            // Get data from the table
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            for (int i = 0; i < model.getRowCount(); i++) {
-                XSSFRow row = spreadsheet.createRow(i + 1);
-                for (int j = 0; j < model.getColumnCount() - 1; j++) {
-                    // Exclude the last column ("Total Score")
-                    Cell cell = row.createCell(j);
-                    cell.setCellValue(model.getValueAt(i, j).toString());
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                // Get the selected file
+                File file = fileChooser.getSelectedFile();
+                
+                // Ensure the selected file has the correct extension
+                if (!file.getName().toLowerCase().endsWith(".xlsx")) {
+                    file = new File(file.getAbsolutePath() + ".xlsx");
                 }
+                
+                // Create a workbook and sheet as before
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet spreadsheet = workbook.createSheet("Scores");
+
+                // Create header row
+                XSSFRow headerRow = spreadsheet.createRow(0);
+                String[] headers = {"Student ID", "Name", "Attendance Score", "Regular Score", "Midterm Score", "Final Score"};
+                for (int i = 0; i < headers.length; i++) {
+                    Cell cell = headerRow.createCell(i);
+                    cell.setCellValue(headers[i]);
+                }
+
+                // Get data from the table and write to the sheet
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    XSSFRow row = spreadsheet.createRow(i + 1);
+                    for (int j = 0; j < model.getColumnCount() - 1; j++) {
+                        // Exclude the last column ("Total Score")
+                        Cell cell = row.createCell(j);
+                        cell.setCellValue(model.getValueAt(i, j).toString());
+                    }
+                }
+
+                // Write to the selected file
+                FileOutputStream out = new FileOutputStream(file);
+                workbook.write(out);
+                out.close();
+
+                JOptionPane.showMessageDialog(this, "Data exported to Excel successfully.");
+
+            } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                // User canceled the operation
+                JOptionPane.showMessageDialog(this, "Export to Excel canceled by the user.");
             }
-
-            // Write to Excel file
-            String desktopPath = System.getProperty("user.home") + "\\Desktop";
-            String filePath = desktopPath + "\\Scores.xlsx";
-            FileOutputStream out = new FileOutputStream(new File(filePath));
-            workbook.write(out);
-            out.close();
-
-            JOptionPane.showMessageDialog(this, "Data exported to Excel successfully.");
 
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error exporting data to Excel.");
         }
     }
+
 }
