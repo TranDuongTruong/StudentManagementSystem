@@ -5,6 +5,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +39,7 @@ public class ManageScroresViewP extends JPanel {
     private JTextField textFieldStudentName;
     private JTextField textFieldStudentID;
     private JButton btnExportToExcel; 
+    private JTextField searchInp;
 
 
     /**
@@ -154,23 +157,27 @@ public class ManageScroresViewP extends JPanel {
         btnUpdateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
+                int selectedViewRow = table.getSelectedRow();
+                
+                if (selectedViewRow != -1) {
+                    // Convert the selected view row to model row
+                    int selectedModelRow = table.convertRowIndexToModel(selectedViewRow);
 
-                if (selectedRow != -1) {
-                    // Get data from the selected row and populate text fields
+                    // Get data from the model using the converted row index
                     DefaultTableModel model = (DefaultTableModel) table.getModel();
-                    textFieldAttendanceScore.setText(model.getValueAt(selectedRow, 2).toString());
-                    textFieldRegularScore.setText(model.getValueAt(selectedRow, 3).toString());
-                    textFieldMidtermScore.setText(model.getValueAt(selectedRow, 4).toString());
-                    textFieldFinalScore.setText(model.getValueAt(selectedRow, 5).toString());
-                    textFieldStudentID.setText(model.getValueAt(selectedRow, 0).toString());
-                    textFieldStudentName.setText(model.getValueAt(selectedRow, 1).toString());
-                    textFieldTotalScore.setText(model.getValueAt(selectedRow, 6).toString());
+                    textFieldAttendanceScore.setText(model.getValueAt(selectedModelRow, 2).toString());
+                    textFieldRegularScore.setText(model.getValueAt(selectedModelRow, 3).toString());
+                    textFieldMidtermScore.setText(model.getValueAt(selectedModelRow, 4).toString());
+                    textFieldFinalScore.setText(model.getValueAt(selectedModelRow, 5).toString());
+                    textFieldStudentID.setText(model.getValueAt(selectedModelRow, 0).toString());
+                    textFieldStudentName.setText(model.getValueAt(selectedModelRow, 1).toString());
+                    textFieldTotalScore.setText(model.getValueAt(selectedModelRow, 6).toString());
                 } else {
                     JOptionPane.showMessageDialog(ManageScroresViewP.this, "Please select a row to update.");
                 }
             }
         });
+
 
         btnSave = new JButton("Save");
         btnSave.setBounds(272, 568, 146, 42);
@@ -190,6 +197,31 @@ public class ManageScroresViewP extends JPanel {
         btnExportToExcel.setBounds(428, 568, 146, 42);
         add(btnExportToExcel);
         
+        JLabel label_Student_ID = new JLabel("Student ID");
+        label_Student_ID.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        label_Student_ID.setBounds(28, 71, 135, 42);
+        add(label_Student_ID);
+        
+        searchInp = new JTextField();
+        searchInp.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        searchInp.setColumns(10);
+        searchInp.setBounds(173, 75, 272, 35);
+        add(searchInp);
+        
+        JButton btnTim = new JButton("Search");
+        btnTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnTim.setBounds(491, 73, 117, 41);
+        add(btnTim);
+        
+        JButton btnHuyTim = new JButton("Undo");
+        btnHuyTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnHuyTim.setBounds(634, 73, 117, 41);
+        add(btnHuyTim);
+        
+        JSeparator separator_1 = new JSeparator();
+        separator_1.setBounds(28, 128, 738, 2);
+        add(separator_1);
+        
         // Add ActionListener for the export button
         btnExportToExcel.addActionListener(new ActionListener() {
             @Override
@@ -197,10 +229,68 @@ public class ManageScroresViewP extends JPanel {
                 exportToExcel();
             }
         });
+     // Add ActionListener for the search button
+        btnTim.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String studentIDInput = searchInp.getText();
+                if (!studentIDInput.isEmpty()) {
+                    // Perform search
+                    searchByStudentID(studentIDInput);
+                } else {
+                    JOptionPane.showMessageDialog(ManageScroresViewP.this, "Please enter a Student ID to search.");
+                }
+            }
+        });
+
+     // Add ActionListener for the undo button
+        btnHuyTim.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Reset search
+                resetSearch();
+            }
+        });
         // Fetch data from the database based on the classCode
         fetchDataFromClassroom(classCode);
 
     }
+    private void resetSearch() {
+        // Clear the search input
+        searchInp.setText("");
+        
+        // Reset the row sorter to display the full list
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        table.setRowSorter(new TableRowSorter<>(model));
+    }
+    private void searchByStudentID(String studentIDInput) {
+        // Check if the entered student ID contains only numerical digits
+        if (!studentIDInput.matches("\\d+")) {
+            JOptionPane.showMessageDialog(ManageScroresViewP.this, "Invalid Student ID format. Please enter a valid numerical Student ID.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter);
+
+        RowFilter<DefaultTableModel, Object> filter;
+        try {
+            // Filter based on the entered student ID
+            filter = RowFilter.regexFilter(studentIDInput, 0);
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(filter);
+
+        // Check if any rows are displayed after filtering
+        if (table.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(ManageScroresViewP.this, "No records found for Student ID: " + studentIDInput);
+            // Reset the search
+            resetSearch();
+        }
+    }
+
 
     private void fetchDataFromClassroom(String classCode) {
         try {
@@ -285,6 +375,7 @@ public class ManageScroresViewP extends JPanel {
         textFieldTotalScore.setText("");
 
     }
+
     private void handleUpdateScores() {
         // Lấy thông tin từ text fields
         int selectedRow = table.getSelectedRow();
@@ -418,5 +509,4 @@ public class ManageScroresViewP extends JPanel {
             JOptionPane.showMessageDialog(this, "Error exporting data to Excel.");
         }
     }
-
 }
