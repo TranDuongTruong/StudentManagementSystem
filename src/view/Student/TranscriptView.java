@@ -9,7 +9,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import controller.DatabaseConnection;
-import controller.Student.ClassesController;
+import controller.Student.*;
 import model.ClassesManager;
 import model.Classroom;
 
@@ -38,10 +38,9 @@ public class TranscriptView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TranscriptView() {
+	public TranscriptView(StudentAccountMainView mainView) {
 		 setLayout(null);
-	        setBounds(162, 0, 835, 640);
-	        
+	        setBounds(162, 0, 835, 640);	        
 	         classesPane = new JPanel();
 	         classesPane.setBorder(new LineBorder(new Color(255, 0, 0), 2));
 	        classesPane.setBackground(new Color(255, 255, 255));
@@ -90,7 +89,7 @@ public class TranscriptView extends JPanel {
 		                        {null, null, null, null}
 		                },
 		                new String[] {
-		                		"Class Code", "Class Name", "Current Number of Students", "Maximum Number of Students"
+		                		"Class Code", "Class Name"
 		                }
 		        ) {
 		            // Ghi đè phương thức isCellEditable để không cho phép chỉnh sửa
@@ -105,7 +104,24 @@ public class TranscriptView extends JPanel {
 		        
 		        // Thiết lập font cho bảng
 		        table.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        
+		        table.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				    	if (e.getClickCount() == 2) {
+		                	System.out.println("aaaaaa");
+		                    int row = table.getSelectedRow();
+		                   
+					    
+					    	
+					    	Classroom classRoom=classes.getClassroomList().get(row);
+					    	
+					    	
+					    //	System.err.println("aaaaaaaaa"+classRoom.getClassCode());	
+					    	
+					    	 mainView.setDetailTranscript(classRoom.getClassCode());
+		                }
+				    }
+				});
 			
 			
 			JScrollPane scrollPane = new JScrollPane(table);
@@ -146,8 +162,7 @@ public class TranscriptView extends JPanel {
 	        Object[] rowData = new Object[4];
 	        rowData[0] = classroom.getClassCode();
 	        rowData[1] = classroom.getClassName();
-	        rowData[2] = classroom.getNumberOfStudents();
-	        rowData[3] = classroom.getMaximumNumOfStudents();
+	       
 	        tableModel.addRow(rowData);
 	    }
 	    // Cập nhật model của JTable

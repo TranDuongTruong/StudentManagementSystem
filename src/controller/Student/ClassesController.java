@@ -24,7 +24,6 @@ public class ClassesController  {
         db=new DatabaseConnection();
         
         DatabaseConnection a= new DatabaseConnection();
-//        LoginController.teacherId=9;
         classes=a.retrieveClassesFromDatabaseforStudent(LoginController.studentId);
         view.searchClassListener(new SearchListener() );
         view.undoClassListener(new UndoListener());
