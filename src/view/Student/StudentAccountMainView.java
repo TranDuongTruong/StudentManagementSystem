@@ -346,7 +346,7 @@ public class StudentAccountMainView extends JFrame {
 	final InformationView infoView = new InformationView();
 	final ExaminationView examView = new ExaminationView();
 	final CuriculumView curView = new CuriculumView();
-	final CourseView courView = new CourseView();
+	CourseView courView ;
 	final TranscriptView transView = new TranscriptView(this);
 	final SyllabiView syllabiView = new SyllabiView();
 	final chatBoxViewP chatView = new chatBoxViewP();
@@ -381,9 +381,10 @@ public class StudentAccountMainView extends JFrame {
 		btn_CourseRegistration.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("aaaadfsaaa");
 				contentPane.remove(content);
 				removeContent();
+				courView = new CourseView();
 				contentPane.add(courView);
 				contentPane.invalidate();
 				contentPane.repaint();

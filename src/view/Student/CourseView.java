@@ -60,11 +60,14 @@ public class CourseView extends JPanel {
 	 */
 	
 	public CourseView() {
+		System.out.println("aaaaaaa");
 		setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17)));
 //		LoginController.studentId=9;
 		 DatabaseConnection db = new DatabaseConnection();
 	     String [] classCode=db.getRegisteredClassCodes(LoginController.studentId);
-	     
+	     for(int i=0;i<classCode.length;i++) {
+	    	 System.out.println("aaaaaaa"+classCode);
+	     }
 	     currentRegisteredClass=db.retrieveClassesFromDatabase(classCode);
 	     
 		setLayout(null);

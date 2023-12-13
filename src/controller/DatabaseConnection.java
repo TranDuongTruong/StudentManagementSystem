@@ -90,7 +90,7 @@ public class DatabaseConnection {
 	    public ClassesManager retrieveClassesFromDatabase(int teacherID) {
 	        ClassesManager classes = new ClassesManager();
 	        String f1, f2;
-	        int f3, f4;
+	        int f3=0, f4;
 
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -103,12 +103,12 @@ public class DatabaseConnection {
 	            while (rs.next()) {
 	                f1 = rs.getString(1);
 	                f2 = rs.getString(2);
-	                f3 = rs.getInt(3);
+	                f3 ++;
 	                f4 = rs.getInt(4);
 
 	                List<Student> students = retrieveStudentsFromClassroom(f1);
 
-	                Classroom classroom = new Classroom(f1, f2, f3, f4, students);
+	                Classroom classroom = new Classroom(f1, f2, students.size(), f4, students);
 	                classes.addClassroom(classroom);
 
 	                System.out.println(f1 + "  " + f2);
@@ -229,7 +229,7 @@ public class DatabaseConnection {
 	    	
 	        ClassesManager classes = new ClassesManager();
 	        String f1, f2;
-	        int f3, f4;
+	        int f3=0, f4;
 	        String f5;
 	        Wrapper<String> f8= new Wrapper<>(" "),f7 =  new Wrapper<>(" ") ;
 	        int  f6;
@@ -243,7 +243,8 @@ public class DatabaseConnection {
 	            while (rs.next()) {
 	                f1 = rs.getString(1);
 	                f2 = rs.getString(2);
-	                f3 = rs.getInt(3);
+	                //f3 = rs.getInt(3);
+	                f3++;
 	                f4 = rs.getInt(4);
 	                f5=rs.getString(5);
 	                f6=rs.getInt(6);
@@ -253,7 +254,7 @@ public class DatabaseConnection {
 	                retrieveScheduleDataFromDatabase(f1,f7,f8);
 	               // System.out.println("aaaaaaaddddđ:"+f7);
 	               // List<Student> students = retrieveStudentsFromClassroom(f1);
-		            // Classroom classroom = new Classroom(f1, f2, f3, f4, students,f5,"","",f6);
+		           // Classroom classroom = new Classroom(f1, f2, f3, f4, students,f5,"","",f6);
 	                Classroom classroom = new Classroom(f1, f2, f3, f4, null,f5,f8.value.toString(),f7.value.toString(),f6);
 	                classes.addClassroom(classroom);
 
@@ -295,6 +296,7 @@ public class DatabaseConnection {
  		        while (resultSet.next()) {
  		            String classCode = resultSet.getString("classCode");
  		            registeredClassCodes.add(classCode);
+ 		            System.out.println(classCode);
  		        }
 
  		        // Đóng kết nối và các đối tượng liên quan
