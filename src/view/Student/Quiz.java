@@ -19,6 +19,8 @@ public class Quiz extends JFrame implements ActionListener {
     private JRadioButton opt1, opt2, opt3, opt4;
     private ButtonGroup groupoptions;
     private JButton next, submit, lifeline;
+    private JButton back;
+
 
     public static int totalTimer; 
     public static int ans_given = 0;
@@ -111,7 +113,7 @@ public class Quiz extends JFrame implements ActionListener {
         groupoptions.add(opt4);
 
         next = new JButton("Next");
-        next.setBounds(1115, 498, 200, 40);
+        next.setBounds(1115, 470, 200, 40);
         next.setFont(new Font("Tahoma", Font.PLAIN, 22));
         next.setBackground(new Color(30, 144, 255));
         next.setForeground(Color.WHITE);
@@ -119,13 +121,23 @@ public class Quiz extends JFrame implements ActionListener {
         getContentPane().add(next);
 
         lifeline = new JButton("50-50 Lifeline");
-        lifeline.setBounds(1115, 581, 200, 40);
+        lifeline.setBounds(1115, 600, 200, 40);
         lifeline.setFont(new Font("Tahoma", Font.PLAIN, 22));
         lifeline.setBackground(new Color(30, 144, 255));
         lifeline.setForeground(Color.WHITE);
         lifeline.addActionListener(this);
 
         getContentPane().add(lifeline);
+        
+        back = new JButton("Back");
+        back.setBounds(1115, 533, 200, 40);
+        back.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        back.setBackground(new Color(30, 144, 255));
+        back.setForeground(Color.WHITE);
+        back.addActionListener(this);
+        getContentPane().add(back);
+        back.setEnabled(false); // Initially disable the back button
+
 
         submit = new JButton("Submit");
         submit.setBounds(1115, 661, 200, 40);
@@ -137,7 +149,7 @@ public class Quiz extends JFrame implements ActionListener {
         getContentPane().add(submit);
 
         timerLabel = new JLabel();
-        timerLabel.setBounds(1110, 423, 250, 30);
+        timerLabel.setBounds(1099, 416, 250, 30);
         timerLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
         timerLabel.setForeground(Color.RED);
         getContentPane().add(timerLabel);
@@ -221,6 +233,7 @@ public class Quiz extends JFrame implements ActionListener {
                 next.setEnabled(false);
                 submit.setEnabled(true);
             }
+            back.setEnabled(true);
 
             count++;
             start(count);
@@ -237,7 +250,18 @@ public class Quiz extends JFrame implements ActionListener {
                 }
                 lifeline.setEnabled(false);
             }
-        } else if (ae.getSource() == submit) {
+        }
+        else if (ae.getSource() == back) {
+            // Handle the "Back" button
+            if (count > 0) {
+                count--;
+                start(count);
+                next.setEnabled(true); // Enable the next button after going back
+                if (count == 0) {
+                    back.setEnabled(false); // Disable the back button on the first question
+                }
+            }
+        }else if (ae.getSource() == submit) {
             ans_given = 1;
             if (groupoptions.getSelection() == null) {
                 useranswers[count][0] = "";
