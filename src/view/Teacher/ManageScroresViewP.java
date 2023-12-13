@@ -546,10 +546,11 @@ public class ManageScroresViewP extends JPanel {
 
                 JOptionPane.showMessageDialog(this, "Data exported to Excel successfully.");
 
-            } else if (userSelection == JFileChooser.CANCEL_OPTION) {
-                // User canceled the operation
-                JOptionPane.showMessageDialog(this, "Export to Excel canceled by the user.");
-            }
+            } 
+//            else if (userSelection == JFileChooser.CANCEL_OPTION) {
+//                // User canceled the operation
+//                JOptionPane.showMessageDialog(this, "Export to Excel canceled by the user.");
+//            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
