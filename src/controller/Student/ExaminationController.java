@@ -1,67 +1,86 @@
 package controller.Student;
 
-import view.Student.ExaminationView;
-import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
 
 import controller.DatabaseConnection;
 import controller.Admin.LoginController;
+import model.Classroom;
+import model.Student;
+import view.Student.ExaminationView;
+import view.Student.TranscriptView;
+import view.Teacher.ClassesViewP;
+import model.ClassesManager;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+public class ExaminationController  {
+    ClassesManager classes;
+    public ExaminationView view;
 
-public class ExaminationController {
-
-    private ExaminationView view;
-
-    public ExaminationController(ExaminationView view) {
+    DatabaseConnection db;
+   
+    
+    public ExaminationController(ExaminationView view){
+    	classes=new ClassesManager();
         this.view = view;
+        db=new DatabaseConnection();
+        
+        DatabaseConnection a= new DatabaseConnection();
+        classes=a.retrieveClassesFromDatabaseforStudent(LoginController.studentId);
+        view.searchClassListener(new SearchListener() );
+        view.undoClassListener(new UndoListener());
+       
+        displayClasses();
     }
-
-    public void loadDataFromDatabase() {
-        int studentId = LoginController.studentId;
-
-        try {
-            // Establish a connection
-            Connection connection = DatabaseConnection.connectToBB(); // Get the database connection
-
-            // Create a statement
-            Statement statement = connection.createStatement();
-
-            // Execute the query to get data from the database
-            String query = "SELECT classroom.classCode, classroom.className " +
-                           "FROM classroom " +
-                           "JOIN studentclassroom ON classroom.classCode = studentclassroom.classCode " +
-                           "WHERE studentclassroom.studentID = " + studentId;
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            // Create a DefaultTableModel to hold the data
-            DefaultTableModel model = (DefaultTableModel) view.getTable().getModel();
-            model.setRowCount(0); // Clear existing data
-
-            // Populate the table with data from the result set
-            while (resultSet.next()) {
-                String classCode = resultSet.getString("classCode");
-                String className = resultSet.getString("className");
-                
-                // Thêm trạng thái vào mô hình bảng
-                String examStatus = getExamStatus(classCode);
-                model.addRow(new Object[] { classCode, className, examStatus });
-            }
-
-            // Close the connections
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    
+    
+     void displayClasses() {
+        
+        view.model=classes;
+        view.displayClassList(classes);
         
     }
+  
+   
+    
+    private class SearchListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	String classCode=view.getClassCode();
+        	
+        	ClassesManager findClassroomList=new ClassesManager();
+        	
+        	if(classCode!=null&&!classCode.trim().isEmpty()) {       		        		
+        		for (Classroom classroom: classes.getClassroomList()) {
+        	        if (String.valueOf(classroom.getClassCode()).contains(classCode)) {
+        	        	findClassroomList.addClassroom(classroom);
+        	        }
+        	    } 
+        	    
+        		
+        		view.displayClassList(findClassroomList);
+            	view.classes=findClassroomList;
+        	}
+        		        	        
+        	
+        }
+
+       
+    }
+    private class UndoListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {       	
+        	displayClasses();
+        }
+
+       
+    }
+    
  // Phương thức kiểm tra xem có bài kiểm tra nào cho lớp cụ thể hay không
-    public boolean hasExams(String classCode) {
+    public static boolean hasExams(String classCode) {
         try {
             Connection connection = DatabaseConnection.connectToBB();
             Statement statement = connection.createStatement();
@@ -88,8 +107,9 @@ public class ExaminationController {
     }
     
     // Hàm này trả về trạng thái (Yes/No) dựa trên việc có bài kiểm tra hay không
-    public String getExamStatus(String classCode) {
+    public static String getExamStatus(String classCode) {
         return hasExams(classCode) ? "Yes" : "No";
     }
-
+   
+	
 }
