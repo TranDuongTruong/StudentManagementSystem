@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -88,29 +89,38 @@ public class TranscriptDetailView extends JPanel {
 	        
 	}
 	private void setTableData(float attendanceScore, float regularScore, float midtermScore, float finalScore, Object total) {
-	    DefaultTableModel model = (DefaultTableModel) table.getModel();
-	    
-	    float per=0;
-	    model.setValueAt(attendanceScore, 0, 2);
-	    
-	   per=(float) (attendanceScore*1.5);
-	   
-	   model.setValueAt(per+"%", 0, 4);
-	   
-	    model.setValueAt(regularScore, 1, 2);per=(float) (regularScore*1);	
-	    model.setValueAt(per+"%", 1, 4);
-	    
-	    model.setValueAt(midtermScore, 2, 2);per=(float) (midtermScore*2);	
-	    model.setValueAt(per+"%", 2, 4);
-	    
-	    
-	    model.setValueAt(finalScore, 3, 2);per=(float) (finalScore*5.5);	
-	    if(String.valueOf(finalScore)=="") model.setValueAt("", 3, 2);
-	    System.out.println(finalScore+"\tadjhssssssssssssss");
-	    model.setValueAt(per+"%", 3, 4);
-	    
-	    model.setValueAt(total, 4, 4);
-	}
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        float per = 0;
+        model.setValueAt(attendanceScore, 0, 2);
+
+        per = (float) (attendanceScore * 1.5);
+        setFormattedValue(model, per, 0, 4);
+
+        model.setValueAt(regularScore, 1, 2);
+        per = (float) (regularScore * 1);
+        setFormattedValue(model, per, 1, 4);
+
+        model.setValueAt(midtermScore, 2, 2);
+        per = (float) (midtermScore * 2);
+        setFormattedValue(model, per, 2, 4);
+
+        model.setValueAt(finalScore, 3, 2);
+        per = (float) (finalScore * 5.5);
+        if (String.valueOf(finalScore).equals("")) {
+            model.setValueAt("", 3, 2);
+        }
+        System.out.println(finalScore + "\tadjhssssssssssssss");
+
+        setFormattedValue(model, per, 3, 4);
+
+        model.setValueAt(total, 4, 4);
+    }
+
+    private void setFormattedValue(DefaultTableModel model, float value, int row, int column) {
+        DecimalFormat df = new DecimalFormat("#.##"); // Format to two decimal places
+        model.setValueAt(df.format(value) + "%", row, column);
+    }
 	
 	public void getScores(String studentID, String classCode) {
 		System.err.println("\t"+studentID+"\t"+classCode);
