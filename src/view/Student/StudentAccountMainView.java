@@ -186,7 +186,7 @@ public class StudentAccountMainView extends JFrame {
 		panel.setBackground(new Color(255, 128, 128));
 		panel.setBounds(0, 0, 162, 640);
 		contentPane.add(panel);
-		panel.setLayout(null);
+		panel.setLayout(null); 
 
 		Box verticalBox_1 = Box.createVerticalBox();
 		verticalBox_1.setAlignmentX(0.0f);
@@ -200,13 +200,13 @@ public class StudentAccountMainView extends JFrame {
 			}
 		});
 		// btn_DashBoard_1.setText(studentName);
-		btn_DashBoard_1.setMaximumSize(new Dimension(100, 20));
+		btn_DashBoard_1.setMaximumSize(new Dimension(120, 20));
 		btn_DashBoard_1.setBorder(null);
 		btn_DashBoard_1.setBackground(Color.RED); // Set the name label color to red
 		verticalBox_1.add(btn_DashBoard_1);
 
 		btn_Information = new JButton("Dasboard"); // Updated button label
-		btn_Information.setMaximumSize(new Dimension(100, 20));
+		btn_Information.setMaximumSize(new Dimension(120, 20));
 		btn_Information.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Information);
 
@@ -214,7 +214,7 @@ public class StudentAccountMainView extends JFrame {
 		verticalBox_1.add(verticalStrut_1_1);
 
 		btn_Schedule = new JButton("Schedule"); // Updated button label
-		btn_Schedule.setMaximumSize(new Dimension(100, 20));
+		btn_Schedule.setMaximumSize(new Dimension(120, 20));
 		btn_Schedule.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Schedule);
 
@@ -222,7 +222,7 @@ public class StudentAccountMainView extends JFrame {
 		verticalBox_1.add(verticalStrut_2_1);
 
 		JButton btn_Learning = new JButton("Learning");
-		btn_Learning.setMaximumSize(new Dimension(100, 20));
+		btn_Learning.setMaximumSize(new Dimension(120, 20));
 		btn_Learning.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Learning);
 
@@ -297,7 +297,7 @@ public class StudentAccountMainView extends JFrame {
 		verticalBox_1.add(verticalStrut_2_1_7);
 
 		JButton btn_Logout = new JButton("<- Logout"); // Updated button label
-		btn_Logout.setMaximumSize(new Dimension(100, 20));
+		btn_Logout.setMaximumSize(new Dimension(140, 25));
 		btn_Logout.setBackground(Color.WHITE);
 		btn_Logout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -316,7 +316,7 @@ public class StudentAccountMainView extends JFrame {
 		
 		//Start: Clock
 		clockLabel = new ClockLabel();
-		clockLabel.setBounds(0, 0, 162, 26);
+		clockLabel.setBounds(10, 0, 142, 26);
 		panel.add(clockLabel);
 
 		dateLabel = new DateLabel();
