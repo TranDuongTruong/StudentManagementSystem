@@ -235,6 +235,7 @@ public class ClassesAdminView extends JFrame {
 		textField_SoHSHT = new JTextField();
 		textField_SoHSHT.setColumns(10);
 		textField_SoHSHT.setBounds(541, 414, 164, 41);
+		textField_SoHSHT.setEditable(false);
 		classesPane.add(textField_SoHSHT);
 		
 		JLabel lb_SoHSTD = new JLabel("Number of max student");
@@ -372,7 +373,7 @@ public class ClassesAdminView extends JFrame {
 	public Classroom getNewClass() {
 		String classCode = this.textField_MaLop.getText();
         String className = this.textField_TenLop.getText();
-        int numOfCurentStudents = Integer.valueOf(this.textField_SoHSHT.getText());
+        int numOfCurentStudents = 0;
         int maximumNumOfStudents =Integer.valueOf(this.textField_SoHSTD.getText());;
         
         Classroom lop= new Classroom(classCode, className, numOfCurentStudents, maximumNumOfStudents);

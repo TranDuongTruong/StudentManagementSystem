@@ -16,7 +16,7 @@ public class DatabaseConnection {
 	 //FOR Local
 	    private static final String URL = "jdbc:mysql://localhost:3306/spmdatabase11";   
 	    private static final String USER = "root";
-	    private static final String PASSWORD = "";
+	    private static final String PASSWORD = "123456";
 	    
 	 //FOR Online
 //	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663967";   
@@ -46,7 +46,7 @@ public class DatabaseConnection {
 	    	
 	        ClassesManager classes = new ClassesManager();
 	        String f1, f2;
-	        int f3, f4;
+	        int f3=0, f4;
 	        
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -58,7 +58,7 @@ public class DatabaseConnection {
 	            while (rs.next()) {
 	                f1 = rs.getString(1);
 	                f2 = rs.getString(2);
-	                f3 = rs.getInt(3);
+	                f3 ++;
 	                f4 = rs.getInt(4);
 	              
 

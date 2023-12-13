@@ -63,6 +63,7 @@ public class StudentController implements ActionListener{
 		this.studentViewAtt = view;
 		this.classRoom=classRoom;
 		db=new DatabaseConnection();
+		
 		view.searchStudentListener(new SearchListenerAtt());
 		view.huyTimListener(new HuyTimListenerAtt());
 		 displayListOfStudentAtt();

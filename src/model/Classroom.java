@@ -25,7 +25,7 @@ public class Classroom {
 			super();
 			this.classCode = classCode;
 			this.className = className;
-			this.numOfCurentStudents = numOfCurentStudents;
+			this.numOfCurentStudents = studentList.size()-1;
 			this.maximumNumOfStudents = maximumNumOfStudents;
 			this.studentList = studentList;
 			this.schedule = thoiGian;
@@ -123,7 +123,7 @@ public class Classroom {
 			super();
 			this.classCode = classCode;
 			this.className = className;
-			this.numOfCurentStudents = numOfCurentStudents;
+			this.numOfCurentStudents = studentList.size()-1;
 			this.maximumNumOfStudents = maximumNumOfStudents;
 			this.studentList = studentList;
 		}
