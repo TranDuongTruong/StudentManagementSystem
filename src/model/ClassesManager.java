@@ -33,6 +33,7 @@ public class ClassesManager {
         }
         return null;
     }
+
     public Classroom findClassroomByCodeRegister(String classCodeRegister) {
         for (Classroom classroom : classroomList) {
             if (classroom.getClass_registration_code().equals(classCodeRegister)) {
@@ -88,7 +89,7 @@ public class ClassesManager {
 		this.addClassroom(lop);
 		
 	}
-
+	
 	public void updateClassroom(Classroom updatedClassroom) {
 	    for (int i = 0; i < classroomList.size(); i++) {
 	        Classroom classroom = classroomList.get(i);
@@ -98,7 +99,7 @@ public class ClassesManager {
 	        }
 	    }
 	}
-
+	
 	
 	
 }
