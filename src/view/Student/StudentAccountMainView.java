@@ -1,43 +1,37 @@
 package view.Student;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Locale;
 
+import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.Timer;
 
-import controller.DatabaseConnection;
 import controller.Admin.LoginController;
+import controller.DatabaseConnection;
 import controller.Student.MainViewCtrl;
 import model.Student;
 import view.Admin.LoginView;
 import view.style.GradientPanel;
 
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.awt.Panel;
-import java.io.File;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.Dimension;
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import javax.swing.*;
 
 public class StudentAccountMainView extends JFrame {
 
@@ -63,7 +57,7 @@ public class StudentAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//				LoginController.studentId=9;
+				LoginController.studentId=9;
 					retrieveStudent();
 					StudentAccountMainView frame = new StudentAccountMainView();
 					frame.setVisible(true);
@@ -141,8 +135,41 @@ public class StudentAccountMainView extends JFrame {
     }
 
     ClockLabel clockLabel;
+   
+
+    public class DateLabel extends JLabel {
+        private final SimpleDateFormat dateFormat;
+        private Timer timer;
+
+        public DateLabel() {
+            super();
+            this.dateFormat = new SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH);
+            setFont(new Font("Verdana", Font.PLAIN, 16));
+            setForeground(new Color(0x00FF00));
+            setBackground(Color.black);
+            setOpaque(true);
+
+            updateDate();
+            timer = new Timer(60000, e -> updateDate()); // Update every minute
+            timer.start();
+        }
+
+        private void updateDate() {
+            setText(dateFormat.format(Calendar.getInstance().getTime()));
+        }
+
+        public void startTimer() {
+            timer.start();
+        }
+
+        public void stopTimer() {
+            timer.stop();
+        }
+    }
+    DateLabel dateLabel;
 	public StudentAccountMainView() {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 677);
 		contentPane = new JPanel();
@@ -157,7 +184,7 @@ public class StudentAccountMainView extends JFrame {
 		
 		GradientPanel panel = new GradientPanel(Color.red,Color.white);
 		panel.setBackground(new Color(255, 128, 128));
-		panel.setBounds(0, 0, 152, 640);
+		panel.setBounds(0, 0, 162, 640);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -293,8 +320,12 @@ public class StudentAccountMainView extends JFrame {
 		panel.add(verticalStrut_4);
 		
 		clockLabel = new ClockLabel();
-		clockLabel.setBounds(10, 4, 132, 26);
+		clockLabel.setBounds(0, 0, 162, 26);
 		panel.add(clockLabel);
+		
+		dateLabel = new DateLabel();
+	    dateLabel.setBounds(0, 28, 162, 20);
+	    panel.add(dateLabel);
 		
 		
 		 content = new JPanel();
