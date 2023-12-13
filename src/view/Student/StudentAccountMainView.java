@@ -154,7 +154,7 @@ public class StudentAccountMainView extends JFrame {
 		Component verticalStrut_4 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_4);
 		
-		 btn_Information = new JButton("Information"); // Updated button label
+		 btn_Information = new JButton("Dasboard"); // Updated button label
 		btn_Information.setMaximumSize(new Dimension(100, 20));
 		btn_Information.setBackground(Color.LIGHT_GRAY);
 		verticalBox_1.add(btn_Information);
@@ -288,6 +288,7 @@ public class StudentAccountMainView extends JFrame {
 	final TranscriptView transView=new TranscriptView(this);
 	final SyllabiView syllabiView=new SyllabiView();
 	final chatBoxViewP chatView=new chatBoxViewP();
+	final DashboardStudentView dashboarStudentView=new DashboardStudentView();
 	 TranscriptDetailView transcriptDetailView;
 	boolean hasScheduleView = false;
 	boolean hasInformationView = false;
@@ -298,6 +299,7 @@ public class StudentAccountMainView extends JFrame {
 	 boolean hasSyllabi=false;
 	 boolean hasChatBox=false;
 	 boolean hasTranscriptDetail=false;
+	 boolean hasdashboarStudentView=false;
 	public void setButtonListener() {
 
 		btn_Schedule.addActionListener(new ActionListener() {
@@ -353,9 +355,9 @@ public class StudentAccountMainView extends JFrame {
 				
 			    public void actionPerformed(ActionEvent e) {	
 			    	contentPane.remove(content);removeContent();
-			    	contentPane.add(infoView);
+			    	contentPane.add(dashboarStudentView);
 			    	contentPane.invalidate();
-			    	contentPane.repaint();hasInformationView =true;
+			    	contentPane.repaint();hasdashboarStudentView =true;
 			    }
 			});
 	     
@@ -423,6 +425,10 @@ public class StudentAccountMainView extends JFrame {
 		  if(hasTranscriptDetail) {
 			  contentPane.remove(transcriptDetailView);
 			  hasTranscriptDetail=false;
+		  }
+		  if(hasdashboarStudentView) {
+			  contentPane.remove(dashboarStudentView);
+			  hasdashboarStudentView=false;
 		  }
 		}
 
