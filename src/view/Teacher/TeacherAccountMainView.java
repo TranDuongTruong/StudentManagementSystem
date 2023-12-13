@@ -87,7 +87,7 @@ public class TeacherAccountMainView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//					LoginController.teacherId=9;
+//					LoginController.teacherId = 9;
 					TeacherAccountMainView frame = new TeacherAccountMainView();
 					// MainViewCtrl_Teacher mainView=new MainViewCtrl_Teacher(frame);
 					frame.setVisible(true);
@@ -230,6 +230,7 @@ public class TeacherAccountMainView extends JFrame {
 		hasAttendance = true;
 
 	}
+
 	private static class ClockLabel extends JLabel {
 		private final SimpleDateFormat timeFormat;
 		private Timer timer;
@@ -262,27 +263,37 @@ public class TeacherAccountMainView extends JFrame {
 
 	ClockLabel clockLabel;
 
-	/*
-	 * public class DateLabel extends JLabel { private final SimpleDateFormat
-	 * dateFormat; private Timer timer;
-	 * 
-	 * public DateLabel() { super(); this.dateFormat = new
-	 * SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH); setFont(new
-	 * Font("Verdana", Font.PLAIN, 16)); setForeground(new Color(0x00FF00));
-	 * setBackground(Color.black); setOpaque(true);
-	 * 
-	 * updateDate(); timer = new Timer(60000, e -> updateDate()); // Update every
-	 * minute timer.start(); }
-	 * 
-	 * private void updateDate() {
-	 * setText(dateFormat.format(Calendar.getInstance().getTime())); }
-	 * 
-	 * public void startTimer() { timer.start(); }
-	 * 
-	 * public void stopTimer() { timer.stop(); } }
-	 * 
-	 * DateLabel dateLabel;
-	 */
+	public class DateLabel extends JLabel {
+		private final SimpleDateFormat dateFormat;
+		private Timer timer;
+
+		public DateLabel() {
+			super();
+			this.dateFormat = new SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH);
+			setFont(new Font("Verdana", Font.PLAIN, 16));
+			setForeground(new Color(0x00FF00));
+			setBackground(Color.black);
+			setOpaque(true);
+
+			updateDate();
+			timer = new Timer(60000, e -> updateDate()); // Update every minute
+			timer.start();
+		}
+
+		private void updateDate() {
+			setText(dateFormat.format(Calendar.getInstance().getTime()));
+		}
+
+		public void startTimer() {
+			timer.start();
+		}
+
+		public void stopTimer() {
+			timer.stop();
+		}
+	}
+
+	DateLabel dateLabel;
 
 	public TeacherAccountMainView() {
 
@@ -316,7 +327,6 @@ public class TeacherAccountMainView extends JFrame {
 		Box verticalBox = Box.createVerticalBox();
 
 		verticalBox.setAlignmentX(Box.LEFT_ALIGNMENT);
-		
 
 		// Tạo các button
 		btn_DashBoard = new JButton("Dashboard");
@@ -349,28 +359,26 @@ public class TeacherAccountMainView extends JFrame {
 		btn_classes.setMaximumSize(new Dimension(200, 40));
 		btn_Schedule.setMaximumSize(new Dimension(200, 40));
 		btn_blog.setMaximumSize(new Dimension(200, 40));
-		
+
 		clockLabel = new ClockLabel();
 		clockLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		clockLabel.setForeground(new Color(255, 0, 0));
-		clockLabel.setBackground(new Color(255, 128, 128));
+//		clockLabel.setBackground(new Color(255, 128, 128));
 		clockLabel.setMaximumSize(new Dimension(200, 40));
-	//	clockLabel.setBounds(10, 350, 200, 40);
-		//panel.add(clockLabel);
-		
-		DateLabel dateLabel = new DateLabel();
+		// clockLabel.setBounds(10, 350, 200, 40);
+		// panel.add(clockLabel);
+
+		dateLabel = new DateLabel();
 		dateLabel.setForeground(new Color(255, 0, 0));
-		dateLabel.setBackground(new Color(255, 128, 128));
+//		dateLabel.setBackground(new Color(255, 128, 128));
 		dateLabel.setBounds(10, 350, 200, 40);
-		//panel.add(dateLabel);
+		// panel.add(dateLabel);
 		// Thêm các button vào VerticalBox
-		
-		
-		
+
 		verticalBox.add(dateLabel);
-		verticalBox.add(Box.createVerticalStrut(10)); 
+		verticalBox.add(Box.createVerticalStrut(10));
 		verticalBox.add(clockLabel);
-		verticalBox.add(Box.createVerticalStrut(10)); 
+		verticalBox.add(Box.createVerticalStrut(10));
 		verticalBox.add(btn_DashBoard);
 		verticalBox.add(Box.createVerticalStrut(10)); // Khoảng cách giữa các button
 		verticalBox.add(btn_classes);
@@ -396,8 +404,6 @@ public class TeacherAccountMainView extends JFrame {
 		});
 		btn_Classes_1.setMaximumSize(new Dimension(120, 20));
 		panel.add(btn_Classes_1);
-		
-		
 
 		content_panel = new JPanel();
 		content_panel.setBorder(new LineBorder(new Color(255, 0, 0)));

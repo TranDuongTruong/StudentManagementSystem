@@ -137,25 +137,35 @@ public class StudentAccountMainView extends JFrame {
 
 	ClockLabel clockLabel;
 
-	/*
-	 * public class DateLabel extends JLabel { private final SimpleDateFormat
-	 * dateFormat; private Timer timer;
-	 * 
-	 * public DateLabel() { super(); this.dateFormat = new
-	 * SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH); setFont(new
-	 * Font("Verdana", Font.PLAIN, 16)); setForeground(new Color(255,128,128));
-	 * setBackground(Color.red); setOpaque(true);
-	 * 
-	 * updateDate(); timer = new Timer(60000, e -> updateDate()); // Update every
-	 * minute timer.start(); }
-	 * 
-	 * private void updateDate() {
-	 * setText(dateFormat.format(Calendar.getInstance().getTime())); }
-	 * 
-	 * public void startTimer() { timer.start(); }
-	 * 
-	 * public void stopTimer() { timer.stop(); } }
-	 */
+	public class DateLabel extends JLabel {
+		private final SimpleDateFormat dateFormat;
+		private Timer timer;
+
+		public DateLabel() {
+			super();
+			this.dateFormat = new SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH);
+			setFont(new Font("Verdana", Font.PLAIN, 16));
+			setForeground(new Color(255, 128, 128));
+			setBackground(Color.black);
+			setOpaque(true);
+
+			updateDate();
+			timer = new Timer(60000, e -> updateDate()); // Update every minute
+			timer.start();
+		}
+
+		private void updateDate() {
+			setText(dateFormat.format(Calendar.getInstance().getTime()));
+		}
+
+		public void startTimer() {
+			timer.start();
+		}
+
+		public void stopTimer() {
+			timer.stop();
+		}
+	}
 
 	DateLabel dateLabel;
 
@@ -177,7 +187,7 @@ public class StudentAccountMainView extends JFrame {
 		panel.setBackground(new Color(255, 128, 128));
 		panel.setBounds(0, 0, 162, 640);
 		contentPane.add(panel);
-		panel.setLayout(null); 
+		panel.setLayout(null);
 
 		Box verticalBox_1 = Box.createVerticalBox();
 		verticalBox_1.setAlignmentX(0.0f);
@@ -196,7 +206,7 @@ public class StudentAccountMainView extends JFrame {
 		btn_Name.setBorder(null);
 		btn_Name.setBackground(Color.RED); // Set the name label color to red
 		verticalBox_1.add(btn_Name);
-		
+
 		Component verticalStrut_4 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_4);
 
@@ -321,30 +331,21 @@ public class StudentAccountMainView extends JFrame {
 
 		verticalBox_1.add(btn_Logout);
 
-		DateLabel dateLabel = new DateLabel();
-		dateLabel.setForeground(new Color(255, 0, 0));
-		dateLabel.setBackground(new Color(255, 128, 128));
-		dateLabel.setBounds(0, 6, 162, 26);
-		//panel.add(dateLabel);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(192, 192, 192));
-		panel_1.setBounds(0, 10, 162, 70);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-		
-		//Start: Clock
+		// Start: Clock
 		clockLabel = new ClockLabel();
-		clockLabel.setBounds(10, 34, 142, 26);
-		
-		panel_1.add(dateLabel);
-		
-		panel_1.add(clockLabel);
-		
-		clockLabel.setForeground(new Color(255, 0, 0));
-		clockLabel.setBackground(new Color(255, 128, 128));
-		//End: Clock
+		clockLabel.setBounds(10, 46, 142, 26);
+		panel.add(clockLabel);
 
+		clockLabel.setForeground(new Color(255, 0, 0));
+
+		dateLabel = new DateLabel();
+		dateLabel.setForeground(new Color(255, 0, 0));
+//		dateLabel.setBackground(new Color(255, 128, 128));
+		dateLabel.setBounds(0, 6, 162, 26);
+		panel.add(dateLabel);
+
+//		clockLabel.setBackground(new Color(255, 128, 128));
+		// End: Clock
 
 		content = new JPanel();
 		content.setBorder(new LineBorder(new Color(255, 0, 0)));
@@ -367,7 +368,7 @@ public class StudentAccountMainView extends JFrame {
 	final InformationView infoView = new InformationView();
 	final ExaminationView examView = new ExaminationView(this);
 	final CuriculumView curView = new CuriculumView();
-	CourseView courView ;
+	CourseView courView;
 	final TranscriptView transView = new TranscriptView(this);
 	final SyllabiView syllabiView = new SyllabiView();
 	final chatBoxViewP chatView = new chatBoxViewP();
