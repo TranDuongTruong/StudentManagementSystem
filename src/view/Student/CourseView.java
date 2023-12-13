@@ -221,7 +221,7 @@ public class CourseView extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		        String selectedCourse = textField_FindCourse.getText().trim();
 		        if (selectedCourse.equals("")) {
-		            JOptionPane.showMessageDialog(null, "Không có lớp để tìm");
+		            JOptionPane.showMessageDialog(null, "There are no classes to find");
 		            displayAvailableClasses(model);
 		        } else {
 		            ClassesManager findClassroomList = new ClassesManager();
@@ -231,7 +231,7 @@ public class CourseView extends JPanel {
 		                }
 		            }
 		            if (findClassroomList.getClassroomList().isEmpty()) {
-		                JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học có mã chứa: " + selectedCourse);
+		                JOptionPane.showMessageDialog(null, "No class found whose code contains: " + selectedCourse);
 		            } else {
 		                displayAvailableClasses(findClassroomList);
 		            }

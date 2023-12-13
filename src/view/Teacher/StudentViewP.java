@@ -328,7 +328,7 @@ public class StudentViewP extends JPanel {
 	        textField_dob_year = new JTextField();
 	        textField_dob_year.setFont(new Font("Tahoma", Font.PLAIN, 19));
 	        textField_dob_year.setColumns(10);
-	        textField_dob_year.setBounds(228, 512, 43, 29);
+	        textField_dob_year.setBounds(228, 512, 70, 29);
 	        contentPane_1.add(textField_dob_year);
 	        StudentController stu=new StudentController(this,classRoom);
 	}
