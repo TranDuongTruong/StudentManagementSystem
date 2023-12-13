@@ -34,6 +34,10 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import javax.swing.*;
 
 public class StudentAccountMainView extends JFrame {
 
@@ -62,10 +66,6 @@ public class StudentAccountMainView extends JFrame {
 //				LoginController.studentId=9;
 					retrieveStudent();
 					StudentAccountMainView frame = new StudentAccountMainView();
-					
-					System.out.println("aaaa");
-					
-					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -110,10 +110,39 @@ public class StudentAccountMainView extends JFrame {
 		    }
 		    
 	}
+	private static class ClockLabel extends JLabel {
+        private final SimpleDateFormat timeFormat;
+        private Timer timer;
+
+        public ClockLabel() {
+            super();
+            this.timeFormat = new SimpleDateFormat("hh:mm:ss a");
+            setFont(new Font("Verdana", Font.PLAIN, 20));
+            setForeground(new Color(0x00FF00));
+            setBackground(Color.black);
+            setOpaque(true);
+
+            updateTime();
+            timer = new Timer(1000, e -> updateTime());
+            timer.start();
+        }
+
+        private void updateTime() {
+            setText(timeFormat.format(Calendar.getInstance().getTime()));
+        }
+
+        public void startTimer() {
+            timer.start();
+        }
+
+        public void stopTimer() {
+            timer.stop();
+        }
+    }
+
+    ClockLabel clockLabel;
 	public StudentAccountMainView() {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-	
-		System.out.println("aaaaa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 677);
 		contentPane = new JPanel();
@@ -134,7 +163,7 @@ public class StudentAccountMainView extends JFrame {
 		
 		Box verticalBox_1 = Box.createVerticalBox();
 		verticalBox_1.setAlignmentX(0.0f);
-		verticalBox_1.setBounds(10, 57, 132, 573);
+		verticalBox_1.setBounds(10, 83, 132, 573);
 		panel.add(verticalBox_1);
 		
 		
@@ -149,10 +178,6 @@ public class StudentAccountMainView extends JFrame {
 		btn_DashBoard_1.setBorder(null);
 		btn_DashBoard_1.setBackground(Color.RED); // Set the name label color to red
 		verticalBox_1.add(btn_DashBoard_1);
-		
-		
-		Component verticalStrut_4 = Box.createVerticalStrut(10);
-		verticalBox_1.add(verticalStrut_4);
 		
 		 btn_Information = new JButton("Dasboard"); // Updated button label
 		btn_Information.setMaximumSize(new Dimension(100, 20));
@@ -262,15 +287,28 @@ public class StudentAccountMainView extends JFrame {
 		
 		verticalBox_1.add(btn_Logout);
 		
+		
+		Component verticalStrut_4 = Box.createVerticalStrut(10);
+		verticalStrut_4.setBounds(10, 61, 132, 10);
+		panel.add(verticalStrut_4);
+		
+		clockLabel = new ClockLabel();
+		clockLabel.setBounds(10, 4, 132, 26);
+		panel.add(clockLabel);
+		
+		
 		 content = new JPanel();
 		 content.setBorder(new LineBorder(new Color(255, 0, 0)));
 		content.setBounds(162, 0, 835, 630);
+        
 		contentPane.add(content);
 		content.setLayout(null);
 		
 		JLabel label = new JLabel("New label");
 		label.setBounds(410, 220, 45, 13);
 		content.add(label);
+		 
+
 		
 		setButtonListener();
 		
@@ -420,7 +458,7 @@ public class StudentAccountMainView extends JFrame {
 		  }
 		  if(hasChatBox) {
 			  contentPane.remove(chatView);
-			  hasSyllabi=false;
+			  hasChatBox =false;
 		  }
 		  if(hasTranscriptDetail) {
 			  contentPane.remove(transcriptDetailView);
