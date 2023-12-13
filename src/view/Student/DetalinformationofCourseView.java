@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class DetalinformationofCourseView extends JFrame {
 
@@ -104,9 +105,10 @@ public class DetalinformationofCourseView extends JFrame {
 		contentPane.add(lbl_Location);
 		
 		 lblCourseInformation = new JLabel("COURSE INFORMATION");
+		 lblCourseInformation.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseInformation.setForeground(new Color(255, 38, 11));
 		lblCourseInformation.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblCourseInformation.setBounds(6, 6, 264, 37);
+		lblCourseInformation.setBounds(92, 6, 264, 37);
 		contentPane.add(lblCourseInformation);
 		
 		JSeparator separator = new JSeparator();
@@ -114,12 +116,13 @@ public class DetalinformationofCourseView extends JFrame {
 		contentPane.add(separator);
 		
 		JButton btnNewButton = new JButton("Back");
+		btnNewButton.setIcon(new ImageIcon(DetalinformationofCourseView.class.getResource("/Assert/student/Examination/back.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
-		btnNewButton.setBounds(16, 224, 117, 29);
+		btnNewButton.setBounds(312, 224, 117, 29);
 		contentPane.add(btnNewButton);
 		
 		btnEnroll = new JButton("Enroll");
@@ -129,7 +132,7 @@ public class DetalinformationofCourseView extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnEnroll.setBounds(143, 224, 117, 29);
+		btnEnroll.setBounds(16, 224, 117, 29);
 		contentPane.add(btnEnroll);
 		
 		 // Gọi hàm để lấy dữ liệu từ cơ sở dữ liệu

@@ -29,6 +29,8 @@ import javax.swing.text.JTextComponent;
 
 import controller.DatabaseConnection;
 import controller.Admin.LoginController;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
 public class DashboardTeacherView extends JPanel {
 
@@ -57,10 +59,11 @@ public class DashboardTeacherView extends JPanel {
 	private JLabel lblGender_info;
 	private JLabel lblEmail_info;
 	private Date date;
-	private JTextField txtCurrentAddress;
 	private JLabel lblAddress_info;
 	private JLabel lblPhone_info;
+	private JLabel lblNewLabel_1;
 	public DashboardTeacherView() {
+		setBorder(new LineBorder(new Color(255, 28, 17)));
 	
 	        setBounds(162, 0, 835, 640);
 	        setLayout(null);
@@ -151,13 +154,6 @@ public class DashboardTeacherView extends JPanel {
 		              separator_1.setBounds(6, 242, 823, 24);
 		              add(separator_1);
 		              
-		              txtCurrentAddress = new JTextField();
-		              txtCurrentAddress.setForeground(new Color(255, 28, 17));
-		              txtCurrentAddress.setText("Current Address");
-		              txtCurrentAddress.setBounds(6, 253, 130, 26);
-		              add(txtCurrentAddress);
-		              txtCurrentAddress.setColumns(10);
-		              
 		              JLabel lbladdress = new JLabel("Address:");
 		              lbladdress.setHorizontalAlignment(SwingConstants.RIGHT);
 		              lbladdress.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -190,6 +186,11 @@ public class DashboardTeacherView extends JPanel {
 		              lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		              lblNewLabel.setBounds(6, 6, 295, 32);
 		              add(lblNewLabel);
+		              
+		              lblNewLabel_1 = new JLabel("Current Address");
+		              lblNewLabel_1.setForeground(new Color(255, 28, 17));
+		              lblNewLabel_1.setBounds(6, 262, 113, 16);
+		              add(lblNewLabel_1);
 		              
 		              setVisible(true);
 		              getData(String.valueOf(LoginController.teacherId));

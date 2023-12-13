@@ -29,6 +29,7 @@ import javax.swing.text.JTextComponent;
 
 import controller.DatabaseConnection;
 import controller.Admin.LoginController;
+import javax.swing.border.BevelBorder;
 
 public class DashboardStudentView extends JPanel {
 
@@ -61,6 +62,7 @@ public class DashboardStudentView extends JPanel {
 	private JLabel lblAddress_info;
 	private JLabel lblPhone_info;
 	public DashboardStudentView() {
+		setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17)));
 	
 	        setBounds(162, 0, 835, 640);
 	        setLayout(null);
