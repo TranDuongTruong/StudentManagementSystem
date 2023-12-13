@@ -89,9 +89,12 @@ public class TranscriptDetailView extends JPanel {
 	}
 	private void setTableData(float attendanceScore, float regularScore, float midtermScore, float finalScore, Object total) {
 	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    
 	    float per=0;
 	    model.setValueAt(attendanceScore, 0, 2);
-	   per=(float) (attendanceScore*1.5);	 
+	    
+	   per=(float) (attendanceScore*1.5);
+	   
 	   model.setValueAt(per+"%", 0, 4);
 	   
 	    model.setValueAt(regularScore, 1, 2);per=(float) (regularScore*1);	
@@ -100,7 +103,10 @@ public class TranscriptDetailView extends JPanel {
 	    model.setValueAt(midtermScore, 2, 2);per=(float) (midtermScore*2);	
 	    model.setValueAt(per+"%", 2, 4);
 	    
+	    
 	    model.setValueAt(finalScore, 3, 2);per=(float) (finalScore*5.5);	
+	    if(String.valueOf(finalScore)=="") model.setValueAt("", 3, 2);
+	    System.out.println(finalScore+"\tadjhssssssssssssss");
 	    model.setValueAt(per+"%", 3, 4);
 	    
 	    model.setValueAt(total, 4, 4);
@@ -130,7 +136,12 @@ public class TranscriptDetailView extends JPanel {
             
             // Kiểm tra kết quả truy vấn
             if (resultSet.next()) {
+            	
+            	
                 float attendanceScore = resultSet.getFloat("attendanceScore");
+              
+                
+                
                 float regularScore = resultSet.getFloat("regularScore");
                 float midtermScore = resultSet.getFloat("midtermScore");
                 float finalScore = resultSet.getFloat("finalScore");
