@@ -73,7 +73,8 @@ public class TranscriptDetailView extends JPanel {
 	        scrollPane.setViewportView(table);
 	        
 			
-			  JTextPane txtpnClassMath = new JTextPane(); txtpnClassMath.setForeground(new
+			  JTextPane txtpnClassMath = new JTextPane(); 
+			  txtpnClassMath.setFont(new Font("Tahoma", Font.PLAIN, 14));txtpnClassMath.setForeground(new
 			  Color(225, 0, 0)); txtpnClassMath.setText("CLASS:"+getClassName(classCode));
 			  txtpnClassMath.setBounds(10, 56, 815, 36);
 			  txtpnClassMath.setAlignmentX(Component.CENTER_ALIGNMENT);
