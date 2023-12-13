@@ -200,7 +200,7 @@ public class StudentAccountMainView extends JFrame {
 			}
 		});
 		// btn_DashBoard_1.setText(studentName);
-		btn_DashBoard_1.setMaximumSize(new Dimension(100, 20));
+		btn_DashBoard_1.setMaximumSize(new Dimension(120, 20));
 		btn_DashBoard_1.setBorder(null);
 		btn_DashBoard_1.setBackground(Color.RED); // Set the name label color to red
 		verticalBox_1.add(btn_DashBoard_1);
@@ -316,7 +316,7 @@ public class StudentAccountMainView extends JFrame {
 		
 		//Start: Clock
 		clockLabel = new ClockLabel();
-		clockLabel.setBounds(0, 0, 162, 26);
+		clockLabel.setBounds(10, 0, 142, 26);
 		panel.add(clockLabel);
 
 		dateLabel = new DateLabel();
