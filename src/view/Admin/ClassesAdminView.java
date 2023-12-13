@@ -74,7 +74,7 @@ public class ClassesAdminView extends JFrame {
 	 */
 	
 	public void notFindClass(String id) {
-    	JOptionPane.showMessageDialog(null, "Không tìm thấy lớp có mã : "+id, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    	JOptionPane.showMessageDialog(null, "No class with code found : "+id, "Announcement", JOptionPane.INFORMATION_MESSAGE);
     }
 	public ClassesAdminView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -138,7 +138,7 @@ public class ClassesAdminView extends JFrame {
 		 	}
 		 });
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btn_Tim.setBounds(465, 30, 97, 48);
+		btn_Tim.setBounds(465, 30, 136, 48);
 		classesPane.add(btn_Tim);
 		
 		JLabel lblDanhSchCc = new JLabel("List of classes");
@@ -265,19 +265,19 @@ public class ClassesAdminView extends JFrame {
 	
 		
 		btn_Them.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_Them.setBounds(127, 540, 97, 33);
+		btn_Them.setBounds(73, 540, 97, 33);
 		classesPane.add(btn_Them);
 		
 		 btn_Xoa = new JButton("Delete");
 		
 		btn_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_Xoa.setBounds(232, 540, 97, 33);
+		btn_Xoa.setBounds(185, 540, 97, 33);
 		classesPane.add(btn_Xoa);
 		
 		 btn_CapNhat = new JButton("Update");
 	
 		btn_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_CapNhat.setBounds(339, 540, 97, 33);
+		btn_CapNhat.setBounds(297, 540, 110, 33);
 		classesPane.add(btn_CapNhat);
 		
 		 btn_Luu = new JButton("Save");
@@ -286,13 +286,13 @@ public class ClassesAdminView extends JFrame {
 			}
 		});
 		btn_Luu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_Luu.setBounds(446, 540, 97, 33);
+		btn_Luu.setBounds(431, 540, 97, 33);
 		classesPane.add(btn_Luu);
 		
 		 btn_Huy = new JButton("Cancel");
 		
 		btn_Huy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btn_Huy.setBounds(553, 540, 97, 33);
+		btn_Huy.setBounds(541, 540, 97, 33);
 		classesPane.add(btn_Huy);
 		
 		 btnHuyTim = new JButton("");
@@ -302,7 +302,7 @@ public class ClassesAdminView extends JFrame {
 			}
 		});
 		btnHuyTim.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnHuyTim.setBounds(572, 30, 110, 48);
+		btnHuyTim.setBounds(611, 30, 110, 48);
 		classesPane.add(btnHuyTim);
 		
 		contentPane.add( classesPane);
