@@ -30,6 +30,8 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
+import javax.swing.border.BevelBorder;
 
 public class ClassesAdminView extends JFrame {
 	public JTextField textField_FindMaLop;
@@ -84,8 +86,9 @@ public class ClassesAdminView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btnBack = new JButton("Back");
-		btnBack.setBounds(784, 0, 37, 31);
+		btnBack = new JButton("");
+		btnBack.setIcon(new ImageIcon(ClassesAdminView.class.getResource("/Assert/student/Examination/back.png")));
+		btnBack.setBounds(778, 0, 51, 31);
 		contentPane.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -107,6 +110,7 @@ public class ClassesAdminView extends JFrame {
 			}
 		});
 		classesPane = new JPanel();
+		classesPane.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17)));
         classesPane.setBackground(new Color(255, 255, 255));
         classesPane.setBounds(0, 0, 766, 623);
         getContentPane().add(classesPane);
@@ -127,6 +131,7 @@ public class ClassesAdminView extends JFrame {
 		textField_FindMaLop.setColumns(10);
 		
 		 btn_Tim = new JButton("Find");
+		 btn_Tim.setIcon(new ImageIcon(ClassesAdminView.class.getResource("/Assert/student/Examination/find.png")));
 		 btn_Tim.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
 		 		
@@ -290,7 +295,8 @@ public class ClassesAdminView extends JFrame {
 		btn_Huy.setBounds(553, 540, 97, 33);
 		classesPane.add(btn_Huy);
 		
-		 btnHuyTim = new JButton("Undo");
+		 btnHuyTim = new JButton("");
+		 btnHuyTim.setIcon(new ImageIcon(ClassesAdminView.class.getResource("/Assert/student/Examination/refresh.png")));
 		btnHuyTim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

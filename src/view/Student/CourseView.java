@@ -38,6 +38,9 @@ import controller.Admin.LoginController;
 import controller.Student.CourseCtrl;
 import java.awt.Font;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import javax.swing.border.BevelBorder;
 public class CourseView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -57,6 +60,7 @@ public class CourseView extends JPanel {
 	 */
 	
 	public CourseView() {
+		setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17), new Color(255, 28, 17)));
 //		LoginController.studentId=9;
 		 DatabaseConnection db = new DatabaseConnection();
 	     String [] classCode=db.getRegisteredClassCodes(LoginController.studentId);
@@ -67,22 +71,23 @@ public class CourseView extends JPanel {
 		this.setBounds(162, 0, 835, 640);
 		JButton btnngK = new JButton("Enroll");
 		btnngK.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnngK.setBounds(444, 64, 103, 40);
+		btnngK.setBounds(489, 64, 103, 40);
 		add(btnngK);
 		
-		JLabel lblNewLabel = new JLabel("Course code enroll");
+		JLabel lblNewLabel = new JLabel("Course code enroll:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(57, 64, 168, 40);
+		lblNewLabel.setBounds(146, 63, 179, 40);
 		add(lblNewLabel);
 		
 		textField_MaDangki = new JTextField();
 		textField_MaDangki.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_MaDangki.setBounds(247, 69, 132, 31);
+		textField_MaDangki.setBounds(328, 68, 132, 31);
 		add(textField_MaDangki);
 		textField_MaDangki.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("List of course registered");
-		lblNewLabel_2.setBounds(297, 113, 130, 16);
+		lblNewLabel_2.setBounds(297, 113, 179, 16);
 		add(lblNewLabel_2);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -114,7 +119,7 @@ public class CourseView extends JPanel {
 		scrollPane.setViewportView(table_dangky);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(6, 418, 829, 216);
+		scrollPane_1.setBounds(6, 419, 823, 215);
 		add(scrollPane_1);
 		
 		table_Timlop = new JTable() {
@@ -200,13 +205,15 @@ public class CourseView extends JPanel {
 			
 		CourseCtrl courseCtrl = new CourseCtrl(this);
 		
-		JLabel lblNewLabel_3 = new JLabel("Course");
+		JLabel lblNewLabel_3 = new JLabel("Course:");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(252, 370, 82, 27);
+		lblNewLabel_3.setBounds(247, 369, 82, 27);
 		add(lblNewLabel_3);
 		
 		
 		btn_Tim = new JButton("Find");
+		btn_Tim.setIcon(new ImageIcon(CourseView.class.getResource("/Assert/student/Examination/find.png")));
 		btn_Tim.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        String selectedCourse = textField_FindCourse.getText().trim();
@@ -241,7 +248,8 @@ public class CourseView extends JPanel {
 		add(textField_FindCourse);
 		textField_FindCourse.setColumns(10);
 		
-		JButton btn_Undo = new JButton("Undo");
+		JButton btn_Undo = new JButton("");
+		btn_Undo.setIcon(new ImageIcon(CourseView.class.getResource("/Assert/student/Examination/refresh.png")));
 		btn_Undo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				displayAvailableClasses(model);
@@ -249,7 +257,7 @@ public class CourseView extends JPanel {
 			}
 		});
 		btn_Undo.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		btn_Undo.setBounds(585, 362, 103, 39);
+		btn_Undo.setBounds(585, 362, 64, 39);
 		add(btn_Undo);
 		
 		

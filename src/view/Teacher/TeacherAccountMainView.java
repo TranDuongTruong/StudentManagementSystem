@@ -247,9 +247,6 @@ public class TeacherAccountMainView extends JFrame {
 			        panel.setBackground(new Color(245, 89, 37));
 			        panel.setBounds(0, 0, 109, 640);
 			        main_Panel.add(panel);
-			        JLabel label = new JLabel();
-			        panel.add(label);
-			        label.setIcon(scaledImageIcon);
 			        
 			        Box verticalBox = Box.createVerticalBox();
 
