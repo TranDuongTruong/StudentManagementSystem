@@ -174,7 +174,7 @@ public class AttendanceViewP extends JPanel {
 	                    if (row < table.getRowCount() && column == selectColumnIndex) {
 	                        table.editCellAt(row, column); 
 	                        classRoom.getStudentList().get(row).setAttendance(!classRoom.getStudentList().get(row).isAttendance());
-
+	                        System.out.println("aa:\t"+ classRoom.getStudentList().get(row).isAttendance());
 	                    }
 	                  
 	                    
@@ -232,7 +232,7 @@ public class AttendanceViewP extends JPanel {
 	        submitBtn.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		
-	        		submitAttendance(classRoom, mainView);
+	        		submitAttendance(classRoom, mainView);  
 	        		
 	        	}
 	        });
@@ -245,8 +245,12 @@ public class AttendanceViewP extends JPanel {
 	        		 currentDate=currentDate.plusDays(1);
 	      		     formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 	      		     dateString = currentDate.format(formatter);
-	        		 attendance=fetchAttendanceDataForColumn("attendance_"+classRoom.getClassCode(),dateString,true);	 			    
+	        		 attendance=fetchAttendanceDataForColumn("attendance_"+classRoom.getClassCode(),dateString,true);
+	        		 for(int i=0;i<classRoom.getNumberOfStudents();i++) {
+	        			 classRoom.getStudentList().get(i).setAttendance(attendance.get(i));
+	        		 }
 	 			    displayAttendanceCollum(); txtpnAttendance.setText("Attendance on "+ dateString);
+	 			   System.err.println(startDate+"\t"+endDate+"\tCurentDate: "+currentDate);
 	        	}
 	        });
 	        btnNewButton.setIcon(new ImageIcon(AttendanceViewP.class.getResource("/Assert/Icon/nextIcon.png")));
@@ -264,6 +268,10 @@ public class AttendanceViewP extends JPanel {
 	      		     dateString = currentDate.format(formatter);
 	        		 attendance=fetchAttendanceDataForColumn("attendance_"+classRoom.getClassCode(),dateString,false);	 			    
 	 			    displayAttendanceCollum(); txtpnAttendance.setText("Attendance on "+ dateString);
+	 			   for(int i=0;i<classRoom.getNumberOfStudents();i++) {
+	        			 classRoom.getStudentList().get(i).setAttendance(attendance.get(i));
+	        		 }
+	 			    System.err.println(startDate+"\t"+endDate+"\tCurentDate: "+currentDate);
 	        	}
 	        });
 	        btnNewButton_1.setIcon(new ImageIcon(AttendanceViewP.class.getResource("/Assert/Icon/periviousIcon.png")));
@@ -273,10 +281,13 @@ public class AttendanceViewP extends JPanel {
 	        
 	   
 	        getDateRange( classRoom.getClassCode());
+	       attendance=fetchAttendanceDataForColumn("attendance_"+classRoom.getClassCode(),dateString,false);
 	        StudentController stu=new StudentController(this,classRoom);
+	        	 			    
+		
 	}
-	private Map<String, String> attendanceTables;
-	public void fetchAttendanceTables() {
+	private static Map<String, String> attendanceTables;
+	public static void fetchAttendanceTables() {
 	    DatabaseConnection db = new DatabaseConnection();
 	    Connection con = db.connectToBB();
 
@@ -307,7 +318,7 @@ public class AttendanceViewP extends JPanel {
 	        }
 	    }
 	}
-	public void insertIntoAttendanceTables(String classCode, String tableName) {
+	public static void insertIntoAttendanceTables(String classCode, String tableName) {
 	  
 	    DatabaseConnection db = new DatabaseConnection();
 	    Connection con = db.connectToBB();
@@ -351,6 +362,8 @@ public class AttendanceViewP extends JPanel {
 	                + "id INT PRIMARY KEY AUTO_INCREMENT,"
 	                + "studentID INT,"
 	                + "studentName CHAR(255),"
+	                +  "`" + startDate.format(formatter) + "` TINYINT(1),"
+	                +  "`" + endDate.format(formatter) + "` TINYINT(1),"
 	                + "FOREIGN KEY (studentID) REFERENCES student(studentID)"
 	                + ") ENGINE=InnoDB;";
 
@@ -362,7 +375,9 @@ public class AttendanceViewP extends JPanel {
 	            // Store the name of the new attendance table in attendanceTables
 	            String attendanceTable = "attendance_" + classCode;
 	            
-
+	           
+	        
+	            
 	            System.out.println("Created a new attendance table for class " + classCode);
 	            insertIntoAttendanceTables(classCode, "attendance_" + classCode);
 	        } catch (SQLException e) {
@@ -385,8 +400,10 @@ public class AttendanceViewP extends JPanel {
 	                int studentID = student.getStudentID();
 	                String studentName = student.getName();	         
 	                statement2.setInt(1, studentID);
-	                statement2.setString(2, studentName);	          	            
+	                statement2.setString(2, studentName);	
+
 	                statement2.executeUpdate();
+	                
 	            }
 
 	            System.out.println("Inserted attendance information for class " + classCode);
@@ -401,6 +418,7 @@ public class AttendanceViewP extends JPanel {
 	    
 	    
 	    
+	    dateString=currentDate.format(formatter);
 	    
 	    
 	    // Check if the dateString column exists in the attendance table
@@ -422,6 +440,7 @@ public class AttendanceViewP extends JPanel {
 	    }
 
 	    List<Student> students = classroom.getStudentList();
+	  //  System.out.println("\tkkjfj:"+classroom.getStudentList().get(0).isAttendance()+students.get(0).isAttendance());
 	    try {
 	        // Prepare the SQL query to update attendance data
 	        String updateQuery = "UPDATE " + attendanceTable + " SET " + dateString + " = ? WHERE studentID = ?";
@@ -433,8 +452,10 @@ public class AttendanceViewP extends JPanel {
 	        for (Student student : students) {
 	            int studentID = student.getStudentID();
 	            boolean attendanceStatus = student.isAttendance();
-
+	         
+	           
 	            statement2.setBoolean(1, attendanceStatus);
+	            
 	            statement2.setInt(2, studentID);
 
 	            // Execute the update statement
@@ -486,6 +507,76 @@ public class AttendanceViewP extends JPanel {
 	 public static List<Boolean> fetchAttendanceDataForColumn(String tableName, String columnName, boolean isNext) {
 		// System.out.println("Ban dau:"+columnName+"\t"+currentDate+"\t"+LocalDate.now());
 		 
+		 fetchAttendanceTables();
+		 DatabaseConnection db1 = new DatabaseConnection();
+		    Connection con1 = db1.connectToBB();
+		    String classCode = classRoom.getClassCode();
+
+		    // Check if the attendance table for the class exists in the database
+		    if (!attendanceTables.containsKey(classCode)) {
+		        // Create SQL query to create a new attendance table
+		        String createTableQuery = "CREATE TABLE attendance_" + classCode + " ("
+		                + "id INT PRIMARY KEY AUTO_INCREMENT,"
+		                + "studentID INT,"
+		                + "studentName CHAR(255),"
+		                +  "`" + startDate.format(formatter) + "` TINYINT(1),"
+		                +  "`" + endDate.format(formatter) + "` TINYINT(1),"
+		                + "FOREIGN KEY (studentID) REFERENCES student(studentID)"
+		                + ") ENGINE=InnoDB;";
+
+		        try {
+		            // Execute the query to create a new attendance table
+		            Statement statement = con1.createStatement();
+		            statement.executeUpdate(createTableQuery);
+
+		            // Store the name of the new attendance table in attendanceTables
+		            String attendanceTable = "attendance_" + classCode;
+		            
+		           
+		        
+		            
+		            System.out.println("Created a new attendance table for class " + classCode);
+		            insertIntoAttendanceTables(classCode, tableName);
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    fetchAttendanceTables();
+		    
+		 
+		 
+		    List<Student> students1 = classRoom.getStudentList();
+		    String attendanceTable1 = attendanceTables.get(classCode);
+		    try {
+		        // Check if the attendance table name is valid
+		        if (attendanceTable1 != null && !attendanceTable1.isEmpty()) {
+		            // Prepare the SQL query to insert attendance data
+		            String insertQuery = "INSERT INTO " + attendanceTable1 + " (studentID, studentName) VALUES (?, ?)";
+
+		            // Use PreparedStatement to execute the query
+		            PreparedStatement statement2 = con1.prepareStatement(insertQuery);
+
+		            // Iterate over the student list and insert attendance information for each student
+		            for (Student student : students1) {
+		                int studentID = student.getStudentID();
+		                String studentName = student.getName();	         
+		                statement2.setInt(1, studentID);
+		                statement2.setString(2, studentName);	
+
+		                statement2.executeUpdate();
+		                
+		            }
+
+		            System.out.println("Inserted attendance information for class " + classCode);
+		        } else {
+		            System.out.println("Invalid attendance table name");
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    }
+		    
+		    ///-------------------------------
 		 DatabaseConnection db = new DatabaseConnection();
 		    Connection con = db.connectToBB();
 		 	if(currentDate.isBefore(startDate)) {
@@ -557,13 +648,14 @@ public class AttendanceViewP extends JPanel {
 		            } else {
 		                if (currentDate.isBefore(startDate)) {
 		                	
-		                //	System.err.println("adsajdhaliduwq129881293"+currentDate);
+		                	
 		                	currentDate=startDate;		                			                   		                   		                    		                    
 		                   
 		                } else {
 		                //	System.err.println("ads33a3"+currentDate);
 		                	currentDate = currentDate.minusDays(1);
 		                }
+		                
 		                
 		                
 		            }
@@ -588,6 +680,10 @@ public class AttendanceViewP extends JPanel {
 		        // Lấy dữ liệu từ tập kết quả và điền vào danh sách
 		        while (result.next()) {
 		            boolean columnValue = result.getBoolean(columnName);
+		            
+		            if (result.wasNull()) {
+		                columnValue = false;
+		            }		            
 		            columnData.add(columnValue);
 		        }
 
@@ -647,12 +743,13 @@ public class AttendanceViewP extends JPanel {
 			        rowData[0] = student.getStudentID();
 			        rowData[1] = student.getName();
 			        rowData[2] = student.getDob();
+			        rowData[3] =false;
 			        model.addRow(rowData);
 			    }
 			    
 			    // Cập nhật model của JTable
 			    table.setModel(model);
-			    
+			    displayAttendanceCollum();
 			   
 			}
 		
@@ -666,7 +763,8 @@ public class AttendanceViewP extends JPanel {
 			        rowData[0] = student.getStudentID();
 			        rowData[1] = student.getName();
 			        rowData[2] = student.getDob();
-			        rowData[3]=attendance.get(i);
+			        if(attendance.get(i)==null)rowData[3]=false;
+			        else rowData[3]=attendance.get(i);
 			        i++;
 			        model.addRow(rowData);
 			    }

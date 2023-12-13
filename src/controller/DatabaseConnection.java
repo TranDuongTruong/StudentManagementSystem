@@ -46,7 +46,7 @@ public class DatabaseConnection {
 	    	
 	        ClassesManager classes = new ClassesManager();
 	        String f1, f2;
-	        int f3, f4;
+	        int f3=0, f4;
 	        
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -58,7 +58,7 @@ public class DatabaseConnection {
 	            while (rs.next()) {
 	                f1 = rs.getString(1);
 	                f2 = rs.getString(2);
-	                f3 = rs.getInt(3);
+	                f3 ++;
 	                f4 = rs.getInt(4);
 	              
 
