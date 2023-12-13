@@ -9,20 +9,25 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import org.apache.poi.ss.usermodel.*;
 import controller.DatabaseConnection;
 import model.Classroom;
 
@@ -252,6 +257,19 @@ public class ManageScroresViewP extends JPanel {
                 resetSearch();
             }
         });
+        // Create the "Import from Excel" button
+        JButton btnImportFromExcel = new JButton("Import from Excel");
+        btnImportFromExcel.setBounds(584, 568, 146, 42);
+        add(btnImportFromExcel);
+
+        // Add an ActionListener for the import button
+        btnImportFromExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                importFromExcel();
+            }
+        });
+        
         // Fetch data from the database based on the classCode
         fetchDataFromClassroom(classCode);
 
@@ -538,5 +556,161 @@ public class ManageScroresViewP extends JPanel {
             JOptionPane.showMessageDialog(this, "Error exporting data to Excel.");
         }
     }
+    private void importFromExcel() {
+        try {
+            // Create a file chooser
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Choose an Excel file to import");
+
+            // Set the file filter to accept only Excel files
+            FileNameExtensionFilter excelFilter = new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx");
+            fileChooser.setFileFilter(excelFilter);
+
+            // Show the file chooser dialog
+            int userSelection = fileChooser.showOpenDialog(this);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                // Get the selected file
+                File file = fileChooser.getSelectedFile();
+
+                // Read data from the selected Excel file
+                readDataFromExcel(file);
+
+                JOptionPane.showMessageDialog(this, "Data imported from Excel successfully.");
+            } 
+//            else if (userSelection == JFileChooser.CANCEL_OPTION) {
+//                // User canceled the operation
+//                JOptionPane.showMessageDialog(this, "Import from Excel canceled by the user.");
+//            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error importing data from Excel.");
+        }
+    }
+    private void readDataFromExcel(File file) {
+        try {
+            // Create a FileInputStream to read the Excel file
+            FileInputStream fis = new FileInputStream(file);
+
+            // Create a workbook from the Excel file
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+
+            // Get the first sheet from the workbook
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+            // Get the number of rows in the sheet
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            // Clear existing data from JTable and database
+            clearTableAndDatabase();
+
+            // Iterate through each row
+            for (int i = 1; i < rowCount; i++) {
+                // Create a new row in the JTable
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.addRow(new Object[]{});
+
+                // Get the current row in the JTable
+                int currentRow = model.getRowCount() - 1;
+
+                // Get the current row in the Excel sheet
+                XSSFRow excelRow = sheet.getRow(i);
+
+                // Get the number of columns in the sheet
+                int columnCount = excelRow.getPhysicalNumberOfCells();
+
+                // Iterate through each cell in the row
+                for (int j = 0; j < columnCount; j++) {
+                    // Get the current cell in the Excel sheet
+                    XSSFCell cell = excelRow.getCell(j);
+
+                    // Set the cell value to the JTable
+                    model.setValueAt(getCellValue(cell), currentRow, j);
+                }
+
+                // Save the data to the database
+                saveDataToDatabase(model, currentRow);
+                fetchDataFromClassroom(classCode);
+                
+            }
+
+            // Close the FileInputStream and workbook
+            fis.close();
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveDataToDatabase(DefaultTableModel model, int row) {
+        try {
+            Connection connection = DatabaseConnection.connectToBB();
+
+            // Prepare SQL query to insert data into the database
+            String insertQuery = "INSERT INTO scores (studentID, classCode, attendanceScore, regularScore, midtermScore, finalScore) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                // Set values for the parameters based on the JTable data
+                preparedStatement.setInt(1, Integer.parseInt(model.getValueAt(row, 0).toString())); // Assuming column 0 is Student ID
+                preparedStatement.setString(2, classCode);
+                preparedStatement.setFloat(3, Float.parseFloat(model.getValueAt(row, 2).toString())); // Assuming column 2 is Attendance Score
+                preparedStatement.setFloat(4, Float.parseFloat(model.getValueAt(row, 3).toString())); // Assuming column 3 is Regular Score
+                preparedStatement.setFloat(5, Float.parseFloat(model.getValueAt(row, 4).toString())); // Assuming column 4 is Midterm Score
+                preparedStatement.setFloat(6, Float.parseFloat(model.getValueAt(row, 5).toString())); // Assuming column 5 is Final Score
+
+
+                // Execute the SQL query to insert data
+                preparedStatement.executeUpdate();
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clearTableAndDatabase() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Clear all rows from JTable
+
+        // Clear data from the database (You may need to implement this based on your database structure)
+        try {
+            Connection connection = DatabaseConnection.connectToBB();
+            String clearDataQuery = "DELETE FROM scores WHERE classCode = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(clearDataQuery)) {
+                preparedStatement.setString(1, classCode);
+                preparedStatement.executeUpdate();
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private Object getCellValue(Cell cell) {
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return cell.getDateCellValue();
+                } else {
+                    return cell.getNumericCellValue();
+                }
+            case BOOLEAN:
+                return cell.getBooleanCellValue();
+            case FORMULA:
+                return cell.getCellFormula();
+            case BLANK:
+                return "";
+            default:
+                return "";
+        }
+    }
+
+    
 
 }

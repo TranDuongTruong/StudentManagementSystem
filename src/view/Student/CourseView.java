@@ -5,10 +5,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.util.Random;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +22,9 @@ import java.sql.SQLException;
 
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 
 import controller.Student.ScheduleCtrl;
@@ -81,7 +86,7 @@ public class CourseView extends JPanel {
 		add(lblNewLabel_2);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 140, 819, 141);
+		scrollPane.setBounds(6, 140, 819, 200);
 		add(scrollPane);
 		
 		table_dangky = new JTable();
@@ -95,6 +100,17 @@ public class CourseView extends JPanel {
 				"Class code", "Class name", "Schedule", "Location", "Credit hours"
 			}
 		));
+		// Thêm cột mới vào mô hình dữ liệu
+		DefaultTableModel tableModel = (DefaultTableModel) table_dangky.getModel();
+		tableModel.addColumn("Unenroll");
+
+		// Đặt ButtonRenderer cho cột "Unenroll"
+		TableColumn unenrollColumn = table_dangky.getColumnModel().getColumn(tableModel.getColumnCount() - 1);
+		unenrollColumn.setCellRenderer(new ButtonRenderer());
+
+		// Đặt ButtonEditor cho cột "Unenroll"
+		unenrollColumn.setCellEditor(new ButtonEditor(new JTextField()));
+		
 		scrollPane.setViewportView(table_dangky);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -213,69 +229,138 @@ public class CourseView extends JPanel {
 		    }
 		});
 		btn_Tim.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		btn_Tim.setBounds(544, 364, 103, 39);
+		btn_Tim.setBounds(470, 362, 103, 39);
 		add(btn_Tim);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(102, 351, 601, 2);
 		add(separator_1);
 		
-		JButton btn_delete = new JButton("Delete");
-		btn_delete.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btn_delete.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Get the indices of selected rows in table_dangky
-		        int[] selectedRows = table_dangky.getSelectedRows();
-
-		        if (selectedRows.length > 0) {
-		            // Display the confirmation dialog
-		            int response = JOptionPane.showConfirmDialog(
-		                    null,
-		                    "Are you sure you want to cancel registration for selected classes?",
-		                    "Confirmation",
-		                    JOptionPane.YES_NO_OPTION);
-
-		            if (response == JOptionPane.YES_OPTION) {
-		                // User confirmed, proceed with deletion
-		                for (int i = selectedRows.length - 1; i >= 0; i--) {
-		                    int selectedRow = selectedRows[i];
-		                    String classCode = (String) table_dangky.getValueAt(selectedRow, 0);
-		                    if (classCode != null) {
-		                        // Add to the model
-		                        model.addClassroom(currentRegisteredClass.findClassroomByCode(classCode));
-		                        // Remove from currentRegisteredClass
-		                        currentRegisteredClass.remove(currentRegisteredClass.findClassroomByCode(classCode));
-
-		                        displayRegisteredClasses(currentRegisteredClass);
-		                        //displayAvailableClasses(model);
-		                        //setDataToTextField();
-		                        deleteStudentClassroom(LoginController.studentId, classCode);
-		                        JOptionPane.showMessageDialog(null, "Cancellation of class registration successful!");
-		                    } else {
-		                        JOptionPane.showMessageDialog(null, "Please select the classes you want to cancel in the table!");
-		                    }
-		                }
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(null, "Please select at least one class to cancel registration!");
-		        }
-		    }
-		});
-
-		btn_delete.setBounds(279, 292, 258, 39);
-		add(btn_delete);
-		
 		textField_FindCourse = new JTextField();
 		textField_FindCourse.setBounds(330, 371, 130, 26);
 		add(textField_FindCourse);
 		textField_FindCourse.setColumns(10);
 		
+		JButton btn_Undo = new JButton("Undo");
+		btn_Undo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayAvailableClasses(model);
+		        textField_FindCourse.setText("");
+			}
+		});
+		btn_Undo.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btn_Undo.setBounds(585, 362, 103, 39);
+		add(btn_Undo);
+		
 		
         //ScheduleCtrl sechualeCtrl=new ScheduleCtrl(this);
         
 	    }
-	    
-	    
+		
+		class ButtonRenderer extends JButton implements TableCellRenderer {
+		    public ButtonRenderer() {
+		        setOpaque(true);
+		    }
+	
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        if (isSelected) {
+		            setForeground(table.getSelectionForeground());
+		            setBackground(table.getSelectionBackground());
+		        } else {
+		            setForeground(table.getForeground());
+		            setBackground(UIManager.getColor("Button.background"));
+		        }
+		        setText("X");
+		        return this;
+		    }
+		}
+		
+		class ButtonEditor extends DefaultCellEditor {
+		    protected JButton button;
+		    private String label;
+		    private boolean isPushed;
+		    private int rowIndex;
+
+		    public ButtonEditor(JTextField textField) {
+		        super(textField);
+		        button = new JButton();
+		        button.setOpaque(true);
+		        button.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+		                fireEditingStopped();
+		                // Xử lý sự kiện khi nút "Unenroll" được nhấp
+		                // Lấy chỉ số hàng của nút được nhấp
+		                int selectedRow = rowIndex;
+		                // Thực hiện unenroll cho hàng tương ứng
+		                // ...
+		            }
+		        });
+		    }
+
+		    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+		        if (isSelected) {
+		            button.setForeground(table.getSelectionForeground());
+		            button.setBackground(table.getSelectionBackground());
+		        } else {
+		            button.setForeground(table.getForeground());
+		            button.setBackground(table.getBackground());
+		        }
+		        label = (value == null) ? "" : value.toString();
+		        button.setText(label);
+		        isPushed = true;
+		        rowIndex = row;
+		        return button;
+		    }
+
+		    public Object getCellEditorValue() {
+		        if (isPushed) {
+		        	int[] selectedRows = table_dangky.getSelectedRows();
+
+			        if (selectedRows.length > 0) {
+			            // Display the confirmation dialog
+			            int response = JOptionPane.showConfirmDialog(
+			                    null,
+			                    "Are you sure you want to cancel registration for selected classes?",
+			                    "Confirmation",
+			                    JOptionPane.YES_NO_OPTION);
+
+			            if (response == JOptionPane.YES_OPTION) {
+			                // User confirmed, proceed with deletion
+			                for (int i = selectedRows.length - 1; i >= 0; i--) {
+			                    int selectedRow = selectedRows[i];
+			                    String classCode = (String) table_dangky.getValueAt(selectedRow, 0);
+			                    if (classCode != null) {
+
+			                        // Remove from currentRegisteredClass
+			                        currentRegisteredClass.remove(currentRegisteredClass.findClassroomByCode(classCode));
+
+			                        displayRegisteredClasses(currentRegisteredClass);
+			                        //displayAvailableClasses(model);
+			                        //setDataToTextField();
+			                        deleteStudentClassroom(LoginController.studentId, classCode);
+			                        JOptionPane.showMessageDialog(null, "Cancellation of class registration successful!");
+			                    } else {
+			                        JOptionPane.showMessageDialog(null, "Please select the classes you want to cancel in the table!");
+			                    }
+			                }
+			            }
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Please select at least one class to unenroll registration!");
+			        }
+		        }
+		        isPushed = false;
+		        return label;
+		    }
+
+		    public boolean stopCellEditing() {
+		        isPushed = false;
+		        return super.stopCellEditing();
+		    }
+
+		    protected void fireEditingStopped() {
+		        super.fireEditingStopped();
+		    }
+		}
 	    public void displayRegisteredClasses(ClassesManager classes) {		
 			if(table_dangky==null) return;
 		    DefaultTableModel tableModel = (DefaultTableModel) table_dangky.getModel();
