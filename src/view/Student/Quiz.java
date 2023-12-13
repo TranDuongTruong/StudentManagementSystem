@@ -20,7 +20,7 @@ public class Quiz extends JFrame implements ActionListener {
     private ButtonGroup groupoptions;
     private JButton next, submit, lifeline;
 
-    public static int totalTimer = 30; // 15 minutes in seconds
+    public static int totalTimer; 
     public static int ans_given = 0;
     public static int count = 0;
     public static double score = 0;
@@ -34,12 +34,13 @@ public class Quiz extends JFrame implements ActionListener {
         try {
             connection = DatabaseConnection.connectToBB();
 
-            String sql = "SELECT * FROM questions WHERE classCode = ?";
+            String sql = "SELECT *, total_timer FROM questions WHERE classCode = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, classCode);
             questionsResultSet = preparedStatement.executeQuery();
 
             while (questionsResultSet.next()) {
+            	totalTimer = questionsResultSet.getInt("total_timer");
                 String[] questionData = {
                         questionsResultSet.getString("question_text"),
                         questionsResultSet.getString("option1"),
@@ -297,4 +298,3 @@ public class Quiz extends JFrame implements ActionListener {
         new Quiz("C104");
     }
 }
-
