@@ -16,7 +16,7 @@ public class DatabaseConnection {
 	 //FOR Local
 	    private static final String URL = "jdbc:mysql://localhost:3306/spmdatabase11";   
 	    private static final String USER = "root";
-	    private static final String PASSWORD = "123456";
+	    private static final String PASSWORD = "";
 	    
 	 //FOR Online
 //	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663967";   
