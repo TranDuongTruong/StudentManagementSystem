@@ -30,6 +30,7 @@ import controller.DatabaseConnection;
 import controller.Student.MainViewCtrl;
 import model.Student;
 import view.Admin.LoginView;
+import view.style.DateLabel;
 import view.style.GradientPanel;
 
 public class StudentAccountMainView extends JFrame {
@@ -136,35 +137,25 @@ public class StudentAccountMainView extends JFrame {
 
 	ClockLabel clockLabel;
 
-	public class DateLabel extends JLabel {
-		private final SimpleDateFormat dateFormat;
-		private Timer timer;
-
-		public DateLabel() {
-			super();
-			this.dateFormat = new SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH);
-			setFont(new Font("Verdana", Font.PLAIN, 16));
-			setForeground(new Color(0x00FF00));
-			setBackground(Color.black);
-			setOpaque(true);
-
-			updateDate();
-			timer = new Timer(60000, e -> updateDate()); // Update every minute
-			timer.start();
-		}
-
-		private void updateDate() {
-			setText(dateFormat.format(Calendar.getInstance().getTime()));
-		}
-
-		public void startTimer() {
-			timer.start();
-		}
-
-		public void stopTimer() {
-			timer.stop();
-		}
-	}
+	/*
+	 * public class DateLabel extends JLabel { private final SimpleDateFormat
+	 * dateFormat; private Timer timer;
+	 * 
+	 * public DateLabel() { super(); this.dateFormat = new
+	 * SimpleDateFormat("EEE, dd MMM, yyyy", Locale.ENGLISH); setFont(new
+	 * Font("Verdana", Font.PLAIN, 16)); setForeground(new Color(255,128,128));
+	 * setBackground(Color.red); setOpaque(true);
+	 * 
+	 * updateDate(); timer = new Timer(60000, e -> updateDate()); // Update every
+	 * minute timer.start(); }
+	 * 
+	 * private void updateDate() {
+	 * setText(dateFormat.format(Calendar.getInstance().getTime())); }
+	 * 
+	 * public void startTimer() { timer.start(); }
+	 * 
+	 * public void stopTimer() { timer.stop(); } }
+	 */
 
 	DateLabel dateLabel;
 
@@ -194,56 +185,75 @@ public class StudentAccountMainView extends JFrame {
 		panel.add(verticalBox_1);
 
 		String studentName = retrieveStudentName(LoginController.studentId);
-		JButton btn_DashBoard_1 = new JButton(studentName);
-		btn_DashBoard_1.addActionListener(new ActionListener() {
+		JButton btn_Name = new JButton("Name");
+		btn_Name.setForeground(new Color(255, 255, 255));
+		btn_Name.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		// btn_DashBoard_1.setText(studentName);
-		btn_DashBoard_1.setMaximumSize(new Dimension(120, 20));
-		btn_DashBoard_1.setBorder(null);
-		btn_DashBoard_1.setBackground(Color.RED); // Set the name label color to red
-		verticalBox_1.add(btn_DashBoard_1);
+		btn_Name.setMaximumSize(new Dimension(200, 20));
+		btn_Name.setBorder(null);
+		btn_Name.setBackground(Color.RED); // Set the name label color to red
+		verticalBox_1.add(btn_Name);
+		
+		Component verticalStrut_4 = Box.createVerticalStrut(10);
+		verticalBox_1.add(verticalStrut_4);
 
 		btn_Information = new JButton("Dasboard"); // Updated button label
-		btn_Information.setMaximumSize(new Dimension(120, 20));
-		btn_Information.setBackground(Color.LIGHT_GRAY);
+		btn_Information.setForeground(new Color(255, 255, 255));
+		btn_Information.setMaximumSize(new Dimension(200, 20));
+		btn_Information.setBackground(new Color(255, 0, 0));
 		verticalBox_1.add(btn_Information);
 
 		Component verticalStrut_1_1 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_1_1);
 
 		btn_Schedule = new JButton("Schedule"); // Updated button label
-		btn_Schedule.setMaximumSize(new Dimension(120, 20));
-		btn_Schedule.setBackground(Color.LIGHT_GRAY);
+		btn_Schedule.setForeground(new Color(255, 255, 255));
+		btn_Schedule.setMaximumSize(new Dimension(200, 20));
+		btn_Schedule.setBackground(new Color(255, 0, 0));
 		verticalBox_1.add(btn_Schedule);
 
 		Component verticalStrut_2_1 = Box.createVerticalStrut(10);
 		verticalBox_1.add(verticalStrut_2_1);
 
 		JButton btn_Learning = new JButton("Learning");
-		btn_Learning.setMaximumSize(new Dimension(120, 20));
-		btn_Learning.setBackground(Color.LIGHT_GRAY);
+		btn_Learning.setForeground(new Color(255, 255, 255));
+		btn_Learning.setMaximumSize(new Dimension(200, 20));
+		btn_Learning.setBackground(new Color(255, 0, 0));
 		verticalBox_1.add(btn_Learning);
 
 		// Create the additional buttons
 		int lBtn = 120, wBtn = 15;
 		btn_CourseRegistration = new JButton("Course");
+		btn_CourseRegistration.setBackground(new Color(255, 0, 0));
+		btn_CourseRegistration.setForeground(new Color(255, 255, 255));
 		btn_CourseRegistration.setMaximumSize(new Dimension(lBtn, wBtn));
 
 		btn_Transcript = new JButton("Transcript");
+		btn_Transcript.setBackground(new Color(255, 0, 0));
+		btn_Transcript.setForeground(new Color(255, 255, 255));
 		btn_Transcript.setMaximumSize(new Dimension(lBtn, wBtn));
 
 		btn_Curriculum = new JButton("Curriculum");
+		btn_Curriculum.setBackground(new Color(255, 0, 0));
+		btn_Curriculum.setForeground(new Color(255, 255, 255));
 		btn_Curriculum.setMaximumSize(new Dimension(lBtn, wBtn));
 		btn_Examination = new JButton("Examination");
+		btn_Examination.setBackground(new Color(255, 0, 0));
+		btn_Examination.setForeground(new Color(255, 255, 255));
 		btn_Examination.setMaximumSize(new Dimension(lBtn, wBtn));
 
 		btn_Syllabli = new JButton("Syllabli");
+		btn_Syllabli.setBackground(new Color(255, 0, 0));
+		btn_Syllabli.setForeground(new Color(255, 255, 255));
 
 		btn_Syllabli.setMaximumSize(new Dimension(lBtn, wBtn));
 
 		btn_chatBox = new JButton("ChatGPT");
+		btn_chatBox.setBackground(new Color(255, 0, 0));
+		btn_chatBox.setForeground(new Color(255, 255, 255));
 
 		btn_chatBox.setMaximumSize(new Dimension(lBtn, wBtn));
 		// Set the initial visibility and size of the additional buttons
@@ -297,8 +307,9 @@ public class StudentAccountMainView extends JFrame {
 		verticalBox_1.add(verticalStrut_2_1_7);
 
 		JButton btn_Logout = new JButton("<- Logout"); // Updated button label
+		btn_Logout.setForeground(new Color(255, 255, 255));
 		btn_Logout.setMaximumSize(new Dimension(140, 25));
-		btn_Logout.setBackground(Color.WHITE);
+		btn_Logout.setBackground(new Color(255, 0, 0));
 		btn_Logout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginController loginController = new LoginController(new LoginView());
@@ -310,18 +321,28 @@ public class StudentAccountMainView extends JFrame {
 
 		verticalBox_1.add(btn_Logout);
 
-		Component verticalStrut_4 = Box.createVerticalStrut(10);
-		verticalStrut_4.setBounds(10, 61, 132, 10);
-		panel.add(verticalStrut_4);
+		DateLabel dateLabel = new DateLabel();
+		dateLabel.setForeground(new Color(255, 0, 0));
+		dateLabel.setBackground(new Color(255, 128, 128));
+		dateLabel.setBounds(0, 6, 162, 26);
+		//panel.add(dateLabel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(192, 192, 192));
+		panel_1.setBounds(0, 10, 162, 70);
+		panel.add(panel_1);
+		panel_1.setLayout(null);
 		
 		//Start: Clock
 		clockLabel = new ClockLabel();
-		clockLabel.setBounds(10, 0, 142, 26);
-		panel.add(clockLabel);
-
-		dateLabel = new DateLabel();
-		dateLabel.setBounds(0, 28, 162, 20);
-		panel.add(dateLabel);
+		clockLabel.setBounds(10, 34, 142, 26);
+		
+		panel_1.add(dateLabel);
+		
+		panel_1.add(clockLabel);
+		
+		clockLabel.setForeground(new Color(255, 0, 0));
+		clockLabel.setBackground(new Color(255, 128, 128));
 		//End: Clock
 
 

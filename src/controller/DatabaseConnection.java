@@ -16,7 +16,7 @@ public class DatabaseConnection {
 	 //FOR Local
 	    private static final String URL = "jdbc:mysql://localhost:3306/spmdatabase11";   
 	    private static final String USER = "root";
-	    private static final String PASSWORD = "";
+	    private static final String PASSWORD = "123456";
 	    
 	 //FOR Online
 //	    private static final String URL = "jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663967";   
@@ -60,9 +60,6 @@ public class DatabaseConnection {
 	                f2 = rs.getString(2);
 	                f3 ++;
 	                f4 = rs.getInt(4);
-	              
-
-
 	                List<Student> students = retrieveStudentsFromClassroom(f1);
 
 	                Classroom classroom = new Classroom(f1, f2, f3, f4, students);
@@ -107,7 +104,8 @@ public class DatabaseConnection {
 	                f4 = rs.getInt(4);
 
 	                List<Student> students = retrieveStudentsFromClassroom(f1);
-
+	               // System.out.println("size:"+students.size());
+	                
 	                Classroom classroom = new Classroom(f1, f2, students.size(), f4, students);
 	                classes.addClassroom(classroom);
 
@@ -311,7 +309,7 @@ public class DatabaseConnection {
  		    return classCodeArray;
  		}
 	   public  List<Student> retrieveStudentsFromClassroom(String classCode) {
-		   connectToBB();
+		   connectToBB();int count=0;
 	        List<Student> students = new ArrayList();
 	        int studentID; String name; LocalDate dob; String address; boolean gender;
 			 String phoneNumber; int creditsCompleted; int  creditsOwed;
@@ -335,16 +333,17 @@ public class DatabaseConnection {
 	       		  phoneNumber=rs.getString(6);
 	       		  creditsCompleted=rs.getInt(7);
 	       		  creditsOwed=rs.getInt(8);
-	       		  
+	       		  count++;
 	       		 
 	       		 Student student=new Student( studentID, name, dob, address, gender, phoneNumber, creditsCompleted, creditsOwed); 
 	       		 students.add(student);
 	       		  
-	       		 System.err.println(name+"\t"+dob);
+	       	//	 System.err.println(name+"\t"+dob+"\t"+count);
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
+	        //System.out.println("ahjadb\t:"+count);
 	        return students;
 	    }
 	    static class Wrapper<T> {
