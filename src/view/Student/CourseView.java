@@ -185,7 +185,7 @@ public class CourseView extends JPanel {
 			                    currentRegisteredClass.addClassroom(registeredClass);
 			                    // Display the "currentRegisteredClass" list on table_dangky
 			                    displayRegisteredClasses(currentRegisteredClass);
-//			                    insertStudentClassroom(LoginController.studentId, registeredClass.getClassCode());
+			                    insertStudentClassroom(LoginController.studentId, registeredClass.getClassCode());
 			                    JOptionPane.showMessageDialog(null, "Enroll successful!");
 			                    textField_MaDangki.setText("");
 			                }
@@ -337,7 +337,7 @@ public class CourseView extends JPanel {
 			                        displayRegisteredClasses(currentRegisteredClass);
 			                        //displayAvailableClasses(model);
 			                        //setDataToTextField();
-//			                        deleteStudentClassroom(LoginController.studentId, classCode);
+			                        deleteStudentClassroom(LoginController.studentId, classCode);
 			                        JOptionPane.showMessageDialog(null, "Cancellation of class registration successful!");
 			                    } else {
 			                        JOptionPane.showMessageDialog(null, "Please select the classes you want to cancel in the table!");
