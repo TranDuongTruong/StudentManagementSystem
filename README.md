@@ -7,9 +7,7 @@ A comprehensive desktop application built with Java Swing and MySQL that provide
 **⚠️ Important: This is Sprint #5 implementation. Please checkout to the appropriate branch before running:**
 
 ```bash
-git checkout sprint-5
-# or
-git checkout main  # if sprint-5 is merged to main
+git checkout sprint#5
 ```
 
 ## 📋 Features
@@ -244,7 +242,7 @@ private static final String PASSWORD = "your_password";
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
@@ -257,3 +255,5 @@ For support and questions:
 ---
 
 **Note**: This is Sprint #5 implementation. Make sure to checkout the correct branch before running the application.
+
+
