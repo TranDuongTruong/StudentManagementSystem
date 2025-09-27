@@ -119,7 +119,7 @@ src/
 2. **Checkout Sprint #5**
 
    ```bash
-   git checkout sprint-5
+   git checkout sprint#5
    ```
 
 3. **Database Setup**
@@ -255,5 +255,6 @@ For support and questions:
 ---
 
 **Note**: This is Sprint #5 implementation. Make sure to checkout the correct branch before running the application.
+
 
 
